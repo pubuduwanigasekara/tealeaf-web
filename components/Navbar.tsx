@@ -271,6 +271,7 @@ export const Navbar: React.FC = () => {
   return (
     <>
       <nav
+        data-scroll-section="false"
         className={`fixed w-full z-40 transition-all duration-300 ${paddingClass} ${bgClass}`}
         style={{ paddingRight: isMobileMenuOpen ? `${scrollbarWidth}px` : "" }}
       >

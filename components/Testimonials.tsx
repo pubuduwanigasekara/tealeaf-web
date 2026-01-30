@@ -20,13 +20,13 @@ const testimonials: ExtendedTestimonialItem[] = [
     company: "Helix Decision Science",
     quote: `Angela does not just "manage the financial infrastructure" - she stewards value creation. She understands the "tollgate" fundraising model, ensuring that a company hits specific, measurable milestones at every phase to unlock new rounds of capital.`,
     content: (
-      <div className="space-y-8">
+      <div className="space-y-8 [&_p]:leading-normal">
         <div className="hidden lg:block">
           <h3 className="text-2xl font-bold text-brand-dark mb-4">
             Strategic Financial Leadership: A CEO's Perspective on Angela
             Sweeney
           </h3>
-          <p className="text-brand-dark leading-relaxed mb-4">
+          <p className="text-brand-dark mb-4">
             In the high-stakes world of AI-powered decision science, technical
             innovation must be matched by operational rigor. As the Founder and
             CEO of Helix Decision Science, I have seen firsthand how the right
@@ -34,7 +34,7 @@ const testimonials: ExtendedTestimonialItem[] = [
             startup into a high-velocity, early-revenue organization. Angela
             Sweeney has been the architect of that transformation for us.
           </p>
-          <p className="text-brand-dark leading-relaxed">
+          <p className="text-brand-dark">
             For any founder or board looking to scale, Angela provides the
             bridge between visionary product development and the
             institutional-grade discipline required for a successful exit.
@@ -79,9 +79,7 @@ const testimonials: ExtendedTestimonialItem[] = [
                   <strong className="block text-brand-dark font-semibold text-base mb-1">
                     {item.title}
                   </strong>
-                  <p className="text-brand-dark text-base leading-relaxed block">
-                    {item.desc}
-                  </p>
+                  <p className="text-brand-dark text-base block">{item.desc}</p>
                 </div>
               </li>
             ))}
@@ -92,13 +90,13 @@ const testimonials: ExtendedTestimonialItem[] = [
           <h4 className="text-lg font-bold text-brand-dark mb-3">
             Why Angela is the "Ideal Fractional CFO"
           </h4>
-          <p className="text-brand-dark leading-relaxed mb-4">
+          <p className="text-brand-dark mb-4">
             Angela does not just "manage the financial infrastructure"—she
             stewards value creation. She understands the "tollgate" fundraising
             model, ensuring that a company hits specific, measurable milestones
             at every phase to unlock new rounds of capital.
           </p>
-          <p className="text-brand-dark leading-relaxed">
+          <p className="text-brand-dark">
             Her experience in high-growth SaaS and technology, combined with a
             global perspective on cross-border financial management, makes her
             uniquely suited for companies with international ambitions.
@@ -106,7 +104,7 @@ const testimonials: ExtendedTestimonialItem[] = [
         </div>
 
         <blockquote className="border-l-4 border-brand-accent pl-6 pr-4 py-2 my-6 bg-brand-accent/5 rounded-r-lg">
-          <p className="text-lg text-brand-dark font-medium leading-relaxed">
+          <p className="text-lg text-brand-dark font-medium">
             "Angela's hands-on financial stewardship and milestone-based
             planning are essential for rapid scaling and future value
             realization."
@@ -123,21 +121,19 @@ const testimonials: ExtendedTestimonialItem[] = [
     quote:
       "Angela Sweeney has been an invaluable partner to Maven. She brings clarity to our financial picture while always keeping the long-term vision in focus. Her guidance helps me make confident decisions about growth, investment, and where I'm taking the business next.",
     content: (
-      <>
-        <p className="mb-4">
-          Angela Sweeney has been an invaluable partner to Maven.
-        </p>
-        <p className="mb-4">
+      <div className="leading-normal space-y-4">
+        <p>Angela Sweeney has been an invaluable partner to Maven.</p>
+        <p>
           She brings clarity to our financial picture while always keeping the
           long-term vision in focus. Her guidance helps me make confident
           decisions about growth, investment, and where I'm taking the business
           next.
         </p>
-        <p className="mb-4">
+        <p>
           She understands what founders are actually navigating day to day and
           helps you build a business that's both ambitious and grounded.
         </p>
-      </>
+      </div>
     ),
   },
 ];

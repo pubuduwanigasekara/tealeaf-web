@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -11,12 +11,17 @@ import { SplashScreen } from "./components/SplashScreen";
 import { HomePage } from "./pages/Home";
 // import { PrivacyPolicyPage } from './pages/PrivacyPolicy';
 import { NotFoundPage } from "./pages/NotFound";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollSmoother } from "gsap/ScrollSmoother";
 
-// Layout component for standard pages that include Navbar and Footer
-const MainLayout = () => (
+// Register GSAP plugins
+gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+
+// Layout component - Navbar is now outside smooth-content, so layout only has main + footer
+const MainLayoutWithoutNavbar = () => (
   <>
-    <Navbar />
-    <main className="flex-grow">
+    <main className="grow">
       <Outlet />
     </main>
     <Footer />
@@ -31,20 +36,44 @@ function App() {
     setShowSplash(false);
   };
 
+  useEffect(() => {
+    // Initialize ScrollSmoother after component mounts
+    // Wait a bit for the DOM to be ready
+    const timer = setTimeout(() => {
+      ScrollSmoother.create({
+        wrapper: "#smooth-wrapper",
+        content: "#smooth-content",
+        smooth: 0.8, // How long (in seconds) it takes to "catch up" to native scroll - faster than 1.2
+        effects: true, // Enable data-speed and data-lag attributes
+        smoothTouch: 0.1, // Smooth scrolling on touch devices
+      });
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <Router>
-      <div className="min-h-screen font-sans bg-brand-cream text-brand-dark selection:bg-brand-accent selection:text-white flex flex-col">
-        {showSplash && <SplashScreen onComplete={handleSplashComplete} />}
+      {/* Splash screen stays outside smooth-wrapper since it's position: fixed */}
+      {showSplash && <SplashScreen onComplete={handleSplashComplete} />}
 
-        <Routes>
-          {/* Routes wrapped in MainLayout will have Navbar and Footer */}
-          <Route element={<MainLayout />}>
-            <Route path="/" element={<HomePage />} />
-          </Route>
+      <div id="smooth-wrapper">
+        {/* Navbar goes inside wrapper but outside content for proper fixed positioning */}
+        <Navbar />
 
-          {/* <Route path="/privacy" element={<PrivacyPolicyPage />} /> */}
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
+        <div id="smooth-content">
+          <div className="min-h-screen font-sans bg-brand-cream text-brand-dark selection:bg-brand-accent selection:text-white flex flex-col">
+            <Routes>
+              {/* Routes wrapped in MainLayout will have Footer */}
+              <Route element={<MainLayoutWithoutNavbar />}>
+                <Route path="/" element={<HomePage />} />
+              </Route>
+
+              {/* <Route path="/privacy" element={<PrivacyPolicyPage />} /> */}
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+          </div>
+        </div>
       </div>
     </Router>
   );

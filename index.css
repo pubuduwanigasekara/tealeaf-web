@@ -34,7 +34,21 @@
 body {
   letter-spacing: 0.025em;
   /* scroll-padding-top: 80px; */
-  scroll-behavior: smooth;
+}
+
+/* GSAP ScrollSmoother required styles */
+#smooth-wrapper {
+  overflow: hidden;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+#smooth-content {
+  overflow: visible;
+  width: 100%;
 }
 
 button,
