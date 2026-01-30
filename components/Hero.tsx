@@ -1,19 +1,22 @@
-import React from 'react';
-import { Button } from './ui/Button';
+import React from "react";
+import { Button } from "./ui/Button";
 
 export const Hero: React.FC = () => {
   return (
     <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
       {/* Video Background - Light Mode Approach */}
       <div className="absolute inset-0 z-0">
-        <video 
-          autoPlay 
-          loop 
-          muted 
-          playsInline 
-          className="w-full h-full object-cover opacity-45 grayscale-[40%]"
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover opacity-45 grayscale-40"
         >
-          <source src="https://res.cloudinary.com/deszn12rt/video/upload/v1767607314/tealeaf/hero_mqmm18.mp4" type="video/mp4" />
+          <source
+            src="https://res.cloudinary.com/deszn12rt/video/upload/v1767607314/tealeaf/hero_mqmm18.mp4"
+            type="video/mp4"
+          />
         </video>
         {/* Creative Gradient Overlay: 
             Angled gradient (135deg) - a little towards top-left to bottom-right.
@@ -22,9 +25,9 @@ export const Hero: React.FC = () => {
             and ends with a warm accent tint on the bottom-right. 
         */}
         <div className="absolute inset-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] from-brand-cream via-brand-cream/90 to-brand-accent/20 z-10 mix-blend-normal" />
-        
+
         {/* Subtle radial glow of accent color from the top right to enhance the creative feel */}
-        <div className="absolute top-0 right-0 w-2/3 h-full bg-gradient-to-bl from-brand-accent/10 via-transparent to-transparent z-10" />
+        <div className="absolute top-0 right-0 w-2/3 h-full bg-linear-to-bl from-brand-accent/10 via-transparent to-transparent z-10" />
       </div>
 
       <div className="container mx-auto px-6 relative z-10 grid md:grid-cols-12 gap-12 items-center">
@@ -36,36 +39,60 @@ export const Hero: React.FC = () => {
             Financial Leadership
           </div>
           <h1 className="text-5xl md:text-7xl 2xl:text-8xl font-serif text-brand-dark leading-[1.1] 2xl:leading-[1.05]">
-            Helping founders <br/>
-            <span className="text-brand-primary italic">scale with intention.</span>
+            Helping founders <br />
+            <span className="text-brand-primary italic">
+              scale with intention.
+            </span>
           </h1>
-          <p className="text-lg md:text-xl 2xl:text-2xl text-brand-gray !leading-relaxed max-w-2xl 2xl:max-w-4xl text-pretty tracking-wide">
-            We provide strategic financial leadership that transforms your vision into a fundable, scalable business. With 
+          <p className="text-lg md:text-xl 2xl:text-2xl text-brand-gray leading-relaxed! max-w-2xl 2xl:max-w-4xl text-pretty tracking-wide">
+            We provide strategic financial leadership that transforms your
+            vision into a fundable, scalable business. With
             <span className="relative inline-block px-1 mx-1">
-              <span className="relative z-10 font-semibold text-brand-dark">20+ years</span>
-              <svg className="absolute -bottom-1 left-0 w-full h-2 z-0 text-brand-accent/40" viewBox="0 0 100 10" preserveAspectRatio="none">
-                <path d="M0 5 Q 25 0 50 5 T 100 5" fill="none" stroke="currentColor" strokeWidth="8" strokeLinecap="round" />
+              <span className="relative z-10 font-semibold text-brand-dark">
+                20+ years
+              </span>
+              <svg
+                className="absolute -bottom-1 left-0 w-full h-2 z-0 text-brand-accent/40"
+                viewBox="0 0 100 10"
+                preserveAspectRatio="none"
+              >
+                <path
+                  d="M0 5 Q 25 0 50 5 T 100 5"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="8"
+                  strokeLinecap="round"
+                />
               </svg>
             </span>
-            of experience, we build the financial foundation that gives you the confidence to scale boldly.
+            of experience, we build the financial foundation that gives you the
+            confidence to scale boldly.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 pt-2">
-             <Button 
-                variant="primary" 
-                icon 
-                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                className="hidden sm:inline-flex !2xl:px-10 !2xl:py-5"
-             >
-               Book a Founder Financial Readiness Call
-             </Button>
-              <Button 
-                variant="primary" 
-                icon 
-                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                className="sm:hidden"
-             >
-               Book a Call
-             </Button>
+            <Button
+              variant="primary"
+              icon
+              onClick={() =>
+                document
+                  .getElementById("contact")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
+              className="hidden sm:inline-flex 2xl:py-4"
+            >
+              Book a Founder Financial Readiness Call
+            </Button>
+            <Button
+              variant="primary"
+              icon
+              onClick={() =>
+                document
+                  .getElementById("contact")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
+              className="sm:hidden"
+            >
+              Book a Call
+            </Button>
           </div>
         </div>
       </div>

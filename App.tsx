@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
-import { Navbar } from './components/Navbar';
-import { Footer } from './components/Footer';
-import { SplashScreen } from './components/SplashScreen';
-import { HomePage } from './pages/Home';
-import { PrivacyPolicyPage } from './pages/PrivacyPolicy';
-import { NotFoundPage } from './pages/NotFound';
+import React, { useState } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Outlet,
+} from "react-router-dom";
+import { Navbar } from "./components/Navbar";
+import { Footer } from "./components/Footer";
+import { SplashScreen } from "./components/SplashScreen";
+import { HomePage } from "./pages/Home";
+// import { PrivacyPolicyPage } from './pages/PrivacyPolicy';
+import { NotFoundPage } from "./pages/NotFound";
 
 // Layout component for standard pages that include Navbar and Footer
 const MainLayout = () => (
@@ -36,8 +41,8 @@ function App() {
           <Route element={<MainLayout />}>
             <Route path="/" element={<HomePage />} />
           </Route>
-          
-          <Route path="/privacy" element={<PrivacyPolicyPage />} />
+
+          {/* <Route path="/privacy" element={<PrivacyPolicyPage />} /> */}
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
