@@ -88,12 +88,12 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-50 bg-gradient-to-br from-[#fffdfa] via-[#fff5f0] to-[#fceee9] text-brand-dark flex flex-col h-[100dvh] -translate-y-full will-change-transform overflow-hidden"
+      className="fixed inset-0 z-50 bg-linear-to-br from-[#fffdfa] via-[#fff5f0] to-[#fceee9] text-brand-dark flex flex-col h-[100dvh] -translate-y-full will-change-transform overflow-hidden"
     >
       {/* Background decoration */}
       <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
         {/* Warm main glow - Top Right */}
-        <div className="absolute -top-[10%] -right-[10%] w-[80vh] h-[80vh] rounded-full bg-gradient-to-b from-brand-accent/10 to-transparent blur-3xl opacity-60"></div>
+        <div className="absolute -top-[10%] -right-[10%] w-[80vh] h-[80vh] rounded-full bg-linear-to-b from-brand-accent/10 to-transparent blur-3xl opacity-60"></div>
 
         {/* Secondary glow - Center Left - subtle depth */}
         <div className="absolute top-[40%] -left-[10%] w-[60vh] h-[60vh] rounded-full bg-brand-primary/5 blur-3xl opacity-30"></div>

@@ -24,7 +24,7 @@ export const Hero: React.FC = () => {
             blends into a soft cream, 
             and ends with a warm accent tint on the bottom-right. 
         */}
-        <div className="absolute inset-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] from-brand-cream via-brand-cream/90 to-brand-accent/20 z-10 mix-blend-normal" />
+        <div className="absolute inset-0 bg-linear-135 from-brand-cream via-brand-cream/90 to-brand-accent/20 z-10 mix-blend-normal" />
 
         {/* Subtle radial glow of accent color from the top right to enhance the creative feel */}
         <div className="absolute top-0 right-0 w-2/3 h-full bg-linear-to-bl from-brand-accent/10 via-transparent to-transparent z-10" />
