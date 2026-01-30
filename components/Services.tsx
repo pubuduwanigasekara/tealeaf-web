@@ -4,8 +4,6 @@ import { ServiceItem } from "../types";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(ScrollTrigger);
-
 const services: ServiceItem[] = [
   {
     id: "01",

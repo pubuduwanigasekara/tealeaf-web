@@ -10,12 +10,10 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SplitType from "split-type";
 
-gsap.registerPlugin(ScrollTrigger);
-
 const painPoints = [
   {
     id: 1,
-    text: "Investors asking questions you can’t confidently answer.",
+    text: "Investors asking questions you can't confidently answer.",
     icon: MessageCircleQuestion,
   },
   {
@@ -160,11 +158,11 @@ export const FounderPain: React.FC = () => {
             }
             className="group relative flex items-center gap-4 py-4 px-8 rounded-full transition-all transform-gpu duration-500 hover:bg-brand-cream/50"
           >
-            <span className="text-2xl md:text-3xl font-serif italic text-brand-gray group-hover:text-brand-primary transition-colors duration-300">
+            <span className="text-2xl md:text-3xl font-serif italic text-brand-gray group-hover:text-brand-primary transition-colors duration-300 transform-gpu will-change-transform">
               You are not alone.
             </span>
 
-            <div className="w-12 h-12 shrink-0 flex items-center justify-center rounded-full border border-brand-dark/10 text-brand-accent bg-white shadow-sm transition-all duration-300 group-hover:scale-110 group-hover:border-brand-accent group-hover:bg-brand-accent group-hover:text-white">
+            <div className="w-12 h-12 shrink-0 flex items-center justify-center rounded-full border border-brand-dark/10 text-brand-accent bg-white shadow-sm transition-all duration-300 transform-gpu will-change-transform group-hover:scale-110 group-hover:border-brand-accent group-hover:bg-brand-accent group-hover:text-white">
               <ArrowRight className="w-5 h-5" />
             </div>
 

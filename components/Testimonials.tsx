@@ -1,10 +1,7 @@
 import React, { useState, useRef, useLayoutEffect, useEffect } from "react";
 import { Plus, ChevronDown } from "lucide-react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { TestimonialItem } from "../types";
-
-gsap.registerPlugin(ScrollTrigger);
 
 // Extended interface for the rich content
 interface ExtendedTestimonialItem extends Omit<TestimonialItem, "quote"> {

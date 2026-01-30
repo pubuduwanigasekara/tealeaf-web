@@ -18,6 +18,16 @@ import { ScrollSmoother } from "gsap/ScrollSmoother";
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
+/**
+ * Global GSAP Configuration
+ * - force3D: Ensures hardware acceleration for smoother animations
+ * - nullTargetWarn: Prevents console warnings for dynamic React rendering
+ */
+gsap.config({
+  force3D: true,
+  nullTargetWarn: false,
+});
+
 // Layout component - Navbar is now outside smooth-content, so layout only has main + footer
 const MainLayoutWithoutNavbar = () => (
   <>
@@ -40,6 +50,15 @@ function App() {
     // Initialize ScrollSmoother after component mounts
     // Wait a bit for the DOM to be ready
     const timer = setTimeout(() => {
+      /**
+       * Global ScrollTrigger Configuration
+       * Set the default scroller AFTER the DOM elements exist
+       * This prevents null reference errors
+       */
+      ScrollTrigger.defaults({
+        scroller: "#smooth-content",
+      });
+
       ScrollSmoother.create({
         wrapper: "#smooth-wrapper",
         content: "#smooth-content",
