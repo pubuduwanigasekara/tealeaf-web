@@ -17,9 +17,10 @@ export const Footer: React.FC = () => {
         <div className="flex flex-col items-center md:items-start gap-4 order-1">
           <div className="flex items-center gap-3">
             <img
-              src="https://res.cloudinary.com/deszn12rt/image/upload/v1768411955/tealeaf/logo_quygd6.png"
+              src="/static/logo.png"
               alt="Tealeaf Logo"
               className="h-12 w-auto brightness-25 invert"
+              loading="lazy"
             />
           </div>
           {/* Tablet-Only Copyright: Stacked under logo (Matches "current" layout for tablet) */}

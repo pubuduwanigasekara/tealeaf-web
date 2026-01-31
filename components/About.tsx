@@ -205,9 +205,10 @@ const FounderImg = () => {
         <div className="relative w-full max-w-md aspect-4/5 rounded-2xl overflow-hidden shadow-2xl z-10">
           <img
             ref={imgRef}
-            src="https://res.cloudinary.com/deszn12rt/image/upload/v1767861739/tealeaf/founder_fn7bo7.png"
+            src="/static/founder.png"
             alt="Angela Sweeney"
             className="w-full h-full object-cover filter grayscale"
+            loading="lazy"
           />
 
           {/* Gradient Overlay for text readability at bottom */}

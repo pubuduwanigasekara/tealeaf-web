@@ -15,12 +15,10 @@ export const Hero: React.FC = () => {
           loop
           muted
           playsInline
+          preload="auto"
           className="w-full h-full object-cover opacity-45 grayscale-40"
         >
-          <source
-            src="https://res.cloudinary.com/deszn12rt/video/upload/v1767607314/tealeaf/hero_mqmm18.mp4"
-            type="video/mp4"
-          />
+          <source src="/static/hero.mp4" type="video/mp4" />
         </video>
         {/* Creative Gradient Overlay: 
             Angled gradient (135deg) - a little towards top-left to bottom-right.

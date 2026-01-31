@@ -137,7 +137,7 @@ export const WhyTealeaf: React.FC = () => {
               We don't just handle your finances, we{" "}
               <span className="relative inline-block">
                 <span className="relative z-10">architect</span>
-                <span className="absolute bottom-1 left-0 w-full h-3 bg-brand-accent/90 rounded-sm -z-0"></span>
+                <span className="absolute bottom-1 left-0 w-full h-3 bg-brand-accent/90 rounded-sm z-0"></span>
               </span>{" "}
               your growth.
             </h2>

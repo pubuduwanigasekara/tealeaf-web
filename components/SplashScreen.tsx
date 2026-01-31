@@ -179,9 +179,10 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
       <div className="relative flex flex-col items-center justify-center p-10 z-10">
         <img
           ref={logoRef}
-          src="https://res.cloudinary.com/deszn12rt/image/upload/v1768411955/tealeaf/logo_small_fzgygo.png"
+          src="/static/logo_small.png"
           alt="Tealeaf Logo"
           className="h-16 w-auto mb-10"
+          fetchPriority="high"
         />
 
         <div className="overflow-hidden mb-2">

@@ -127,9 +127,10 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
           {/* Logo */}
           <div className="text-2xl flex items-center gap-3">
             <img
-              src="https://res.cloudinary.com/deszn12rt/image/upload/v1768411955/tealeaf/logo_quygd6.png"
+              src="/static/logo.png"
               alt="Tealeaf Logo"
               className="h-10 sm:h-12 w-auto"
+              fetchPriority="high"
             />
           </div>
 
@@ -295,9 +296,10 @@ export const Navbar: React.FC = () => {
             className="flex items-center gap-3 transition-colors"
           >
             <img
-              src="https://res.cloudinary.com/deszn12rt/image/upload/v1768411955/tealeaf/logo_quygd6.png"
+              src="/static/logo.png"
               alt="Tealeaf Logo"
               className="h-12 w-auto"
+              fetchPriority="high"
             />
           </Link>
 

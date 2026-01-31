@@ -25,6 +25,20 @@
       rel="stylesheet"
     />
     <link href="/index.css" rel="stylesheet" />
+
+    <!-- Preload critical images for faster page load -->
+    <link
+      rel="preload"
+      as="image"
+      href="/static/logo.png"
+      fetchpriority="high"
+    />
+    <link
+      rel="preload"
+      as="image"
+      href="/static/logo_small.png"
+      fetchpriority="high"
+    />
   </head>
   <body>
     <div id="root"></div>
