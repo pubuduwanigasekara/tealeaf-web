@@ -1,14 +1,14 @@
-import React, { useLayoutEffect, useRef } from 'react'
+import React, { useLayoutEffect, useRef } from 'react';
 import {
   MessageCircleQuestion,
   TrendingDown,
   FileSpreadsheet,
   UserCog,
   ArrowRight,
-} from 'lucide-react'
-import { gsap, ScrollTrigger } from '@/lib/gsap'
-import SplitType from 'split-type'
-import { useGSAP } from '@gsap/react'
+} from 'lucide-react';
+import { gsap, ScrollTrigger } from '@/lib/gsap';
+import SplitType from 'split-type';
+import { useGSAP } from '@gsap/react';
 
 const painPoints = [
   {
@@ -31,22 +31,22 @@ const painPoints = [
     text: 'You know you need CFO-level insight, just not full-time.',
     icon: UserCog,
   },
-]
+];
 
 export const FounderPain: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const listRef = useRef<HTMLDivElement>(null)
-  const titleRef = useRef<HTMLHeadingElement>(null)
-  const ctaRef = useRef<HTMLDivElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
       // 1. Title Animation
-      const title = titleRef.current
+      const title = titleRef.current;
       if (title) {
         // Set visible immediately before split to avoid issues, but start with opacity 0 in CSS via initial render or set here
-        gsap.set(title, { opacity: 1 })
-        const titleSplit = new SplitType(title, { types: 'words,chars' })
+        gsap.set(title, { opacity: 1 });
+        const titleSplit = new SplitType(title, { types: 'words,chars' });
 
         gsap.fromTo(
           titleSplit.chars,
@@ -62,30 +62,30 @@ export const FounderPain: React.FC = () => {
             stagger: 0.02,
             ease: 'back.out(1.2)',
           }
-        )
+        );
       }
 
       // 2. Rows Animation
-      const rows = gsap.utils.toArray<HTMLElement>('.pain-row')
+      const rows = gsap.utils.toArray<HTMLElement>('.pain-row');
 
-      rows.forEach(row => {
-        const icon = row.querySelector('.pain-icon')
-        const text = row.querySelector('.pain-text')
+      rows.forEach((row) => {
+        const icon = row.querySelector('.pain-icon');
+        const text = row.querySelector('.pain-text');
 
         // Initial states
-        gsap.set(icon, { scale: 0, opacity: 0 })
+        gsap.set(icon, { scale: 0, opacity: 0 });
 
         if (text) {
-          const split = new SplitType(text as HTMLElement, { types: 'words' })
+          const split = new SplitType(text as HTMLElement, { types: 'words' });
           // Ensure words are hidden initially
-          gsap.set(split.words, { opacity: 0, y: 15 })
+          gsap.set(split.words, { opacity: 0, y: 15 });
 
           const tl = gsap.timeline({
             scrollTrigger: {
               trigger: row,
               start: 'top 80%', // Trigger slightly earlier
             },
-          })
+          });
 
           // Icon Pop
           tl.to(icon, {
@@ -93,7 +93,7 @@ export const FounderPain: React.FC = () => {
             opacity: 1,
             duration: 0.6,
             ease: 'power2.out',
-          })
+          });
 
           // Word by word reveal
           tl.to(
@@ -106,9 +106,9 @@ export const FounderPain: React.FC = () => {
               ease: 'power2.out',
             },
             '-=0.4'
-          )
+          );
         }
-      })
+      });
 
       // 3. CTA Animation
       if (ctaRef.current) {
@@ -125,20 +125,20 @@ export const FounderPain: React.FC = () => {
               start: 'bottom 80%',
             },
           }
-        )
+        );
       }
 
       // Refresh needed for SplitType calculation sometimes
       const timer = setTimeout(() => {
-        ScrollTrigger.refresh()
-      }, 200)
+        ScrollTrigger.refresh();
+      }, 200);
 
       return () => {
-        clearTimeout(timer)
-      }
+        clearTimeout(timer);
+      };
     },
     { scope: containerRef }
-  )
+  );
 
   return (
     <section className="py-24 bg-white relative overflow-hidden">
@@ -148,20 +148,17 @@ export const FounderPain: React.FC = () => {
       <div ref={containerRef} className="container mx-auto px-6 relative z-10">
         <h2
           ref={titleRef}
-          className="text-4xl md:text-5xl font-serif text-brand-dark text-center mb-20 opacity-0 [&>div]:will-change-transform"
-        >
+          className="text-4xl md:text-5xl font-serif text-brand-dark text-center mb-20 opacity-0 [&>div]:will-change-transform">
           Does This Sound Familiar?
         </h2>
 
         <div
           ref={listRef}
-          className="flex flex-col gap-12 max-w-3xl mx-auto mb-20"
-        >
-          {painPoints.map(point => (
+          className="flex flex-col gap-12 max-w-3xl mx-auto mb-20">
+          {painPoints.map((point) => (
             <div
               key={point.id}
-              className="pain-row flex items-center gap-6 md:gap-8 group"
-            >
+              className="pain-row flex items-center gap-6 md:gap-8 group">
               {/* Icon */}
               <div className="pain-icon shrink-0 w-16 h-16 rounded-2xl bg-brand-cream border border-brand-dark/5 flex items-center justify-center text-brand-accent shadow-sm group-hover:bg-brand-accent group-hover:text-white transition-colors duration-500">
                 <point.icon size={32} strokeWidth={1.5} />
@@ -183,8 +180,7 @@ export const FounderPain: React.FC = () => {
                 .getElementById('why')
                 ?.scrollIntoView({ behavior: 'smooth' })
             }
-            className="group relative flex items-center gap-4 py-4 px-8 rounded-full transition-colors duration-500 hover:bg-brand-cream/50"
-          >
+            className="group relative flex items-center gap-4 py-4 px-8 rounded-full transition-colors duration-500 hover:bg-brand-cream/50">
             <span className="text-2xl md:text-3xl font-serif italic text-brand-gray group-hover:text-brand-primary transition-colors duration-300">
               You are not alone.
             </span>
@@ -198,5 +194,5 @@ export const FounderPain: React.FC = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};

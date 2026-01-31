@@ -1,8 +1,8 @@
-import React, { useLayoutEffect, useRef } from 'react'
-import { gsap, ScrollTrigger } from '@/lib/gsap'
+import React, { useLayoutEffect, useRef } from 'react';
+import { gsap, ScrollTrigger } from '@/lib/gsap';
 
-import { TestimonialItem } from '@/lib/types'
-import { useGSAP } from '@gsap/react'
+import { TestimonialItem } from '@/lib/types';
+import { useGSAP } from '@gsap/react';
 
 const testimonials: TestimonialItem[] = [
   {
@@ -29,26 +29,26 @@ const testimonials: TestimonialItem[] = [
     role: 'Founder',
     company: 'TechFlow Solutions',
   },
-]
+];
 
 export const Testimonials: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([])
+  const containerRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useGSAP(
     () => {
       // Filter out any null refs just in case
-      const cards = cardsRef.current.filter(Boolean)
+      const cards = cardsRef.current.filter(Boolean);
 
       // Ensure elements exist before animating
       if (cards.length > 0) {
         // Set initial state to avoid FOUC (Flash of Unstyled Content)
-        gsap.set(cards, { opacity: 0, y: 50 })
+        gsap.set(cards, { opacity: 0, y: 50 });
 
         // Use ScrollTrigger.batch to handle elements individually or in groups
         ScrollTrigger.batch(cards, {
           start: 'top 85%',
-          onEnter: batch => {
+          onEnter: (batch) => {
             gsap.to(batch, {
               opacity: 1,
               y: 0,
@@ -56,30 +56,29 @@ export const Testimonials: React.FC = () => {
               stagger: 0.2,
               ease: 'power3.out',
               overwrite: true,
-            })
+            });
           },
           once: true,
-        })
+        });
       }
 
       // Force a refresh after a short delay to ensure layout is settled.
       const timer = setTimeout(() => {
-        ScrollTrigger.refresh()
-      }, 200)
+        ScrollTrigger.refresh();
+      }, 200);
 
       return () => {
-        clearTimeout(timer)
-      }
+        clearTimeout(timer);
+      };
     },
     { scope: containerRef, dependencies: [] }
-  )
+  );
 
   return (
     <section
       id="testimonials"
       ref={containerRef}
-      className="py-24 bg-brand-cream"
-    >
+      className="py-24 bg-brand-cream">
       <div className="container mx-auto px-6">
         <div className="mb-16">
           <h2 className="text-sm font-bold tracking-widest text-brand-accent uppercase mb-3">
@@ -94,11 +93,10 @@ export const Testimonials: React.FC = () => {
           {testimonials.map((t, index) => (
             <div
               key={t.id}
-              ref={el => {
-                cardsRef.current[index] = el
+              ref={(el) => {
+                cardsRef.current[index] = el;
               }}
-              className="group bg-white p-10 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col justify-between border-t-4 border-brand-accent transform-gpu"
-            >
+              className="group bg-white p-10 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col justify-between border-t-4 border-brand-accent transform-gpu">
               <div>
                 <div className="text-brand-primary text-6xl font-serif leading-none mb-4 opacity-30 group-hover:opacity-80 transition-opacity duration-300">
                   “
@@ -123,5 +121,5 @@ export const Testimonials: React.FC = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};

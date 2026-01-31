@@ -1,11 +1,10 @@
-import React from 'react'
+import React from 'react';
 
 export const WhyTealeaf: React.FC = () => {
   return (
     <section
       id="why"
-      className="py-24 bg-brand-dark text-brand-cream relative overflow-hidden"
-    >
+      className="py-24 bg-brand-dark text-brand-cream relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute top-0 right-0 w-1/3 h-full opacity-10">
         <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
@@ -50,5 +49,5 @@ export const WhyTealeaf: React.FC = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};

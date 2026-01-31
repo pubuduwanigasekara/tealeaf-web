@@ -1,14 +1,14 @@
-import React from 'react'
-import { ArrowRight } from 'lucide-react'
-import { twMerge } from 'tailwind-merge'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { ArrowRight } from 'lucide-react';
+import { twMerge } from 'tailwind-merge';
+import { Link } from 'react-router-dom';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'outline' | 'text'
-  icon?: boolean
-  href?: string
-  target?: string
-  rel?: string
+  variant?: 'primary' | 'outline' | 'text';
+  icon?: boolean;
+  href?: string;
+  target?: string;
+  rel?: string;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -22,7 +22,7 @@ export const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   const baseStyles =
-    'group inline-flex items-center justify-center px-8 py-3 rounded-full font-semibold transition-all duration-300 transform-gpu tracking-wide'
+    'group inline-flex items-center justify-center px-8 py-3 rounded-full font-semibold transition-all duration-300 transform-gpu tracking-wide';
 
   const variants = {
     // Primary button uses the Orange Accent for high visibility/CTA
@@ -33,9 +33,9 @@ export const Button: React.FC<ButtonProps> = ({
       'border-2 border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white',
     // Text button
     text: 'text-brand-primary hover:text-brand-accent px-0 underline-offset-4 hover:underline bg-transparent',
-  }
+  };
 
-  const combinedClasses = twMerge(baseStyles, variants[variant], className)
+  const combinedClasses = twMerge(baseStyles, variants[variant], className);
 
   if (href) {
     if (target === '_blank') {
@@ -46,7 +46,7 @@ export const Button: React.FC<ButtonProps> = ({
             <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 duration-300 transition-transform" />
           )}
         </a>
-      )
+      );
     }
 
     return (
@@ -56,7 +56,7 @@ export const Button: React.FC<ButtonProps> = ({
           <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 duration-300 transition-transform" />
         )}
       </Link>
-    )
+    );
   }
 
   return (
@@ -66,5 +66,5 @@ export const Button: React.FC<ButtonProps> = ({
         <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 duration-300 transition-transform" />
       )}
     </button>
-  )
-}
+  );
+};

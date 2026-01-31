@@ -1,6 +1,6 @@
-import React from 'react'
-import { Button } from './ui/Button'
-import { BackgroundPattern } from './ui/BackgroundPattern'
+import React from 'react';
+import { Button } from './ui/Button';
+import { BackgroundPattern } from './ui/BackgroundPattern';
 
 export const Hero: React.FC = () => {
   return (
@@ -29,8 +29,7 @@ export const Hero: React.FC = () => {
               <svg
                 className="absolute -bottom-1 left-0 w-full h-2 z-0 text-brand-accent/30"
                 viewBox="0 0 100 10"
-                preserveAspectRatio="none"
-              >
+                preserveAspectRatio="none">
                 <path
                   d="M0 5 Q 25 0 50 5 T 100 5"
                   fill="none"
@@ -51,8 +50,7 @@ export const Hero: React.FC = () => {
                 document
                   .getElementById('contact')
                   ?.scrollIntoView({ behavior: 'smooth' })
-              }
-            >
+              }>
               Schedule Discovery Call
             </Button>
           </div>
@@ -78,10 +76,10 @@ export const Hero: React.FC = () => {
             {/* Use string paths for local assets in this environment */}
             <img
               src="./assets/hero-bg.jpg"
-              onError={e => {
+              onError={(e) => {
                 // Fallback if the local asset doesn't exist yet
-                ;(e.target as HTMLImageElement).src =
-                  'https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=800&auto=format&fit=crop'
+                (e.target as HTMLImageElement).src =
+                  'https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=800&auto=format&fit=crop';
               }}
               alt="Strategic Planning"
               className="w-full h-full object-cover rounded-lg shadow-2xl relative z-10 filter grayscale contrast-110"
@@ -93,5 +91,5 @@ export const Hero: React.FC = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};

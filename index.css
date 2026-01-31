@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
   --color-primary: #1d395e;
@@ -15,8 +15,8 @@
   --color-brand-cream: var(--color-cream);
   --color-brand-gray: var(--color-gray);
 
-  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Playfair Display", ui-serif, Georgia, Cambria, serif;
+  --font-sans: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Playfair Display', ui-serif, Georgia, Cambria, serif;
 
   --animate-float: float 6s ease-in-out infinite;
 

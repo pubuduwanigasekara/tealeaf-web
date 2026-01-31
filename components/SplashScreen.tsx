@@ -1,34 +1,34 @@
-import React, { useLayoutEffect, useRef } from 'react'
-import { gsap } from '@/lib/gsap'
-import { useGSAP } from '@gsap/react'
+import React, { useLayoutEffect, useRef } from 'react';
+import { gsap } from '@/lib/gsap';
+import { useGSAP } from '@gsap/react';
 
 interface SplashScreenProps {
-  onComplete: () => void
+  onComplete: () => void;
 }
 
 export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const logoRef = useRef<HTMLImageElement>(null)
-  const textRef = useRef<HTMLHeadingElement>(null)
-  const lineRef = useRef<HTMLDivElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null);
+  const logoRef = useRef<HTMLImageElement>(null);
+  const textRef = useRef<HTMLHeadingElement>(null);
+  const lineRef = useRef<HTMLDivElement>(null);
 
-  const brandName = 'Tealeaf Consulting'
+  const brandName = 'Tealeaf Consulting';
 
   useGSAP(
     () => {
       const tl = gsap.timeline({
         onComplete: () => {
-          onComplete()
+          onComplete();
         },
-      })
+      });
 
       // 1. Initial State
-      gsap.set(containerRef.current, { yPercent: 0 })
-      gsap.set(logoRef.current, { opacity: 0, y: 20 })
-      gsap.set(lineRef.current, { scaleX: 0, transformOrigin: 'left' })
+      gsap.set(containerRef.current, { yPercent: 0 });
+      gsap.set(logoRef.current, { opacity: 0, y: 20 });
+      gsap.set(lineRef.current, { scaleX: 0, transformOrigin: 'left' });
 
       // Set initial state for characters
-      gsap.set('.char', { opacity: 0, y: 40 })
+      gsap.set('.char', { opacity: 0, y: 40 });
 
       // 2. Animation Sequence
       tl.to(logoRef.current, {
@@ -82,16 +82,15 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
           duration: 1.2,
           yPercent: -100,
           ease: 'power4.inOut', // Dramatic, elegant easing
-        })
+        });
     },
     { scope: containerRef, dependencies: [] }
-  )
+  );
 
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-100 flex flex-col items-center justify-center bg-linear-to-br from-[#fffdfa] via-[#fff5f0] to-[#fceee9] text-brand-dark overflow-hidden"
-    >
+      className="fixed inset-0 z-100 flex flex-col items-center justify-center bg-linear-to-br from-[#fffdfa] via-[#fff5f0] to-[#fceee9] text-brand-dark overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
         {/* Warm main glow - Top Right */}
@@ -107,8 +106,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
           width="100%"
           height="100%"
           xmlns="http://www.w3.org/2000/svg"
-          className="absolute inset-0 hidden lg:block"
-        >
+          className="absolute inset-0 hidden lg:block">
           <circle
             cx="90%"
             cy="10%"
@@ -131,8 +129,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
           width="100%"
           height="100%"
           xmlns="http://www.w3.org/2000/svg"
-          className="absolute inset-0 hidden sm:block lg:hidden"
-        >
+          className="absolute inset-0 hidden sm:block lg:hidden">
           <circle
             cx="90%"
             cy="10%"
@@ -155,8 +152,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
           width="100%"
           height="100%"
           xmlns="http://www.w3.org/2000/svg"
-          className="absolute inset-0 sm:hidden"
-        >
+          className="absolute inset-0 sm:hidden">
           <circle
             cx="90%"
             cy="10%"
@@ -189,13 +185,11 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
           <h1
             ref={textRef}
             className="text-4xl md:text-5xl font-serif italic font-medium leading-normal! text-brand-dark"
-            aria-label={brandName}
-          >
+            aria-label={brandName}>
             {brandName.split('').map((char, index) => (
               <span
                 key={index}
-                className="char inline-block whitespace-pre will-change-transform"
-              >
+                className="char inline-block whitespace-pre will-change-transform">
                 {char}
               </span>
             ))}
@@ -209,5 +203,5 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
         />
       </div>
     </div>
-  )
-}
+  );
+};

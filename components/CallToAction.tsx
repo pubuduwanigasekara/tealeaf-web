@@ -1,20 +1,18 @@
-import React from 'react'
-import { Button } from './ui/Button'
-import { Check } from 'lucide-react'
+import React from 'react';
+import { Button } from './ui/Button';
+import { Check } from 'lucide-react';
 
 export const CallToAction: React.FC = () => {
   return (
     <section
       id="contact"
-      className="py-24 bg-brand-dark text-white relative overflow-hidden lg:min-h-screen grid place-items-center"
-    >
+      className="py-24 bg-brand-dark text-white relative overflow-hidden lg:min-h-screen grid place-items-center">
       {/* Abstract Background */}
       <div className="absolute w-full h-1/2 left-0 bottom-0 lg:w-full lg:h-full lg:inset-0 z-0 opacity-10">
         <svg
           className="w-full h-full"
           viewBox="0 0 100 100"
-          preserveAspectRatio="none"
-        >
+          preserveAspectRatio="none">
           <path d="M0 100 C 20 0 50 0 100 100 Z" fill="#00429B" />
         </svg>
       </div>
@@ -64,8 +62,7 @@ export const CallToAction: React.FC = () => {
                   href="https://calendly.com/angelatealeaf/angela-tealeaf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hidden lg:inline-flex w-full text-lg py-4"
-                >
+                  className="hidden lg:inline-flex w-full text-lg py-4">
                   Book Consultation Now
                 </Button>
                 <Button
@@ -73,16 +70,14 @@ export const CallToAction: React.FC = () => {
                   href="https://calendly.com/angelatealeaf/angela-tealeaf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="lg:hidden w-full text-lg py-4"
-                >
+                  className="lg:hidden w-full text-lg py-4">
                   Book Now
                 </Button>
                 <p className="text-sm text-gray-400">
                   Or email us at{' '}
                   <a
                     href="mailto:hello@tealeafconsult.com"
-                    className="text-brand-accent hover:text-white transition-colors"
-                  >
+                    className="text-brand-accent hover:text-white transition-colors">
                     hello@tealeafconsult.com
                   </a>
                 </p>
@@ -92,5 +87,5 @@ export const CallToAction: React.FC = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};

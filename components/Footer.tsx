@@ -1,14 +1,14 @@
-import React from 'react'
-import { Linkedin, ArrowUp, Mail } from 'lucide-react'
-import { ScrollSmoother } from '@/lib/gsap'
+import React from 'react';
+import { Linkedin, ArrowUp, Mail } from 'lucide-react';
+import { ScrollSmoother } from '@/lib/gsap';
 
 export const Footer: React.FC = () => {
   const scrollToTop = () => {
-    const smoother = ScrollSmoother.get()
-    smoother?.scrollTo(0, true)
-  }
+    const smoother = ScrollSmoother.get();
+    smoother?.scrollTo(0, true);
+  };
 
-  const currentYear = new Date().getFullYear()
+  const currentYear = new Date().getFullYear();
 
   return (
     <footer className="bg-[#0b1120] text-white py-12 border-t border-white/5 font-sans relative">
@@ -41,15 +41,13 @@ export const Footer: React.FC = () => {
             className="w-11 h-11 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors text-gray-400 hover:text-white"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Linkedin"
-          >
+            aria-label="Linkedin">
             <Linkedin size={18} />
           </a>
           <a
             href="mailto:hello@tealeafconsult.com"
             className="w-11 h-11 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors text-gray-400 hover:text-white"
-            aria-label="Email"
-          >
+            aria-label="Email">
             <Mail size={18} />
           </a>
 
@@ -60,8 +58,7 @@ export const Footer: React.FC = () => {
           <button
             onClick={scrollToTop}
             className="hidden md:flex w-11 h-11 rounded-full bg-white/5 border border-white/5 items-center justify-center text-gray-400 hover:bg-brand-primary hover:text-white hover:border-brand-primary transition-[background,color,border-color] duration-300"
-            aria-label="Back to top"
-          >
+            aria-label="Back to top">
             <ArrowUp size={18} />
           </button>
         </div>
@@ -74,5 +71,5 @@ export const Footer: React.FC = () => {
         </p>
       </div>
     </footer>
-  )
-}
+  );
+};

@@ -1,9 +1,9 @@
-import React from 'react'
-import { Button } from '../components/ui/Button'
-import { useNavigate } from 'react-router-dom'
+import React from 'react';
+import { Button } from '../components/ui/Button';
+import { useNavigate } from 'react-router-dom';
 
 export const NotFoundPage: React.FC = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
     <div className="relative min-h-screen flex flex-col items-center justify-center bg-[#f8fcfd] overflow-hidden text-center px-6">
@@ -14,8 +14,7 @@ export const NotFoundPage: React.FC = () => {
             id="grid"
             width="40"
             height="40"
-            patternUnits="userSpaceOnUse"
-          >
+            patternUnits="userSpaceOnUse">
             <path
               d="M 40 0 L 0 0 0 40"
               fill="none"
@@ -54,12 +53,11 @@ export const NotFoundPage: React.FC = () => {
             onClick={() => navigate('/')}
             variant="primary"
             icon
-            className="!px-10 !py-4 text-lg shadow-xl hover:shadow-2xl hover:shadow-brand-accent/20 transition-transform hover:-translate-y-1"
-          >
+            className="!px-10 !py-4 text-lg shadow-xl hover:shadow-2xl hover:shadow-brand-accent/20 transition-transform hover:-translate-y-1">
             Return to Home
           </Button>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

@@ -1,21 +1,21 @@
-import React, { useState, useLayoutEffect } from 'react'
+import React, { useState, useLayoutEffect } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Outlet,
-} from 'react-router-dom'
-import { gsap, ScrollTrigger, ScrollSmoother } from './lib/gsap'
+} from 'react-router-dom';
+import { gsap, ScrollTrigger, ScrollSmoother } from './lib/gsap';
 
-import { Navbar } from './components/Navbar'
-import { Footer } from './components/Footer'
-import { SplashScreen } from './components/SplashScreen'
-import { HomePage } from './pages/Home'
+import { Navbar } from './components/Navbar';
+import { Footer } from './components/Footer';
+import { SplashScreen } from './components/SplashScreen';
+import { HomePage } from './pages/Home';
 // import { PrivacyPolicyPage } from './pages/PrivacyPolicy';
-import { NotFoundPage } from './pages/NotFound'
+import { NotFoundPage } from './pages/NotFound';
 
 // Register GSAP plugins
-gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
+gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
 /**
  * Global GSAP Configuration
@@ -25,7 +25,7 @@ gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 gsap.config({
   force3D: true,
   nullTargetWarn: false,
-})
+});
 
 // Layout component - Navbar is now outside smooth-content, so layout only has main + footer
 const MainLayoutWithoutNavbar = () => (
@@ -35,15 +35,15 @@ const MainLayoutWithoutNavbar = () => (
     </main>
     <Footer />
   </>
-)
+);
 
 function App() {
   // Always show splash screen on initial load/refresh
-  const [showSplash, setShowSplash] = useState(true)
+  const [showSplash, setShowSplash] = useState(true);
 
   const handleSplashComplete = () => {
-    setShowSplash(false)
-  }
+    setShowSplash(false);
+  };
 
   useLayoutEffect(() => {
     // Initialize ScrollSmoother after component mounts
@@ -56,7 +56,7 @@ function App() {
        */
       ScrollTrigger.defaults({
         scroller: '#smooth-content',
-      })
+      });
 
       ScrollSmoother.create({
         wrapper: '#smooth-wrapper',
@@ -65,11 +65,11 @@ function App() {
         effects: true, // Enable data-speed and data-lag attributes
         smoothTouch: 0.1, // Smooth scrolling on touch devices
         normalizeScroll: true, // Forces scrolling to happen on the main JS thread
-      })
-    }, 100)
+      });
+    }, 100);
 
-    return () => clearTimeout(timer)
-  }, [])
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <Router>
@@ -94,7 +94,7 @@ function App() {
         </div>
       </div>
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;

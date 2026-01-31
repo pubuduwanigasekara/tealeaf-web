@@ -1,13 +1,12 @@
-import React from 'react'
-import { Button } from './ui/Button'
-import { ScrollSmoother } from '@/lib/gsap'
+import React from 'react';
+import { Button } from './ui/Button';
+import { ScrollSmoother } from '@/lib/gsap';
 
 export const Hero: React.FC = () => {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center pt-20 overflow-hidden"
-    >
+      className="relative min-h-screen flex items-center pt-20 overflow-hidden">
       {/* Video Background - Light Mode Approach */}
       <div className="absolute inset-0 z-0">
         <video
@@ -16,8 +15,7 @@ export const Hero: React.FC = () => {
           muted
           playsInline
           preload="auto"
-          className="w-full h-full object-cover opacity-45 grayscale-40"
-        >
+          className="w-full h-full object-cover opacity-45 grayscale-40">
           <source src="/static/hero.mp4" type="video/mp4" />
         </video>
         {/* Creative Gradient Overlay: 
@@ -56,8 +54,7 @@ export const Hero: React.FC = () => {
               <svg
                 className="absolute -bottom-1 left-0 w-full h-2 z-0 text-brand-accent/40"
                 viewBox="0 0 100 10"
-                preserveAspectRatio="none"
-              >
+                preserveAspectRatio="none">
                 <path
                   d="M0 5 Q 25 0 50 5 T 100 5"
                   fill="none"
@@ -75,11 +72,10 @@ export const Hero: React.FC = () => {
               variant="primary"
               icon
               onClick={() => {
-                const smoother = ScrollSmoother.get()
-                smoother?.scrollTo('#contact', true, 'top 80px')
+                const smoother = ScrollSmoother.get();
+                smoother?.scrollTo('#contact', true, 'top 80px');
               }}
-              className="hidden sm:inline-flex 2xl:py-4"
-            >
+              className="hidden sm:inline-flex 2xl:py-4">
               Book a Founder Financial Readiness Call
             </Button>
             <Button
@@ -90,13 +86,12 @@ export const Hero: React.FC = () => {
                   .getElementById('contact')
                   ?.scrollIntoView({ behavior: 'smooth' })
               }
-              className="sm:hidden"
-            >
+              className="sm:hidden">
               Book a Call
             </Button>
           </div>
         </div>
       </div>
     </section>
-  )
-}
+  );
+};

@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { Menu, X, Linkedin, Mail } from 'lucide-react'
-import { gsap, ScrollSmoother } from '@/lib/gsap'
-import { useNavigate, useLocation, Link } from 'react-router-dom'
-import { twMerge } from 'tailwind-merge'
-import { useGSAP } from '@gsap/react'
+import React, { useState, useEffect, useRef } from 'react';
+import { Menu, X, Linkedin, Mail } from 'lucide-react';
+import { gsap, ScrollSmoother } from '@/lib/gsap';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { twMerge } from 'tailwind-merge';
+import { useGSAP } from '@gsap/react';
 
-import { Button } from './ui/Button'
+import { Button } from './ui/Button';
 
 const navLinks = [
   { name: 'Why Tealeaf', href: '#why', id: 'why', offset: 80 },
@@ -17,13 +17,13 @@ const navLinks = [
     id: 'testimonials',
     offset: 80,
   },
-]
+];
 
 interface MobileMenuProps {
-  isOpen: boolean
-  onClose: () => void
-  isScrolled: boolean
-  onNavigate: (id: string) => void
+  isOpen: boolean;
+  onClose: () => void;
+  isScrolled: boolean;
+  onNavigate: (id: string) => void;
 }
 
 const MobileMenu: React.FC<MobileMenuProps> = ({
@@ -32,13 +32,13 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
   isScrolled,
   onNavigate,
 }) => {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const contentRef = useRef<HTMLDivElement>(null)
-  const footerRef = useRef<HTMLDivElement>(null)
-  const timeline = useRef<gsap.core.Timeline | null>(null)
+  const containerRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const footerRef = useRef<HTMLDivElement>(null);
+  const timeline = useRef<gsap.core.Timeline | null>(null);
 
   // Sync padding with main navbar
-  const paddingClass = isScrolled ? 'py-4' : 'py-6'
+  const paddingClass = isScrolled ? 'py-4' : 'py-6';
 
   useGSAP(
     () => {
@@ -72,34 +72,33 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
             ease: 'power2.out',
           },
           '-=0.8'
-        )
+        );
     },
     { scope: containerRef, dependencies: [] }
-  )
+  );
 
   useEffect(() => {
     if (isOpen) {
-      timeline.current?.timeScale(1).play()
+      timeline.current?.timeScale(1).play();
     } else {
-      timeline.current?.timeScale(1.5).reverse() // Make closing slightly faster than opening
+      timeline.current?.timeScale(1.5).reverse(); // Make closing slightly faster than opening
     }
-  }, [isOpen])
+  }, [isOpen]);
 
   const handleLinkClick = (
     e: React.MouseEvent,
     id: string,
     offset?: number
   ) => {
-    e.preventDefault()
-    onClose()
-    onNavigate(id, offset)
-  }
+    e.preventDefault();
+    onClose();
+    onNavigate(id, offset);
+  };
 
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-50 bg-linear-to-br from-[#fffdfa] via-[#fff5f0] to-[#fceee9] text-brand-dark flex flex-col h-dvh -translate-y-full transform-gpu overflow-hidden"
-    >
+      className="fixed inset-0 z-50 bg-linear-to-br from-[#fffdfa] via-[#fff5f0] to-[#fceee9] text-brand-dark flex flex-col h-dvh -translate-y-full transform-gpu overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
         {/* Warm main glow - Top Right */}
@@ -121,8 +120,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
           'w-full flex-none transition-padding duration-300',
           paddingClass,
           'relative z-10'
-        )}
-      >
+        )}>
         <div className="container mx-auto px-6 flex justify-between items-center">
           {/* Logo */}
           <div className="text-2xl flex items-center gap-3">
@@ -138,8 +136,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
           <button
             className="p-2 text-brand-dark hover:text-brand-accent transition-colors"
             onClick={onClose}
-            aria-label="Close menu"
-          >
+            aria-label="Close menu">
             <X size={28} />
           </button>
         </div>
@@ -150,15 +147,13 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
         {/* Navigation Links */}
         <div
           ref={contentRef}
-          className="flex-1 flex flex-col justify-center space-y-6 min-h-[300px]"
-        >
+          className="flex-1 flex flex-col justify-center space-y-6 min-h-[300px]">
           {navLinks.map((link, index) => (
             <Link
               key={link.name}
               to={link.href}
               className="mobile-link-item group flex items-baseline gap-4 sm:gap-6 pl-2 will-change-transform"
-              onClick={e => handleLinkClick(e, link.id, link.offset)}
-            >
+              onClick={(e) => handleLinkClick(e, link.id, link.offset)}>
               <span className="text-xl sm:text-2xl font-serif italic text-brand-accent font-medium min-w-[2ch]">
                 0{index + 1}
               </span>
@@ -172,8 +167,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
         {/* Footer / CTA Section */}
         <div
           ref={footerRef}
-          className="pb-10 pt-8 flex-none will-change-transform"
-        >
+          className="pb-10 pt-8 flex-none will-change-transform">
           <div className="border-t border-brand-dark/10 w-full mb-8"></div>
 
           <div className="space-y-8">
@@ -190,10 +184,9 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
                 variant="primary"
                 className="w-full sm:w-fit py-4! px-20!"
                 onClick={() => {
-                  onClose()
-                  onNavigate('contact', 80)
-                }}
-              >
+                  onClose();
+                  onNavigate('contact', 80);
+                }}>
                 Contact Us
               </Button>
 
@@ -204,15 +197,13 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
                   className="hover:text-brand-primary transition-colors"
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="Linkedin"
-                >
+                  aria-label="Linkedin">
                   <Linkedin size={24} />
                 </a>
                 <a
                   href="mailto:hello@tealeafconsult.com"
                   className="hover:text-brand-primary transition-colors"
-                  aria-label="Email"
-                >
+                  aria-label="Email">
                   <Mail size={24} />
                 </a>
               </div>
@@ -221,58 +212,58 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export const Navbar: React.FC = () => {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [scrollbarWidth, setScrollbarWidth] = useState(0)
-  const navigate = useNavigate()
-  const location = useLocation()
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [scrollbarWidth, setScrollbarWidth] = useState(0);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20)
-    }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Handle Scrollbar Width compensation & Body Lock
   useEffect(() => {
     if (isMobileMenuOpen) {
-      const width = window.innerWidth - document.documentElement.clientWidth
-      setScrollbarWidth(width)
-      document.body.style.overflow = 'hidden'
-      document.body.style.paddingRight = `${width}px`
+      const width = window.innerWidth - document.documentElement.clientWidth;
+      setScrollbarWidth(width);
+      document.body.style.overflow = 'hidden';
+      document.body.style.paddingRight = `${width}px`;
     } else {
       const timer = setTimeout(() => {
-        document.body.style.overflow = ''
-        document.body.style.paddingRight = ''
-        setScrollbarWidth(0)
-      }, 2000)
-      return () => clearTimeout(timer)
+        document.body.style.overflow = '';
+        document.body.style.paddingRight = '';
+        setScrollbarWidth(0);
+      }, 2000);
+      return () => clearTimeout(timer);
     }
-  }, [isMobileMenuOpen])
+  }, [isMobileMenuOpen]);
 
   // Unified navigation handler
   const handleNavigation = (id: string, offset?: number) => {
     if (location.pathname !== '/') {
       // If we are not on home, navigate to home and pass the target ID in state
-      navigate('/', { state: { scrollTo: id } })
+      navigate('/', { state: { scrollTo: id } });
     } else {
-      const smoother = ScrollSmoother.get()
-      smoother?.scrollTo(`#${id}`, true, offset ? `top ${offset}px` : 'top')
+      const smoother = ScrollSmoother.get();
+      smoother?.scrollTo(`#${id}`, true, offset ? `top ${offset}px` : 'top');
     }
-  }
+  };
 
-  const paddingClass = isScrolled ? 'py-4' : 'py-6'
+  const paddingClass = isScrolled ? 'py-4' : 'py-6';
 
   // Background Logic:
   const bgClass = isScrolled
     ? 'bg-brand-cream/95 backdrop-blur-md shadow-sm'
-    : 'bg-transparent'
+    : 'bg-transparent';
 
   return (
     <>
@@ -283,18 +274,16 @@ export const Navbar: React.FC = () => {
           paddingClass,
           bgClass
         )}
-        style={{ paddingRight: isMobileMenuOpen ? `${scrollbarWidth}px` : '' }}
-      >
+        style={{ paddingRight: isMobileMenuOpen ? `${scrollbarWidth}px` : '' }}>
         <div className="container mx-auto px-6 flex justify-between items-center">
           {/* Logo */}
           <Link
             to="/"
-            onClick={e => {
-              e.preventDefault()
-              handleNavigation('hero')
+            onClick={(e) => {
+              e.preventDefault();
+              handleNavigation('hero');
             }}
-            className="flex items-center gap-3 transition-colors"
-          >
+            className="flex items-center gap-3 transition-colors">
             <img
               src="/static/logo.png"
               alt="Tealeaf Logo"
@@ -305,26 +294,24 @@ export const Navbar: React.FC = () => {
 
           {/* Desktop Links */}
           <div className="hidden lg:flex items-center space-x-8">
-            {navLinks.map(link => (
+            {navLinks.map((link) => (
               <Link
                 key={link.name}
                 to={link.href}
-                onClick={e => {
-                  e.preventDefault()
-                  handleNavigation(link.id, link.offset)
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNavigation(link.id, link.offset);
                 }}
                 className={twMerge(
                   'text-sm font-medium transition-colors uppercase tracking-wider',
                   isScrolled ? 'text-brand-dark/80' : 'text-brand-dark/90'
-                )}
-              >
+                )}>
                 {link.name}
               </Link>
             ))}
             <Button
               variant="primary"
-              onClick={() => handleNavigation('contact', 80)}
-            >
+              onClick={() => handleNavigation('contact', 80)}>
               Contact Us
             </Button>
           </div>
@@ -333,8 +320,7 @@ export const Navbar: React.FC = () => {
           <button
             className="lg:hidden text-brand-dark hover:text-brand-accent transition-colors p-2"
             onClick={() => setIsMobileMenuOpen(true)}
-            aria-label="Open menu"
-          >
+            aria-label="Open menu">
             <Menu size={28} />
           </button>
         </div>
@@ -348,5 +334,5 @@ export const Navbar: React.FC = () => {
         onNavigate={handleNavigation}
       />
     </>
-  )
-}
+  );
+};

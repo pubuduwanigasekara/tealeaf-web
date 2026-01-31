@@ -1,23 +1,23 @@
-import React, { useRef } from 'react'
-import { gsap, ScrollTrigger } from '@/lib/gsap'
-import { useGSAP } from '@gsap/react'
+import React, { useRef } from 'react';
+import { gsap, ScrollTrigger } from '@/lib/gsap';
+import { useGSAP } from '@gsap/react';
 
 const Stats = () => {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const statsGridRef = useRef<HTMLDivElement>(null)
-  const numberRefs = useRef<(HTMLDivElement | null)[]>([])
+  const containerRef = useRef<HTMLDivElement>(null);
+  const statsGridRef = useRef<HTMLDivElement>(null);
+  const numberRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useGSAP(
     () => {
       // Animate numbers
       numberRefs.current.forEach((el, index) => {
-        if (!el) return
+        if (!el) return;
 
-        const finalValue = parseFloat(el.dataset.value || '0')
-        const prefix = el.dataset.prefix || ''
-        const suffix = el.dataset.suffix || ''
+        const finalValue = parseFloat(el.dataset.value || '0');
+        const prefix = el.dataset.prefix || '';
+        const suffix = el.dataset.suffix || '';
 
-        const counter = { val: 0 }
+        const counter = { val: 0 };
 
         gsap.to(counter, {
           val: finalValue,
@@ -30,10 +30,10 @@ const Stats = () => {
             toggleActions: 'play none none none',
           },
           onUpdate: () => {
-            el.innerText = `${prefix}${Math.floor(counter.val)}${suffix}`
+            el.innerText = `${prefix}${Math.floor(counter.val)}${suffix}`;
           },
-        })
-      })
+        });
+      });
 
       // Animate the cards entrance
       if (statsGridRef.current) {
@@ -48,19 +48,19 @@ const Stats = () => {
             start: 'top 85%',
             toggleActions: 'play none none none',
           },
-        })
+        });
       }
 
       const timer = setTimeout(() => {
-        ScrollTrigger.refresh()
-      }, 200)
+        ScrollTrigger.refresh();
+      }, 200);
 
       return () => {
-        clearTimeout(timer)
-      }
+        clearTimeout(timer);
+      };
     },
     { scope: containerRef, dependencies: [] }
-  )
+  );
 
   return (
     <div ref={containerRef}>
@@ -68,13 +68,12 @@ const Stats = () => {
         {/* Stat 1 */}
         <div className="bg-white/5 p-6 rounded-xl border border-white/5 hover:border-white/10 transition-colors">
           <div
-            ref={el => {
-              numberRefs.current[0] = el
+            ref={(el) => {
+              numberRefs.current[0] = el;
             }}
             data-value="14"
             data-suffix="+"
-            className="text-3xl text-brand-accent font-bold mb-1"
-          >
+            className="text-3xl text-brand-accent font-bold mb-1">
             0
           </div>
           <div className="text-sm text-gray-400 font-medium">
@@ -84,14 +83,13 @@ const Stats = () => {
         {/* Stat 2 */}
         <div className="bg-white/5 p-6 rounded-xl border border-white/5 hover:border-white/10 transition-colors">
           <div
-            ref={el => {
-              numberRefs.current[1] = el
+            ref={(el) => {
+              numberRefs.current[1] = el;
             }}
             data-value="100"
             data-prefix="$"
             data-suffix="M+"
-            className="text-3xl text-brand-accent font-bold mb-1"
-          >
+            className="text-3xl text-brand-accent font-bold mb-1">
             $0
           </div>
           <div className="text-sm text-gray-400 font-medium">
@@ -101,12 +99,11 @@ const Stats = () => {
         {/* Stat 3 */}
         <div className="bg-white/5 p-6 rounded-xl border border-white/5 hover:border-white/10 transition-colors">
           <div
-            ref={el => {
-              numberRefs.current[2] = el
+            ref={(el) => {
+              numberRefs.current[2] = el;
             }}
             data-value="16"
-            className="text-3xl text-brand-accent font-bold mb-1"
-          >
+            className="text-3xl text-brand-accent font-bold mb-1">
             0
           </div>
           <div className="text-sm text-gray-400 font-medium">
@@ -116,13 +113,12 @@ const Stats = () => {
         {/* Stat 4 */}
         <div className="bg-white/5 p-6 rounded-xl border border-white/5 hover:border-white/10 transition-colors">
           <div
-            ref={el => {
-              numberRefs.current[3] = el
+            ref={(el) => {
+              numberRefs.current[3] = el;
             }}
             data-value="20"
             data-suffix="+"
-            className="text-3xl text-brand-accent font-bold mb-1"
-          >
+            className="text-3xl text-brand-accent font-bold mb-1">
             0
           </div>
           <div className="text-sm text-gray-400 font-medium">
@@ -131,16 +127,16 @@ const Stats = () => {
         </div>
       </div>
     </div>
-  )
-}
-Stats.displayName = 'Stats'
+  );
+};
+Stats.displayName = 'Stats';
 
 const FounderImg = () => {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const triggerRef = useRef<HTMLDivElement>(null)
-  const dec1Ref = useRef<HTMLDivElement>(null)
-  const dec2Ref = useRef<HTMLDivElement>(null)
-  const imgRef = useRef<HTMLImageElement | null>(null)
+  const containerRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLDivElement>(null);
+  const dec1Ref = useRef<HTMLDivElement>(null);
+  const dec2Ref = useRef<HTMLDivElement>(null);
+  const imgRef = useRef<HTMLImageElement | null>(null);
 
   useGSAP(
     () => {
@@ -182,25 +178,24 @@ const FounderImg = () => {
               ease: 'power2.out',
             },
             '<'
-          )
+          );
       }
 
       const timer = setTimeout(() => {
-        ScrollTrigger.refresh()
-      }, 200)
+        ScrollTrigger.refresh();
+      }, 200);
 
       return () => {
-        clearTimeout(timer)
-      }
+        clearTimeout(timer);
+      };
     },
     { scope: containerRef, dependencies: [] }
-  )
+  );
 
   return (
     <div
       ref={containerRef}
-      className="relative flex items-center justify-center py-12 lg:py-0"
-    >
+      className="relative flex items-center justify-center py-12 lg:py-0">
       <div ref={triggerRef} className="relative">
         <div className="relative w-full max-w-md aspect-4/5 rounded-2xl overflow-hidden shadow-2xl z-10">
           <img
@@ -232,24 +227,21 @@ const FounderImg = () => {
         {/* Decorative background elements behind image - aligned to the constrained image */}
         <div
           ref={dec1Ref}
-          className="absolute z-[-1] top-0 left-0 w-full max-w-md h-full aspect-4/5 border-2 border-white/5 rounded-2xl hidden md:block"
-        ></div>
+          className="absolute z-[-1] top-0 left-0 w-full max-w-md h-full aspect-4/5 border-2 border-white/5 rounded-2xl hidden md:block"></div>
         <div
           ref={dec2Ref}
-          className="absolute z-[-1] top-0 left-0 w-full max-w-md h-full aspect-4/5 border-2 border-white/5 rounded-2xl hidden md:block"
-        ></div>
+          className="absolute z-[-1] top-0 left-0 w-full max-w-md h-full aspect-4/5 border-2 border-white/5 rounded-2xl hidden md:block"></div>
       </div>
     </div>
-  )
-}
-FounderImg.displayName = 'FounderImg'
+  );
+};
+FounderImg.displayName = 'FounderImg';
 
 export const About: React.FC = () => {
   return (
     <section
       id="about"
-      className="py-24 bg-brand-dark relative overflow-hidden"
-    >
+      className="py-24 bg-brand-dark relative overflow-hidden">
       {/* Subtle background glow/gradient to give depth */}
       <div className="absolute top-0 right-0 w-1/2 h-full bg-brand-primary/5 blur-3xl rounded-full pointer-events-none -translate-y-1/2 translate-x-1/2"></div>
 
@@ -297,5 +289,5 @@ export const About: React.FC = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
