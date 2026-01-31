@@ -40,12 +40,22 @@ const MainLayoutWithoutNavbar = () => (
 function App() {
   // Always show splash screen on initial load/refresh
   const [showSplash, setShowSplash] = useState(true);
+  const [contentReady, setContentReady] = useState(false);
 
   const handleSplashComplete = () => {
     setShowSplash(false);
   };
 
   useLayoutEffect(() => {
+    setTimeout(() => {
+      setContentReady(true);
+    }, 3600);
+  }, []);
+
+  useLayoutEffect(() => {
+    // Only initialize ScrollSmoother after splash is complete and content is ready
+    if (!contentReady) return;
+
     // Initialize ScrollSmoother after component mounts
     // Wait a bit for the DOM to be ready
     const timer = setTimeout(() => {
@@ -69,30 +79,35 @@ function App() {
     }, 100);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [contentReady]);
 
   return (
     <Router>
-      {/* Splash screen stays outside smooth-wrapper since it's position: fixed */}
+      {/* Splash screen - renders first and alone */}
       {showSplash && <SplashScreen onComplete={handleSplashComplete} />}
 
-      <Navbar />
+      {/* Main content - only renders after splash completes */}
+      {contentReady && (
+        <>
+          <Navbar />
 
-      <div id="smooth-wrapper">
-        <div id="smooth-content">
-          <div className="min-h-screen font-sans bg-brand-cream text-brand-dark selection:bg-brand-accent selection:text-white flex flex-col">
-            <Routes>
-              {/* Routes wrapped in MainLayout will have Footer */}
-              <Route element={<MainLayoutWithoutNavbar />}>
-                <Route path="/" element={<HomePage />} />
-              </Route>
+          <div id="smooth-wrapper">
+            <div id="smooth-content">
+              <div className="min-h-screen font-sans bg-brand-cream text-brand-dark selection:bg-brand-accent selection:text-white flex flex-col">
+                <Routes>
+                  {/* Routes wrapped in MainLayout will have Footer */}
+                  <Route element={<MainLayoutWithoutNavbar />}>
+                    <Route path="/" element={<HomePage />} />
+                  </Route>
 
-              {/* <Route path="/privacy" element={<PrivacyPolicyPage />} /> */}
-              <Route path="*" element={<NotFoundPage />} />
-            </Routes>
+                  {/* <Route path="/privacy" element={<PrivacyPolicyPage />} /> */}
+                  <Route path="*" element={<NotFoundPage />} />
+                </Routes>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </Router>
   );
 }

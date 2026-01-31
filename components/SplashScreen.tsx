@@ -58,8 +58,8 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
           },
           '-=0.6'
         )
-        // Hold for a moment to let the brand register
-        .to({}, { duration: 1.5 })
+        // Hold for a moment to let the brand register and rest of the page load
+        .to({}, { duration: 3 })
         // Exit animation: Line zips away, text fades
         .to([logoRef.current, textRef.current], {
           duration: 0.5,

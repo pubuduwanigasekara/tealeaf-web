@@ -310,7 +310,7 @@ export const Navbar: React.FC = () => {
                   handleNavigation(link.id, link.offset);
                 }}
                 className={twMerge(
-                  'text-sm font-medium transition-colors uppercase tracking-wider',
+                  'text-sm font-medium transition-colors uppercase tracking-wider hover:text-brand-accent',
                   isScrolled ? 'text-brand-dark/80' : 'text-brand-dark/90'
                 )}>
                 {link.name}
