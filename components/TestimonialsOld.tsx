@@ -1,7 +1,8 @@
 import React, { useLayoutEffect, useRef } from "react";
-import { TestimonialItem } from "../types";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
+
+import { TestimonialItem } from "@/lib/types";
+import { useGSAP } from "@gsap/react";
 
 const testimonials: TestimonialItem[] = [
   {
@@ -34,8 +35,8 @@ export const Testimonials: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
+  useGSAP(
+    () => {
       // Filter out any null refs just in case
       const cards = cardsRef.current.filter(Boolean);
 
@@ -60,18 +61,18 @@ export const Testimonials: React.FC = () => {
           once: true,
         });
       }
-    }, containerRef);
 
-    // Force a refresh after a short delay to ensure layout is settled.
-    const timer = setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 200);
+      // Force a refresh after a short delay to ensure layout is settled.
+      const timer = setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 200);
 
-    return () => {
-      ctx.revert();
-      clearTimeout(timer);
-    };
-  }, []);
+      return () => {
+        clearTimeout(timer);
+      };
+    },
+    { scope: containerRef, dependencies: [] },
+  );
 
   return (
     <section
@@ -96,7 +97,7 @@ export const Testimonials: React.FC = () => {
               ref={(el) => {
                 cardsRef.current[index] = el;
               }}
-              className="group bg-white p-10 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col justify-between border-t-4 border-brand-accent will-change-transform"
+              className="group bg-white p-10 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col justify-between border-t-4 border-brand-accent transform-gpu"
             >
               <div>
                 <div className="text-brand-primary text-6xl font-serif leading-none mb-4 opacity-30 group-hover:opacity-80 transition-opacity duration-300">

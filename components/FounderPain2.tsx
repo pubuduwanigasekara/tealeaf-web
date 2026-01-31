@@ -6,14 +6,14 @@ import {
   UserCog,
   ArrowRight,
 } from "lucide-react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 import SplitType from "split-type";
+import { useGSAP } from "@gsap/react";
 
 const painPoints = [
   {
     id: 1,
-    text: "Investors asking questions you can’t confidently answer.",
+    text: "Investors asking questions you can't confidently answer.",
     icon: MessageCircleQuestion,
   },
   {
@@ -39,8 +39,8 @@ export const FounderPain: React.FC = () => {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
 
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
+  useGSAP(
+    () => {
       // 1. Title Animation
       const title = titleRef.current;
       if (title) {
@@ -127,18 +127,18 @@ export const FounderPain: React.FC = () => {
           },
         );
       }
-    }, containerRef);
 
-    // Refresh needed for SplitType calculation sometimes
-    const timer = setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 200);
+      // Refresh needed for SplitType calculation sometimes
+      const timer = setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 200);
 
-    return () => {
-      ctx.revert();
-      clearTimeout(timer);
-    };
-  }, []);
+      return () => {
+        clearTimeout(timer);
+      };
+    },
+    { scope: containerRef },
+  );
 
   return (
     <section className="py-24 bg-white relative overflow-hidden">
@@ -189,7 +189,7 @@ export const FounderPain: React.FC = () => {
               You are not alone.
             </span>
 
-            <div className="w-12 h-12 shrink-0 flex items-center justify-center rounded-full border border-brand-dark/10 text-brand-accent bg-white shadow-sm transition-all duration-300 transform-gpu will-change-transform group-hover:scale-110 group-hover:border-brand-accent group-hover:bg-brand-accent group-hover:text-white">
+            <div className="w-12 h-12 shrink-0 flex items-center justify-center rounded-full border border-brand-dark/10 text-brand-accent bg-white shadow-sm transition-[background-color,color,border-color,transform] duration-300 transform-gpu will-change-transform group-hover:scale-110 group-hover:border-brand-accent group-hover:bg-brand-accent group-hover:text-white">
               <ArrowRight className="w-5 h-5" />
             </div>
 

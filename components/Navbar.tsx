@@ -1,14 +1,22 @@
-import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
-import { Menu, X, Linkedin, Twitter, Mail } from "lucide-react";
+import React, { useState, useEffect, useRef } from "react";
+import { Menu, X, Linkedin, Mail } from "lucide-react";
+import { gsap, ScrollSmoother } from "@/lib/gsap";
+import { useNavigate, useLocation, Link } from "react-router-dom";
+import { twMerge } from "tailwind-merge";
+import { useGSAP } from "@gsap/react";
+
 import { Button } from "./ui/Button";
-import gsap from "gsap";
-import { useNavigate, useLocation } from "react-router-dom";
 
 const navLinks = [
-  { name: "Why Tealeaf", href: "#why", id: "why" },
+  { name: "Why Tealeaf", href: "#why", id: "why", offset: 80 },
   { name: "Services", href: "#services", id: "services" },
-  { name: "About Us", href: "#about", id: "about" },
-  { name: "Testimonials", href: "#testimonials", id: "testimonials" },
+  { name: "About Us", href: "#about", id: "about", offset: 80 },
+  {
+    name: "Testimonials",
+    href: "#testimonials",
+    id: "testimonials",
+    offset: 80,
+  },
 ];
 
 interface MobileMenuProps {
@@ -28,13 +36,12 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
   const contentRef = useRef<HTMLDivElement>(null);
   const footerRef = useRef<HTMLDivElement>(null);
   const timeline = useRef<gsap.core.Timeline | null>(null);
-  const navigate = useNavigate();
 
   // Sync padding with main navbar
   const paddingClass = isScrolled ? "py-4" : "py-6";
 
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
+  useGSAP(
+    () => {
       // Initialize timeline in paused state
       timeline.current = gsap
         .timeline({ paused: true })
@@ -66,10 +73,9 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
           },
           "-=0.8",
         );
-    }, containerRef);
-
-    return () => ctx.revert();
-  }, []);
+    },
+    { scope: containerRef, dependencies: [] },
+  );
 
   useEffect(() => {
     if (isOpen) {
@@ -79,16 +85,20 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
     }
   }, [isOpen]);
 
-  const handleLinkClick = (e: React.MouseEvent, id: string) => {
+  const handleLinkClick = (
+    e: React.MouseEvent,
+    id: string,
+    offset?: number,
+  ) => {
     e.preventDefault();
     onClose();
-    onNavigate(id);
+    onNavigate(id, offset);
   };
 
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-50 bg-linear-to-br from-[#fffdfa] via-[#fff5f0] to-[#fceee9] text-brand-dark flex flex-col h-[100dvh] -translate-y-full will-change-transform overflow-hidden"
+      className="fixed inset-0 z-50 bg-linear-to-br from-[#fffdfa] via-[#fff5f0] to-[#fceee9] text-brand-dark flex flex-col h-dvh -translate-y-full transform-gpu overflow-hidden"
     >
       {/* Background decoration */}
       <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
@@ -107,7 +117,11 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
         We mimic the main Navbar structure here to ensure perfect alignment.
       */}
       <div
-        className={`w-full flex-none transition-all duration-300 ${paddingClass} relative z-10`}
+        className={twMerge(
+          "w-full flex-none transition-padding duration-300",
+          paddingClass,
+          "relative z-10",
+        )}
       >
         <div className="container mx-auto px-6 flex justify-between items-center">
           {/* Logo */}
@@ -138,11 +152,11 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
           className="flex-1 flex flex-col justify-center space-y-6 min-h-[300px]"
         >
           {navLinks.map((link, index) => (
-            <a
+            <Link
               key={link.name}
-              href={link.href}
-              className="mobile-link-item group flex items-baseline gap-4 sm:gap-6 pl-2"
-              onClick={(e) => handleLinkClick(e, link.id)}
+              to={link.href}
+              className="mobile-link-item group flex items-baseline gap-4 sm:gap-6 pl-2 will-change-transform"
+              onClick={(e) => handleLinkClick(e, link.id, link.offset)}
             >
               <span className="text-xl sm:text-2xl font-serif italic text-brand-accent font-medium min-w-[2ch]">
                 0{index + 1}
@@ -150,12 +164,15 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
               <span className="text-4xl sm:text-5xl md:text-6xl font-sans font-normal text-brand-dark group-hover:text-brand-accent transition-colors">
                 {link.name}
               </span>
-            </a>
+            </Link>
           ))}
         </div>
 
         {/* Footer / CTA Section */}
-        <div ref={footerRef} className="pb-10 pt-8 flex-none">
+        <div
+          ref={footerRef}
+          className="pb-10 pt-8 flex-none will-change-transform"
+        >
           <div className="border-t border-brand-dark/10 w-full mb-8"></div>
 
           <div className="space-y-8">
@@ -170,10 +187,10 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
               {/* Contact Button */}
               <Button
                 variant="primary"
-                className="w-full sm:w-fit !py-4 !px-20"
+                className="w-full sm:w-fit py-4! px-20!"
                 onClick={() => {
                   onClose();
-                  onNavigate("contact");
+                  onNavigate("contact", 80);
                 }}
               >
                 Contact Us
@@ -239,25 +256,13 @@ export const Navbar: React.FC = () => {
   }, [isMobileMenuOpen]);
 
   // Unified navigation handler
-  const handleNavigation = (id: string) => {
+  const handleNavigation = (id: string, offset?: number) => {
     if (location.pathname !== "/") {
       // If we are not on home, navigate to home and pass the target ID in state
       navigate("/", { state: { scrollTo: id } });
     } else {
-      // If we are already on home, just scroll
-      const element = document.getElementById(id);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
-    }
-  };
-
-  const scrollToTop = (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (location.pathname !== "/") {
-      navigate("/");
-    } else {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      const smoother = ScrollSmoother.get();
+      smoother?.scrollTo(`#${id}`, true, offset ? `top ${offset}px` : "top");
     }
   };
 
@@ -272,41 +277,51 @@ export const Navbar: React.FC = () => {
     <>
       <nav
         data-scroll-section="false"
-        className={`fixed w-full z-40 transition-all duration-300 ${paddingClass} ${bgClass}`}
+        className={twMerge(
+          "fixed w-full z-40 transition-all duration-300",
+          paddingClass,
+          bgClass,
+        )}
         style={{ paddingRight: isMobileMenuOpen ? `${scrollbarWidth}px` : "" }}
       >
         <div className="container mx-auto px-6 flex justify-between items-center">
           {/* Logo */}
-          <a
-            href="/"
-            onClick={scrollToTop}
+          <Link
+            to="/"
+            onClick={(e) => {
+              e.preventDefault();
+              handleNavigation("hero");
+            }}
             className="flex items-center gap-3 transition-colors"
           >
             <img
               src="https://res.cloudinary.com/deszn12rt/image/upload/v1768411955/tealeaf/logo_quygd6.png"
               alt="Tealeaf Logo"
-              className="h-12 w-auto transition-all duration-300"
+              className="h-12 w-auto"
             />
-          </a>
+          </Link>
 
           {/* Desktop Links */}
           <div className="hidden lg:flex items-center space-x-8">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.name}
-                href={link.href}
+                to={link.href}
                 onClick={(e) => {
                   e.preventDefault();
-                  handleNavigation(link.id);
+                  handleNavigation(link.id, link.offset);
                 }}
-                className={`text-sm font-medium ${isScrolled ? "text-brand-dark/80" : "text-brand-dark/90"} hover:text-brand-accent transition-colors uppercase tracking-wider`}
+                className={twMerge(
+                  "text-sm font-medium transition-colors uppercase tracking-wider",
+                  isScrolled ? "text-brand-dark/80" : "text-brand-dark/90",
+                )}
               >
                 {link.name}
-              </a>
+              </Link>
             ))}
             <Button
               variant="primary"
-              onClick={() => handleNavigation("contact")}
+              onClick={() => handleNavigation("contact", 80)}
             >
               Contact Us
             </Button>

@@ -1,6 +1,7 @@
 import React from "react";
 import { ArrowRight } from "lucide-react";
 import { twMerge } from "tailwind-merge";
+import { Link } from "react-router-dom";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "outline" | "text";
@@ -21,7 +22,7 @@ export const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   const baseStyles =
-    "group inline-flex items-center justify-center px-8 py-3 rounded-full font-semibold transition-all duration-300 will-change-transform tracking-wide";
+    "group inline-flex items-center justify-center px-8 py-3 rounded-full font-semibold transition-all duration-300 transform-gpu tracking-wide";
 
   const variants = {
     // Primary button uses the Orange Accent for high visibility/CTA
@@ -37,13 +38,24 @@ export const Button: React.FC<ButtonProps> = ({
   const combinedClasses = twMerge(baseStyles, variants[variant], className);
 
   if (href) {
+    if (target === "_blank") {
+      return (
+        <a href={href} target={target} rel={rel} className={combinedClasses}>
+          {children}
+          {icon && (
+            <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 duration-300 transition-transform" />
+          )}
+        </a>
+      );
+    }
+
     return (
-      <a href={href} target={target} rel={rel} className={combinedClasses}>
+      <Link to={href} className={combinedClasses}>
         {children}
         {icon && (
           <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 duration-300 transition-transform" />
         )}
-      </a>
+      </Link>
     );
   }
 

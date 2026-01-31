@@ -1,9 +1,13 @@
 import React from "react";
 import { Button } from "./ui/Button";
+import { ScrollSmoother } from "@/lib/gsap";
 
 export const Hero: React.FC = () => {
   return (
-    <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
+    <section
+      id="hero"
+      className="relative min-h-screen flex items-center pt-20 overflow-hidden"
+    >
       {/* Video Background - Light Mode Approach */}
       <div className="absolute inset-0 z-0">
         <video
@@ -72,11 +76,10 @@ export const Hero: React.FC = () => {
             <Button
               variant="primary"
               icon
-              onClick={() =>
-                document
-                  .getElementById("contact")
-                  ?.scrollIntoView({ behavior: "smooth" })
-              }
+              onClick={() => {
+                const smoother = ScrollSmoother.get();
+                smoother?.scrollTo("#contact", true, "top 80px");
+              }}
               className="hidden sm:inline-flex 2xl:py-4"
             >
               Book a Founder Financial Readiness Call

@@ -1,7 +1,11 @@
-import React, { useState, useRef, useLayoutEffect, useEffect } from "react";
+import React, { useState, useRef, useLayoutEffect, useCallback } from "react";
 import { Plus, ChevronDown } from "lucide-react";
-import gsap from "gsap";
-import { TestimonialItem } from "../types";
+import { gsap } from "@/lib/gsap";
+import { twMerge } from "tailwind-merge";
+import { useGSAP } from "@gsap/react";
+
+import { TestimonialItem } from "@/lib/types";
+import { useDebouncedScrollTriggerRefresh } from "@/lib/hooks/useDebouncedScrollTriggerRefresh";
 
 // Extended interface for the rich content
 interface ExtendedTestimonialItem extends Omit<TestimonialItem, "quote"> {
@@ -141,22 +145,42 @@ const MobileTestimonialCard: React.FC<{ item: ExtendedTestimonialItem }> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
+  const innerRef = useRef<HTMLDivElement>(null);
+  const refresh = useDebouncedScrollTriggerRefresh();
 
-  useEffect(() => {
+  const toggle = useCallback(() => setIsOpen((v) => !v), []);
+
+  useLayoutEffect(() => {
+    const el = contentRef.current;
+    const inner = innerRef.current;
+    if (!el || !inner) return;
+
+    gsap.killTweensOf(el);
+
     if (isOpen) {
-      gsap.to(contentRef.current, {
-        height: "auto",
+      const h = inner.scrollHeight;
+      gsap.to(el, {
+        height: h,
         duration: 0.5,
         ease: "power2.out",
+        onComplete: () => {
+          // let it adapt if content wraps differently
+          gsap.set(el, { height: "auto" });
+          refresh();
+        },
       });
     } else {
-      gsap.to(contentRef.current, {
+      // if it's auto, lock it first before collapsing
+      const current = el.getBoundingClientRect().height;
+      gsap.set(el, { height: current });
+      gsap.to(el, {
         height: 0,
-        duration: 0.5,
+        duration: 0.4,
         ease: "power2.out",
+        onComplete: refresh,
       });
     }
-  }, [isOpen]);
+  }, [isOpen, refresh]);
 
   return (
     <div className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-brand-dark/5 flex flex-col gap-6">
@@ -187,22 +211,28 @@ const MobileTestimonialCard: React.FC<{ item: ExtendedTestimonialItem }> = ({
 
       {/* Expandable Content */}
       <div ref={contentRef} className="h-0 overflow-hidden">
-        <div className="pt-2 text-brand-gray text-base md:text-lg leading-relaxed space-y-4">
+        <div
+          ref={innerRef}
+          className="pt-2 text-brand-gray text-base md:text-lg leading-relaxed space-y-4"
+        >
           {item.content}
         </div>
       </div>
 
       {/* Toggle Button */}
       <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full py-3 mt-auto rounded-xl border border-brand-dark/10 text-brand-primary font-bold hover:bg-brand-cream hover:border-brand-primary/20 transition-all duration-300 flex items-center justify-center gap-2 group"
+        onClick={toggle}
+        className="w-full py-3 mt-auto rounded-xl border border-brand-dark/10 text-brand-primary font-bold hover:bg-brand-cream hover:border-brand-primary/20 transition-[background-color,border-color] duration-300 flex items-center justify-center gap-2 group"
       >
         <span className="text-sm uppercase tracking-widest">
           {isOpen ? "Read Less" : "Read Full Story"}
         </span>
         <ChevronDown
           size={16}
-          className={`transition-transform duration-300 ${isOpen ? "rotate-180" : "group-hover:translate-y-0.5"}`}
+          className={twMerge(
+            "transition-transform duration-300",
+            isOpen ? "rotate-180" : "group-hover:translate-y-0.5",
+          )}
         />
       </button>
     </div>
@@ -221,51 +251,61 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
   item,
   isOpen,
   onClick,
-  index,
 }) => {
-  const contentRef = useRef<HTMLDivElement>(null);
+  const contentOuterRef = useRef<HTMLDivElement>(null);
+  const contentInnerRef = useRef<HTMLDivElement>(null);
   const rowRef = useRef<HTMLDivElement>(null);
+  const refresh = useDebouncedScrollTriggerRefresh();
+
+  // set initial state once
+  useLayoutEffect(() => {
+    const outer = contentOuterRef.current;
+    if (!outer) return;
+    gsap.set(outer, { height: 0, opacity: 0 });
+  }, []);
 
   // Animate Height on Open/Close
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      if (isOpen) {
-        gsap
-          .timeline()
-          .to(contentRef.current, {
-            height: "auto",
-            duration: 0.6,
-            ease: "expo.out",
-            opacity: 1,
-          })
-          .set(
-            rowRef.current,
-            {
-              backgroundColor: "#ffffff", // White background when open
-            },
-            "<",
-          );
-      } else {
-        gsap
-          .timeline()
-          .to(contentRef.current, {
-            height: 0,
-            duration: 0.5,
-            ease: "power3.inOut",
-            opacity: 0,
-          })
-          .set(
-            rowRef.current,
-            {
-              backgroundColor: "transparent",
-            },
-            "<",
-          );
-      }
-    }, rowRef);
+  useGSAP(
+    () => {
+      const outer = contentOuterRef.current;
+      const inner = contentInnerRef.current;
+      const row = rowRef.current;
+      if (!outer || !inner || !row) return;
 
-    return () => ctx.revert();
-  }, [isOpen]);
+      const h = inner.scrollHeight;
+
+      const t = gsap.timeline({
+        onComplete: refresh,
+      });
+
+      if (isOpen) {
+        // if outer is auto from a previous open, lock it
+        const current = outer.getBoundingClientRect().height;
+        gsap.set(outer, { height: current });
+
+        t.to(outer, {
+          height: h,
+          opacity: 1,
+          duration: 0.6,
+          ease: "expo.out",
+        }).set(outer, { height: "auto" });
+
+        t.set(row, { backgroundColor: "#ffffff" }, 0);
+      } else {
+        const current = outer.getBoundingClientRect().height;
+        gsap.set(outer, { height: current });
+
+        t.to(outer, {
+          height: 0,
+          opacity: 0,
+          duration: 0.5,
+          ease: "power3.inOut",
+        });
+        t.set(row, { backgroundColor: "transparent" }, 0);
+      }
+    },
+    { scope: rowRef, dependencies: [isOpen, refresh] },
+  );
 
   return (
     <div
@@ -275,7 +315,10 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
       {/* Header / Trigger */}
       <button
         onClick={onClick}
-        className={`w-full py-12 px-4 md:px-0 grid grid-cols-12 gap-6 items-start text-left group transition-all duration-300 ${isOpen ? "text-brand-dark" : "text-brand-dark hover:bg-white"}`}
+        className={twMerge(
+          "w-full py-12 px-4 md:px-0 grid grid-cols-12 gap-6 items-start text-left group transition-[background-color,color] duration-300",
+          isOpen ? "text-brand-dark" : "text-brand-dark hover:bg-white",
+        )}
       >
         {/* 1. Info (Col 1-3) - Name & Company - Sticky-ish alignment */}
         <div className="col-span-3 flex flex-col justify-center pl-8 pt-1">
@@ -293,7 +336,10 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
         {/* 2. Large Quote Preview (Col 4-11) */}
         <div className="col-span-8 px-4">
           <p
-            className={`max-w-3xl font-serif text-2xl/8 text-brand-dark line-clamp-4 transition-all duration-100 ${isOpen ? "opacity-0" : "opacity-100"}`}
+            className={twMerge(
+              "max-w-3xl font-serif text-2xl/8 text-brand-dark line-clamp-4 transition-opacity duration-100",
+              isOpen ? "opacity-0" : "opacity-100",
+            )}
           >
             <span className="text-brand-accent pr-2"> &ldquo;</span>
             {item.quote}
@@ -304,19 +350,29 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
         {/* 3. Toggle (Col 12) */}
         <div className="col-span-1 flex items-start justify-end pr-8 pt-1">
           <div
-            className={`relative w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500 
-            ${isOpen ? "rotate-45 bg-brand-dark/5" : "group-hover:bg-brand-dark/5"}`}
+            className={twMerge(
+              "relative w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500",
+              isOpen
+                ? "rotate-45 bg-brand-dark/5"
+                : "group-hover:bg-brand-dark/5",
+            )}
           >
             <Plus
-              className={`w-6 h-6 ${isOpen ? "text-brand-dark" : "text-brand-dark/40"}`}
+              className={twMerge(
+                "w-6 h-6",
+                isOpen ? "text-brand-dark" : "text-brand-dark/40",
+              )}
             />
           </div>
         </div>
       </button>
 
       {/* Expandable Content */}
-      <div ref={contentRef} className="h-0 overflow-hidden">
-        <div className="pb-16 px-8 grid grid-cols-12 gap-12 bg-white">
+      <div ref={contentOuterRef} className="h-0 overflow-hidden">
+        <div
+          ref={contentInnerRef}
+          className="pb-16 px-8 grid grid-cols-12 gap-12 bg-white"
+        >
           {/* Left Spacer / Author Details Context (Col 1-3) */}
           <div className="col-span-3 pl-8">
             <div className="sticky top-8 space-y-4 animate-[fadeIn_0.5s_ease-out_0.3s_forwards]">
@@ -359,19 +415,17 @@ export const Testimonials: React.FC = () => {
   const desktopListRef = useRef<HTMLDivElement>(null);
   const mobileListRef = useRef<HTMLDivElement>(null);
 
-  const handleToggle = (index: number) => {
-    setActiveIndices((prev) => {
-      // If already open, close it
-      if (prev.includes(index)) {
-        return prev.filter((i) => i !== index);
-      }
-      // If closed, open it (keep others open)
-      return [...prev, index];
-    });
-  };
+  const handleToggle = useCallback((index: number) => {
+    setActiveIndices((prev) =>
+      prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index],
+    );
+  }, []);
 
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
+  useGSAP(
+    () => {
+      const root = containerRef.current;
+      if (!root) return;
+
       // Header Animation
       gsap.from(headerRef.current, {
         opacity: 0,
@@ -413,10 +467,9 @@ export const Testimonials: React.FC = () => {
           },
         });
       }
-    }, containerRef);
-
-    return () => ctx.revert();
-  }, []);
+    },
+    { scope: containerRef, dependencies: [] },
+  );
 
   return (
     <section

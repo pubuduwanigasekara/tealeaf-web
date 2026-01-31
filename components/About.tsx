@@ -1,14 +1,14 @@
-import React, { useLayoutEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import React, { useRef } from "react";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { useGSAP } from "@gsap/react";
 
 const Stats = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const statsGridRef = useRef<HTMLDivElement>(null);
   const numberRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
+  useGSAP(
+    () => {
       // Animate numbers
       numberRefs.current.forEach((el, index) => {
         if (!el) return;
@@ -50,17 +50,17 @@ const Stats = () => {
           },
         });
       }
-    }, containerRef);
 
-    const timer = setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 200);
+      const timer = setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 200);
 
-    return () => {
-      ctx.revert();
-      clearTimeout(timer);
-    };
-  }, []);
+      return () => {
+        clearTimeout(timer);
+      };
+    },
+    { scope: containerRef, dependencies: [] },
+  );
 
   return (
     <div ref={containerRef}>
@@ -142,8 +142,8 @@ const FounderImg = () => {
   const dec2Ref = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement | null>(null);
 
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
+  useGSAP(
+    () => {
       if (
         triggerRef.current &&
         dec1Ref.current &&
@@ -184,17 +184,17 @@ const FounderImg = () => {
             "<",
           );
       }
-    }, containerRef);
 
-    const timer = setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 200);
+      const timer = setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 200);
 
-    return () => {
-      ctx.revert();
-      clearTimeout(timer);
-    };
-  }, []);
+      return () => {
+        clearTimeout(timer);
+      };
+    },
+    { scope: containerRef, dependencies: [] },
+  );
 
   return (
     <div

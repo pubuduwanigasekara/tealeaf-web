@@ -1,8 +1,9 @@
-import React, { useLayoutEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
-import { ServiceItem } from "../types";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap, ScrollTrigger, ScrollSmoother } from "@/lib/gsap";
+import { useGSAP } from "@gsap/react";
+
+import { ServiceItem } from "@/lib/types";
 
 const services: ServiceItem[] = [
   {
@@ -69,13 +70,13 @@ const services: ServiceItem[] = [
 const ServiceCard = React.forwardRef<
   HTMLDivElement,
   { service: ServiceItem; index: number }
->(({ service, index }, ref) => {
+>(({ service }, ref) => {
   return (
     // GSAP ScrollTrigger pin handles the stacking effect
     // Each card pins at 96px from top while the next scrolls over it
     <div
       ref={ref}
-      className="service-card relative bg-white border border-brand-dark/5 shadow-lg rounded-3xl overflow-hidden origin-top will-change-transform"
+      className="service-card relative bg-white border border-brand-dark/5 shadow-lg rounded-3xl overflow-hidden origin-top transform-gpu"
     >
       <div className="py-10 px-6 md:py-20 md:px-12">
         <div className="grid md:grid-cols-12 gap-8 lg:gap-16">
@@ -137,12 +138,11 @@ const ServiceCard = React.forwardRef<
             {/* CTA Action */}
             <div className="pt-2">
               <button
-                className="group/btn inline-flex items-center gap-2 text-brand-primary font-bold hover:text-brand-accent transition-all duration-500"
-                onClick={() =>
-                  document
-                    .getElementById("contact")
-                    ?.scrollIntoView({ behavior: "smooth" })
-                }
+                className="group/btn inline-flex items-center gap-2 text-brand-primary font-bold hover:text-brand-accent transition-colors duration-500"
+                onClick={() => {
+                  const smoother = ScrollSmoother.get();
+                  smoother?.scrollTo("#contact", true, "top 80px");
+                }}
               >
                 <span className="relative pb-1 tracking-wide">
                   {service.ctaText}
@@ -167,8 +167,8 @@ export const Services: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
+  useGSAP(
+    () => {
       const mm = gsap.matchMedia();
 
       // DESKTOP ANIMATION (>1024px) - Using ScrollTrigger Pin
@@ -249,17 +249,18 @@ export const Services: React.FC = () => {
           });
         }
       });
-    }, containerRef);
 
-    const timer = setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 200);
+      const timer = setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 200);
 
-    return () => {
-      ctx.revert();
-      clearTimeout(timer);
-    };
-  }, []);
+      return () => {
+        mm.revert();
+        clearTimeout(timer);
+      };
+    },
+    { scope: containerRef },
+  );
 
   return (
     <section

@@ -1,14 +1,14 @@
 import React, { useLayoutEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { useGSAP } from "@gsap/react";
 
 const FeatureCards = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
+  useGSAP(
+    () => {
       // Filter out any null refs just in case
       const cards = cardsRef.current.filter(Boolean);
 
@@ -34,19 +34,19 @@ const FeatureCards = () => {
           once: true,
         });
       }
-    }, containerRef);
 
-    // Force a refresh after a short delay to ensure layout (fonts/images) is settled.
-    // This fixes the issue where animation only works after resize.
-    const timer = setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 200);
+      // Force a refresh after a short delay to ensure layout (fonts/images) is settled.
+      // This fixes the issue where animation only works after resize.
+      const timer = setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 200);
 
-    return () => {
-      ctx.revert();
-      clearTimeout(timer);
-    };
-  }, []);
+      return () => {
+        clearTimeout(timer);
+      };
+    },
+    { scope: containerRef, dependencies: [] },
+  );
 
   return (
     <div ref={containerRef}>

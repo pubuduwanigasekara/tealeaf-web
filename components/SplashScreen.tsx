@@ -1,5 +1,6 @@
 import React, { useLayoutEffect, useRef } from "react";
-import gsap from "gsap";
+import { gsap } from "@/lib/gsap";
+import { useGSAP } from "@gsap/react";
 
 interface SplashScreenProps {
   onComplete: () => void;
@@ -13,8 +14,8 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
 
   const brandName = "Tealeaf Consulting";
 
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
+  useGSAP(
+    () => {
       const tl = gsap.timeline({
         onComplete: () => {
           onComplete();
@@ -82,10 +83,9 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
           yPercent: -100,
           ease: "power4.inOut", // Dramatic, elegant easing
         });
-    }, containerRef);
-
-    return () => ctx.revert();
-  }, [onComplete]);
+    },
+    { scope: containerRef, dependencies: [] },
+  );
 
   return (
     <div

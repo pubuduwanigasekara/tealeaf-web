@@ -51,6 +51,42 @@ body {
   width: 100%;
 }
 
+/* 
+ * ScrollSmoother Optimizations
+ * Prevent jittering on text and elements during smooth scroll
+ */
+
+/* Apply GPU acceleration to all sections to prevent jitter */
+#smooth-content section {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Optimize text rendering during smooth scroll */
+#smooth-content {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Apply GPU acceleration to text elements to prevent sub-pixel jitter */
+#smooth-content p,
+#smooth-content h1,
+#smooth-content h2,
+#smooth-content h3,
+#smooth-content h4,
+#smooth-content h5,
+#smooth-content h6,
+#smooth-content span {
+  transform: translate3d(0, 0, 0);
+}
+
+#smooth-content h1,
+#smooth-content h2,
+#smooth-content h3 {
+  will-change: transform;
+}
+
 button,
 a {
   cursor: pointer;

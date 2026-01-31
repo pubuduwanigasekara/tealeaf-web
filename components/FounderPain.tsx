@@ -6,9 +6,9 @@ import {
   UserCog,
   ArrowRight,
 } from "lucide-react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap, ScrollTrigger, ScrollSmoother } from "@/lib/gsap";
 import SplitType from "split-type";
+import { useGSAP } from "@gsap/react";
 
 const painPoints = [
   {
@@ -39,14 +39,15 @@ export const FounderPain: React.FC = () => {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
 
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
+  useGSAP(
+    () => {
       // 1. Title Animation
       const title = titleRef.current;
       if (title) {
-        // Set visible immediately before split to avoid issues, but start with opacity 0 in CSS via initial render or set here
+        const titleSplit = new SplitType(title, { types: "chars" });
+
+        // Keep parent visible so split text is rendered, but chars start invisible
         gsap.set(title, { opacity: 1 });
-        const titleSplit = new SplitType(title, { types: "words,chars" });
 
         gsap.fromTo(
           titleSplit.chars,
@@ -100,18 +101,18 @@ export const FounderPain: React.FC = () => {
           },
         );
       }
-    }, containerRef);
 
-    // Refresh needed for SplitType calculation sometimes
-    const timer = setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 200);
+      // Refresh needed for SplitType calculation sometimes
+      const timer = setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 200);
 
-    return () => {
-      ctx.revert();
-      clearTimeout(timer);
-    };
-  }, []);
+      return () => {
+        clearTimeout(timer);
+      };
+    },
+    { scope: containerRef, dependencies: [] },
+  );
 
   return (
     <section className="py-32 bg-white relative overflow-hidden">
@@ -121,7 +122,7 @@ export const FounderPain: React.FC = () => {
       <div ref={containerRef} className="container mx-auto px-6 relative z-10">
         <h2
           ref={titleRef}
-          className="text-4xl md:text-5xl font-serif text-brand-dark text-center mb-24 md:mb-32 opacity-0 [&>div]:will-change-transform"
+          className="text-4xl md:text-5xl font-serif text-brand-dark text-center mb-24 md:mb-32 opacity-0 [&>div]:opacity-0 [&>div]:will-change-transform"
         >
           Does This Sound Familiar?
         </h2>
@@ -151,14 +152,13 @@ export const FounderPain: React.FC = () => {
         {/* CTA */}
         <div ref={ctaRef} className="flex justify-center opacity-0">
           <button
-            onClick={() =>
-              document
-                .getElementById("why")
-                ?.scrollIntoView({ behavior: "smooth" })
-            }
-            className="group relative flex items-center gap-4 py-4 px-8 rounded-full transition-all transform-gpu duration-500 hover:bg-brand-cream/50"
+            onClick={() => {
+              const smoother = ScrollSmoother.get();
+              smoother?.scrollTo("#why", true, "top 80px");
+            }}
+            className="group relative flex items-center gap-4 py-4 px-8 rounded-full transition-[background-color] transform-gpu duration-500 hover:bg-brand-cream/50"
           >
-            <span className="text-2xl md:text-3xl font-serif italic text-brand-gray group-hover:text-brand-primary transition-colors duration-300 transform-gpu will-change-transform">
+            <span className="text-2xl md:text-3xl font-serif italic text-brand-gray group-hover:text-brand-primary transition-[color] duration-300 transform-gpu will-change-transform">
               You are not alone.
             </span>
 
