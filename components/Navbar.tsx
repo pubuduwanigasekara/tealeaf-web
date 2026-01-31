@@ -125,7 +125,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
           {/* Logo */}
           <div className="text-2xl flex items-center gap-3">
             <img
-              src="/static/logo.png"
+              src="/static/logo2.png"
               alt="Tealeaf Logo"
               className="h-10 sm:h-12 w-auto"
               fetchPriority="high"
@@ -292,7 +292,7 @@ export const Navbar: React.FC = () => {
             }}
             className="flex items-center gap-3 transition-colors">
             <img
-              src="/static/logo.png"
+              src="/static/logo2.png"
               alt="Tealeaf Logo"
               className="h-12 w-auto"
               fetchPriority="high"

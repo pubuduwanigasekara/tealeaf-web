@@ -1,4 +1,7 @@
 import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { ScrollSmoother } from '@/lib/gsap';
+
 import { Hero } from '../components/Hero';
 import { WhyTealeaf } from '../components/WhyTealeaf';
 import { Services } from '../components/Services';
@@ -6,8 +9,6 @@ import { About } from '../components/About';
 import { Testimonials } from '../components/Testimonials';
 import { FounderPain } from '../components/FounderPain';
 import { CallToAction } from '../components/CallToAction';
-import { useLocation } from 'react-router-dom';
-import { ScrollSmoother } from '@/lib/gsap';
 
 export const HomePage: React.FC = () => {
   const location = useLocation();

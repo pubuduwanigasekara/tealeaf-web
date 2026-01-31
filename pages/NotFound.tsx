@@ -27,7 +27,7 @@ export const NotFoundPage: React.FC = () => {
       </div>
 
       {/* Decorative blurred circle behind 404 - warm glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40rem] h-[40rem] bg-brand-accent/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-160 h-160 bg-brand-accent/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative z-10 max-w-3xl mx-auto space-y-2">
         {/* The 404 Number */}
@@ -53,7 +53,7 @@ export const NotFoundPage: React.FC = () => {
             onClick={() => navigate('/')}
             variant="primary"
             icon
-            className="!px-10 !py-4 text-lg shadow-xl hover:shadow-2xl hover:shadow-brand-accent/20 transition-transform hover:-translate-y-1">
+            className="px-10! py-4! text-lg shadow-xl hover:shadow-2xl hover:shadow-brand-accent/20 transition-transform hover:-translate-y-1">
             Return to Home
           </Button>
         </div>

@@ -265,7 +265,7 @@ export const Services: React.FC = () => {
     <section
       id="services"
       ref={containerRef}
-      className="py-24 mb-32 bg-brand-cream relative">
+      className="py-24 md:mb-32 bg-brand-cream relative">
       <div className="container mx-auto px-6">
         <div className="mb-16 md:mb-24 max-w-2xl sticky top-20 z-0 opacity-40 mix-blend-multiply pointer-events-none hidden md:block">
           {/* 

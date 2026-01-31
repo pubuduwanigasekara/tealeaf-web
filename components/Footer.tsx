@@ -11,13 +11,19 @@ export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#0b1120] text-white py-12 border-t border-white/5 font-sans relative">
+    <footer
+      className="bg-[#0b1120] text-white py-12 font-sans relative"
+      style={{
+        transform: 'translate3d(0, 0, 0)',
+        backfaceVisibility: 'hidden',
+        marginTop: '-1px',
+      }}>
       <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center relative">
         {/* 1. Left Section: Logo */}
         <div className="flex flex-col items-center md:items-start gap-4 order-1">
           <div className="flex items-center gap-3">
             <img
-              src="/static/logo.png"
+              src="/static/logo2.png"
               alt="Tealeaf Logo"
               className="h-12 w-auto brightness-25 invert"
               loading="lazy"

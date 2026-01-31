@@ -5,7 +5,7 @@ import { twMerge } from 'tailwind-merge';
 import { useGSAP } from '@gsap/react';
 
 import { TestimonialItem } from '@/lib/types';
-import { useDebouncedScrollTriggerRefresh } from '@/lib/hooks/useDebouncedScrollTriggerRefresh';
+import { useDebouncedScrollTriggerRefresh, useIsMobile } from '@/lib/hooks';
 
 // Extended interface for the rich content
 interface ExtendedTestimonialItem extends Omit<TestimonialItem, 'quote'> {
@@ -410,6 +410,7 @@ export const Testimonials: React.FC = () => {
   const headerRef = useRef<HTMLDivElement>(null);
   const desktopListRef = useRef<HTMLDivElement>(null);
   const mobileListRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
 
   const handleToggle = useCallback((index: number) => {
     setActiveIndices((prev) =>
@@ -483,27 +484,26 @@ export const Testimonials: React.FC = () => {
           </h3>
         </div>
 
-        {/* Mobile/Tablet View (Cards) - Visible below LG */}
-        <div ref={mobileListRef} className="lg:hidden flex flex-col gap-6">
-          {testimonials.map((item) => (
-            <MobileTestimonialCard key={item.id} item={item} />
-          ))}
-        </div>
-
-        {/* Desktop View (Accordion) - Visible LG+ */}
-        <div
-          ref={desktopListRef}
-          className="hidden lg:block border-t border-brand-dark/10">
-          {testimonials.map((item, index) => (
-            <AccordionItem
-              key={item.id}
-              item={item}
-              index={index}
-              isOpen={activeIndices.includes(index)}
-              onClick={() => handleToggle(index)}
-            />
-          ))}
-        </div>
+        {/* Conditional Rendering: Mobile/Tablet View (Cards) OR Desktop View (Accordion) */}
+        {isMobile ? (
+          <div ref={mobileListRef} className="flex flex-col gap-6">
+            {testimonials.map((item) => (
+              <MobileTestimonialCard key={item.id} item={item} />
+            ))}
+          </div>
+        ) : (
+          <div ref={desktopListRef} className="border-t border-brand-dark/10">
+            {testimonials.map((item, index) => (
+              <AccordionItem
+                key={item.id}
+                item={item}
+                index={index}
+                isOpen={activeIndices.includes(index)}
+                onClick={() => handleToggle(index)}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
