@@ -1,14 +1,14 @@
-import React, { useLayoutEffect, useRef } from "react";
+import React, { useLayoutEffect, useRef } from 'react'
 import {
   MessageCircleQuestion,
   TrendingDown,
   FileSpreadsheet,
   UserCog,
   ArrowRight,
-} from "lucide-react";
-import { gsap, ScrollTrigger, ScrollSmoother } from "@/lib/gsap";
-import SplitType from "split-type";
-import { useGSAP } from "@gsap/react";
+} from 'lucide-react'
+import { gsap, ScrollTrigger, ScrollSmoother } from '@/lib/gsap'
+import SplitType from 'split-type'
+import { useGSAP } from '@gsap/react'
 
 const painPoints = [
   {
@@ -18,36 +18,36 @@ const painPoints = [
   },
   {
     id: 2,
-    text: "Cash burn feels unclear month-to-month.",
+    text: 'Cash burn feels unclear month-to-month.',
     icon: TrendingDown,
   },
   {
     id: 3,
-    text: "Financials held together by spreadsheets and workarounds.",
+    text: 'Financials held together by spreadsheets and workarounds.',
     icon: FileSpreadsheet,
   },
   {
     id: 4,
-    text: "You know you need CFO-level insight, just not full-time.",
+    text: 'You know you need CFO-level insight, just not full-time.',
     icon: UserCog,
   },
-];
+]
 
 export const FounderPain: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const listRef = useRef<HTMLDivElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const ctaRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null)
+  const listRef = useRef<HTMLDivElement>(null)
+  const titleRef = useRef<HTMLHeadingElement>(null)
+  const ctaRef = useRef<HTMLDivElement>(null)
 
   useGSAP(
     () => {
       // 1. Title Animation
-      const title = titleRef.current;
+      const title = titleRef.current
       if (title) {
-        const titleSplit = new SplitType(title, { types: "chars" });
+        const titleSplit = new SplitType(title, { types: 'chars' })
 
         // Keep parent visible so split text is rendered, but chars start invisible
-        gsap.set(title, { opacity: 1 });
+        gsap.set(title, { opacity: 1 })
 
         gsap.fromTo(
           titleSplit.chars,
@@ -55,34 +55,34 @@ export const FounderPain: React.FC = () => {
           {
             scrollTrigger: {
               trigger: title,
-              start: "top 80%",
+              start: 'top 80%',
             },
             y: 0,
             opacity: 1,
             duration: 1,
             stagger: 0.02,
-            ease: "back.out(1.2)",
-          },
-        );
+            ease: 'back.out(1.2)',
+          }
+        )
       }
 
       // 2. Rows Animation (Batch)
-      const rows = gsap.utils.toArray<HTMLElement>(".pain-row");
-      gsap.set(rows, { opacity: 0, y: 25 });
+      const rows = gsap.utils.toArray<HTMLElement>('.pain-row')
+      gsap.set(rows, { opacity: 0, y: 25 })
 
       ScrollTrigger.batch(rows, {
-        start: "top 90%",
-        onEnter: (batch) => {
+        start: 'top 90%',
+        onEnter: batch => {
           gsap.to(batch, {
             opacity: 1,
             y: 0,
             duration: 0.8,
             stagger: 0.1,
-            ease: "power2.out",
-          });
+            ease: 'power2.out',
+          })
         },
         once: true,
-      });
+      })
 
       // 3. CTA Animation
       if (ctaRef.current) {
@@ -93,26 +93,26 @@ export const FounderPain: React.FC = () => {
             opacity: 1,
             y: 0,
             duration: 1,
-            ease: "power3.out",
+            ease: 'power3.out',
             scrollTrigger: {
               trigger: listRef.current,
-              start: "bottom 80%",
+              start: 'bottom 80%',
             },
-          },
-        );
+          }
+        )
       }
 
       // Refresh needed for SplitType calculation sometimes
       const timer = setTimeout(() => {
-        ScrollTrigger.refresh();
-      }, 200);
+        ScrollTrigger.refresh()
+      }, 200)
 
       return () => {
-        clearTimeout(timer);
-      };
+        clearTimeout(timer)
+      }
     },
-    { scope: containerRef, dependencies: [] },
-  );
+    { scope: containerRef, dependencies: [] }
+  )
 
   return (
     <section className="py-32 bg-white relative overflow-hidden">
@@ -131,7 +131,7 @@ export const FounderPain: React.FC = () => {
           ref={listRef}
           className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-12 md:gap-y-24 max-w-5xl mx-auto mb-12 md:mb-32"
         >
-          {painPoints.map((point) => (
+          {painPoints.map(point => (
             <div
               key={point.id}
               className="pain-row flex items-start gap-4 group will-change-transform"
@@ -153,8 +153,8 @@ export const FounderPain: React.FC = () => {
         <div ref={ctaRef} className="flex justify-center opacity-0">
           <button
             onClick={() => {
-              const smoother = ScrollSmoother.get();
-              smoother?.scrollTo("#why", true, "top 80px");
+              const smoother = ScrollSmoother.get()
+              smoother?.scrollTo('#why', true, 'top 80px')
             }}
             className="group relative flex items-center gap-4 py-4 px-8 rounded-full transition-[background-color] transform-gpu duration-500 hover:bg-brand-cream/50"
           >
@@ -171,5 +171,5 @@ export const FounderPain: React.FC = () => {
         </div>
       </div>
     </section>
-  );
-};
+  )
+}

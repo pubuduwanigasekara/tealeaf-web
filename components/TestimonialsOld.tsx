@@ -1,78 +1,78 @@
-import React, { useLayoutEffect, useRef } from "react";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
+import React, { useLayoutEffect, useRef } from 'react'
+import { gsap, ScrollTrigger } from '@/lib/gsap'
 
-import { TestimonialItem } from "@/lib/types";
-import { useGSAP } from "@gsap/react";
+import { TestimonialItem } from '@/lib/types'
+import { useGSAP } from '@gsap/react'
 
 const testimonials: TestimonialItem[] = [
   {
-    id: "1",
+    id: '1',
     quote:
-      "Tealeaf was invaluable to us while we were going through our acquisition. We could not have done it without their support. They built the foundation we stood on.",
-    author: "Guy Marion",
-    role: "CEO",
-    company: "Brightback",
+      'Tealeaf was invaluable to us while we were going through our acquisition. We could not have done it without their support. They built the foundation we stood on.',
+    author: 'Guy Marion',
+    role: 'CEO',
+    company: 'Brightback',
   },
   {
-    id: "2",
+    id: '2',
     quote:
-      "Not your typical outsourced accounting services vendor, they are a true partner. The insights provided helped us pivot our strategy at a critical moment.",
-    author: "Dana Quattrochi",
-    role: "CFO",
-    company: "Firefly Health",
+      'Not your typical outsourced accounting services vendor, they are a true partner. The insights provided helped us pivot our strategy at a critical moment.',
+    author: 'Dana Quattrochi',
+    role: 'CFO',
+    company: 'Firefly Health',
   },
   {
-    id: "3",
+    id: '3',
     quote:
-      "Strategic, thoughtful, and incredibly experienced. Angela brings a level of rigor to the financials that gave our investors immediate confidence.",
-    author: "Sarah Jenkins",
-    role: "Founder",
-    company: "TechFlow Solutions",
+      'Strategic, thoughtful, and incredibly experienced. Angela brings a level of rigor to the financials that gave our investors immediate confidence.',
+    author: 'Sarah Jenkins',
+    role: 'Founder',
+    company: 'TechFlow Solutions',
   },
-];
+]
 
 export const Testimonials: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const containerRef = useRef<HTMLDivElement>(null)
+  const cardsRef = useRef<(HTMLDivElement | null)[]>([])
 
   useGSAP(
     () => {
       // Filter out any null refs just in case
-      const cards = cardsRef.current.filter(Boolean);
+      const cards = cardsRef.current.filter(Boolean)
 
       // Ensure elements exist before animating
       if (cards.length > 0) {
         // Set initial state to avoid FOUC (Flash of Unstyled Content)
-        gsap.set(cards, { opacity: 0, y: 50 });
+        gsap.set(cards, { opacity: 0, y: 50 })
 
         // Use ScrollTrigger.batch to handle elements individually or in groups
         ScrollTrigger.batch(cards, {
-          start: "top 85%",
-          onEnter: (batch) => {
+          start: 'top 85%',
+          onEnter: batch => {
             gsap.to(batch, {
               opacity: 1,
               y: 0,
               duration: 0.8,
               stagger: 0.2,
-              ease: "power3.out",
+              ease: 'power3.out',
               overwrite: true,
-            });
+            })
           },
           once: true,
-        });
+        })
       }
 
       // Force a refresh after a short delay to ensure layout is settled.
       const timer = setTimeout(() => {
-        ScrollTrigger.refresh();
-      }, 200);
+        ScrollTrigger.refresh()
+      }, 200)
 
       return () => {
-        clearTimeout(timer);
-      };
+        clearTimeout(timer)
+      }
     },
-    { scope: containerRef, dependencies: [] },
-  );
+    { scope: containerRef, dependencies: [] }
+  )
 
   return (
     <section
@@ -94,8 +94,8 @@ export const Testimonials: React.FC = () => {
           {testimonials.map((t, index) => (
             <div
               key={t.id}
-              ref={(el) => {
-                cardsRef.current[index] = el;
+              ref={el => {
+                cardsRef.current[index] = el
               }}
               className="group bg-white p-10 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col justify-between border-t-4 border-brand-accent transform-gpu"
             >
@@ -123,5 +123,5 @@ export const Testimonials: React.FC = () => {
         </div>
       </div>
     </section>
-  );
-};
+  )
+}

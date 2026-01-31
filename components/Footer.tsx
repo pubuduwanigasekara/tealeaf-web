@@ -1,14 +1,14 @@
-import React from "react";
-import { Linkedin, ArrowUp, Mail } from "lucide-react";
-import { ScrollSmoother } from "@/lib/gsap";
+import React from 'react'
+import { Linkedin, ArrowUp, Mail } from 'lucide-react'
+import { ScrollSmoother } from '@/lib/gsap'
 
 export const Footer: React.FC = () => {
   const scrollToTop = () => {
-    const smoother = ScrollSmoother.get();
-    smoother?.scrollTo(0, true);
-  };
+    const smoother = ScrollSmoother.get()
+    smoother?.scrollTo(0, true)
+  }
 
-  const currentYear = new Date().getFullYear();
+  const currentYear = new Date().getFullYear()
 
   return (
     <footer className="bg-[#0b1120] text-white py-12 border-t border-white/5 font-sans relative">
@@ -74,5 +74,5 @@ export const Footer: React.FC = () => {
         </p>
       </div>
     </footer>
-  );
-};
+  )
+}

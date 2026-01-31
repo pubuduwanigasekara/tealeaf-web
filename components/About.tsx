@@ -1,39 +1,39 @@
-import React, { useRef } from "react";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
-import { useGSAP } from "@gsap/react";
+import React, { useRef } from 'react'
+import { gsap, ScrollTrigger } from '@/lib/gsap'
+import { useGSAP } from '@gsap/react'
 
 const Stats = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const statsGridRef = useRef<HTMLDivElement>(null);
-  const numberRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const containerRef = useRef<HTMLDivElement>(null)
+  const statsGridRef = useRef<HTMLDivElement>(null)
+  const numberRefs = useRef<(HTMLDivElement | null)[]>([])
 
   useGSAP(
     () => {
       // Animate numbers
       numberRefs.current.forEach((el, index) => {
-        if (!el) return;
+        if (!el) return
 
-        const finalValue = parseFloat(el.dataset.value || "0");
-        const prefix = el.dataset.prefix || "";
-        const suffix = el.dataset.suffix || "";
+        const finalValue = parseFloat(el.dataset.value || '0')
+        const prefix = el.dataset.prefix || ''
+        const suffix = el.dataset.suffix || ''
 
-        const counter = { val: 0 };
+        const counter = { val: 0 }
 
         gsap.to(counter, {
           val: finalValue,
           duration: 2.5,
           delay: index * 0.3,
-          ease: "power3.out", // Starts quickly, slows down at the end
+          ease: 'power3.out', // Starts quickly, slows down at the end
           scrollTrigger: {
             trigger: statsGridRef.current,
-            start: "top 85%",
-            toggleActions: "play none none none",
+            start: 'top 85%',
+            toggleActions: 'play none none none',
           },
           onUpdate: () => {
-            el.innerText = `${prefix}${Math.floor(counter.val)}${suffix}`;
+            el.innerText = `${prefix}${Math.floor(counter.val)}${suffix}`
           },
-        });
-      });
+        })
+      })
 
       // Animate the cards entrance
       if (statsGridRef.current) {
@@ -42,25 +42,25 @@ const Stats = () => {
           opacity: 0,
           duration: 0.8,
           stagger: 0.3,
-          ease: "power2.out",
+          ease: 'power2.out',
           scrollTrigger: {
             trigger: statsGridRef.current,
-            start: "top 85%",
-            toggleActions: "play none none none",
+            start: 'top 85%',
+            toggleActions: 'play none none none',
           },
-        });
+        })
       }
 
       const timer = setTimeout(() => {
-        ScrollTrigger.refresh();
-      }, 200);
+        ScrollTrigger.refresh()
+      }, 200)
 
       return () => {
-        clearTimeout(timer);
-      };
+        clearTimeout(timer)
+      }
     },
-    { scope: containerRef, dependencies: [] },
-  );
+    { scope: containerRef, dependencies: [] }
+  )
 
   return (
     <div ref={containerRef}>
@@ -68,8 +68,8 @@ const Stats = () => {
         {/* Stat 1 */}
         <div className="bg-white/5 p-6 rounded-xl border border-white/5 hover:border-white/10 transition-colors">
           <div
-            ref={(el) => {
-              numberRefs.current[0] = el;
+            ref={el => {
+              numberRefs.current[0] = el
             }}
             data-value="14"
             data-suffix="+"
@@ -84,8 +84,8 @@ const Stats = () => {
         {/* Stat 2 */}
         <div className="bg-white/5 p-6 rounded-xl border border-white/5 hover:border-white/10 transition-colors">
           <div
-            ref={(el) => {
-              numberRefs.current[1] = el;
+            ref={el => {
+              numberRefs.current[1] = el
             }}
             data-value="100"
             data-prefix="$"
@@ -101,8 +101,8 @@ const Stats = () => {
         {/* Stat 3 */}
         <div className="bg-white/5 p-6 rounded-xl border border-white/5 hover:border-white/10 transition-colors">
           <div
-            ref={(el) => {
-              numberRefs.current[2] = el;
+            ref={el => {
+              numberRefs.current[2] = el
             }}
             data-value="16"
             className="text-3xl text-brand-accent font-bold mb-1"
@@ -116,8 +116,8 @@ const Stats = () => {
         {/* Stat 4 */}
         <div className="bg-white/5 p-6 rounded-xl border border-white/5 hover:border-white/10 transition-colors">
           <div
-            ref={(el) => {
-              numberRefs.current[3] = el;
+            ref={el => {
+              numberRefs.current[3] = el
             }}
             data-value="20"
             data-suffix="+"
@@ -131,16 +131,16 @@ const Stats = () => {
         </div>
       </div>
     </div>
-  );
-};
-Stats.displayName = "Stats";
+  )
+}
+Stats.displayName = 'Stats'
 
 const FounderImg = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const triggerRef = useRef<HTMLDivElement>(null);
-  const dec1Ref = useRef<HTMLDivElement>(null);
-  const dec2Ref = useRef<HTMLDivElement>(null);
-  const imgRef = useRef<HTMLImageElement | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null)
+  const triggerRef = useRef<HTMLDivElement>(null)
+  const dec1Ref = useRef<HTMLDivElement>(null)
+  const dec2Ref = useRef<HTMLDivElement>(null)
+  const imgRef = useRef<HTMLImageElement | null>(null)
 
   useGSAP(
     () => {
@@ -154,14 +154,14 @@ const FounderImg = () => {
           .timeline({
             scrollTrigger: {
               trigger: triggerRef.current,
-              start: "top 50%",
-              toggleActions: "play none none none",
+              start: 'top 50%',
+              toggleActions: 'play none none none',
             },
           })
           .to(imgRef.current, {
             duration: 1.2,
-            filter: "grayscale(0)",
-            ease: "power2.out",
+            filter: 'grayscale(0)',
+            ease: 'power2.out',
           })
           .to(
             dec1Ref.current,
@@ -169,9 +169,9 @@ const FounderImg = () => {
               duration: 1.2,
               xPercent: -10,
               yPercent: -10,
-              ease: "power2.out",
+              ease: 'power2.out',
             },
-            "<",
+            '<'
           )
           .to(
             dec2Ref.current,
@@ -179,22 +179,22 @@ const FounderImg = () => {
               duration: 1.2,
               xPercent: 10,
               yPercent: 10,
-              ease: "power2.out",
+              ease: 'power2.out',
             },
-            "<",
-          );
+            '<'
+          )
       }
 
       const timer = setTimeout(() => {
-        ScrollTrigger.refresh();
-      }, 200);
+        ScrollTrigger.refresh()
+      }, 200)
 
       return () => {
-        clearTimeout(timer);
-      };
+        clearTimeout(timer)
+      }
     },
-    { scope: containerRef, dependencies: [] },
-  );
+    { scope: containerRef, dependencies: [] }
+  )
 
   return (
     <div
@@ -240,9 +240,9 @@ const FounderImg = () => {
         ></div>
       </div>
     </div>
-  );
-};
-FounderImg.displayName = "FounderImg";
+  )
+}
+FounderImg.displayName = 'FounderImg'
 
 export const About: React.FC = () => {
   return (
@@ -274,7 +274,7 @@ export const About: React.FC = () => {
                 intention.
               </p>
               <p>
-                Founded by{" "}
+                Founded by{' '}
                 <span className="text-white font-semibold">Angela Sweeney</span>
                 , a visionary CFO and strategic operator, Tealeaf brings over
                 two decades of hands-on experience across 14 startups and 16 M&A
@@ -297,5 +297,5 @@ export const About: React.FC = () => {
         </div>
       </div>
     </section>
-  );
-};
+  )
+}

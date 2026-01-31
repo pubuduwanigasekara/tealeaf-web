@@ -1,13 +1,13 @@
-import React from "react";
-import { twMerge } from "tailwind-merge";
+import React from 'react'
+import { twMerge } from 'tailwind-merge'
 
 export const BackgroundPattern: React.FC<{ className?: string }> = ({
-  className = "",
+  className = '',
 }) => {
   return (
     <div
       className={twMerge(
-        `absolute inset-0 z-0 pointer-events-none overflow-hidden ${className}`,
+        `absolute inset-0 z-0 pointer-events-none overflow-hidden ${className}`
       )}
     >
       <svg
@@ -61,5 +61,5 @@ export const BackgroundPattern: React.FC<{ className?: string }> = ({
         />
       </svg>
     </div>
-  );
-};
+  )
+}

@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
-import { ArrowLeft } from "lucide-react";
-import { Link } from "react-router-dom";
-import { ScrollSmoother } from "@/lib/gsap";
+import React, { useEffect } from 'react'
+import { ArrowLeft } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { ScrollSmoother } from '@/lib/gsap'
 
 export const PrivacyPolicyPage: React.FC = () => {
   // Ensure we start at the top of the page when mounted
   useEffect(() => {
-    const smoother = ScrollSmoother.get();
-    smoother?.scrollTo(0, false);
-  }, []);
+    const smoother = ScrollSmoother.get()
+    smoother?.scrollTo(0, false)
+  }, [])
 
   return (
     <div className="pt-32 pb-24 bg-brand-cream min-h-screen">
@@ -303,5 +303,5 @@ export const PrivacyPolicyPage: React.FC = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

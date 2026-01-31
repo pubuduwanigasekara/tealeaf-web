@@ -1,6 +1,6 @@
-import React from "react";
-import { Button } from "./ui/Button";
-import { ScrollSmoother } from "@/lib/gsap";
+import React from 'react'
+import { Button } from './ui/Button'
+import { ScrollSmoother } from '@/lib/gsap'
 
 export const Hero: React.FC = () => {
   return (
@@ -75,8 +75,8 @@ export const Hero: React.FC = () => {
               variant="primary"
               icon
               onClick={() => {
-                const smoother = ScrollSmoother.get();
-                smoother?.scrollTo("#contact", true, "top 80px");
+                const smoother = ScrollSmoother.get()
+                smoother?.scrollTo('#contact', true, 'top 80px')
               }}
               className="hidden sm:inline-flex 2xl:py-4"
             >
@@ -87,8 +87,8 @@ export const Hero: React.FC = () => {
               icon
               onClick={() =>
                 document
-                  .getElementById("contact")
-                  ?.scrollIntoView({ behavior: "smooth" })
+                  .getElementById('contact')
+                  ?.scrollIntoView({ behavior: 'smooth' })
               }
               className="sm:hidden"
             >
@@ -98,5 +98,5 @@ export const Hero: React.FC = () => {
         </div>
       </div>
     </section>
-  );
-};
+  )
+}

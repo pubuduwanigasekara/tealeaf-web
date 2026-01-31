@@ -1,24 +1,24 @@
-import React, { useState, useRef, useLayoutEffect, useCallback } from "react";
-import { Plus, ChevronDown } from "lucide-react";
-import { gsap } from "@/lib/gsap";
-import { twMerge } from "tailwind-merge";
-import { useGSAP } from "@gsap/react";
+import React, { useState, useRef, useLayoutEffect, useCallback } from 'react'
+import { Plus, ChevronDown } from 'lucide-react'
+import { gsap } from '@/lib/gsap'
+import { twMerge } from 'tailwind-merge'
+import { useGSAP } from '@gsap/react'
 
-import { TestimonialItem } from "@/lib/types";
-import { useDebouncedScrollTriggerRefresh } from "@/lib/hooks/useDebouncedScrollTriggerRefresh";
+import { TestimonialItem } from '@/lib/types'
+import { useDebouncedScrollTriggerRefresh } from '@/lib/hooks/useDebouncedScrollTriggerRefresh'
 
 // Extended interface for the rich content
-interface ExtendedTestimonialItem extends Omit<TestimonialItem, "quote"> {
-  quote: string; // The preview text
-  content: React.ReactNode; // The full rich text content
+interface ExtendedTestimonialItem extends Omit<TestimonialItem, 'quote'> {
+  quote: string // The preview text
+  content: React.ReactNode // The full rich text content
 }
 
 const testimonials: ExtendedTestimonialItem[] = [
   {
-    id: "1",
-    author: "Sean S. Murphy",
-    role: "CEO",
-    company: "Helix Decision Science",
+    id: '1',
+    author: 'Sean S. Murphy',
+    role: 'CEO',
+    company: 'Helix Decision Science',
     quote: `Angela does not just "manage the financial infrastructure" - she stewards value creation. She understands the "tollgate" fundraising model, ensuring that a company hits specific, measurable milestones at every phase to unlock new rounds of capital.`,
     content: (
       <div className="space-y-8 [&_p]:leading-normal">
@@ -56,20 +56,20 @@ const testimonials: ExtendedTestimonialItem[] = [
           <ul className="space-y-4">
             {[
               {
-                title: "Institutional Readiness & Governance",
-                desc: "Angela implemented the reporting and compliance protocols demanded by top-tier investors. She led our 409A preparation, data cleansing, and audit-readiness, ensuring our valuation is both defensible and market-ready.",
+                title: 'Institutional Readiness & Governance',
+                desc: 'Angela implemented the reporting and compliance protocols demanded by top-tier investors. She led our 409A preparation, data cleansing, and audit-readiness, ensuring our valuation is both defensible and market-ready.',
               },
               {
-                title: "Scalable Financial Infrastructure",
+                title: 'Scalable Financial Infrastructure',
                 desc: 'She moved us beyond basic accounting to a sophisticated, reconciled system across Carta, QuickBooks, Brex, and Shield. This "audit-ready" environment is vital for maintaining investor confidence during rapid scaling.',
               },
               {
-                title: "Strategic Budgeting & Forecasting",
-                desc: "Rather than static spreadsheets, Angela built adaptive forecasting tools and scenario analyses. These models allow us to anticipate capital requirements and tie financial strategy directly to our ARR progress.",
+                title: 'Strategic Budgeting & Forecasting',
+                desc: 'Rather than static spreadsheets, Angela built adaptive forecasting tools and scenario analyses. These models allow us to anticipate capital requirements and tie financial strategy directly to our ARR progress.',
               },
               {
-                title: "Capital Table & Incentive Management",
-                desc: "She managed the complexity of our equity and options programs, providing the clarity necessary to attract and retain elite talent while aligning incentives for future acquirers.",
+                title: 'Capital Table & Incentive Management',
+                desc: 'She managed the complexity of our equity and options programs, providing the clarity necessary to attract and retain elite talent while aligning incentives for future acquirers.',
               },
             ].map((item, i) => (
               <li key={i} className="flex gap-4 items-start">
@@ -115,10 +115,10 @@ const testimonials: ExtendedTestimonialItem[] = [
     ),
   },
   {
-    id: "2",
-    author: "Angela Nibbs",
-    role: "Founder & CEO",
-    company: "Maven PR",
+    id: '2',
+    author: 'Angela Nibbs',
+    role: 'Founder & CEO',
+    company: 'Maven PR',
     quote:
       "Angela Sweeney has been an invaluable partner to Maven. She brings clarity to our financial picture while always keeping the long-term vision in focus. Her guidance helps me make confident decisions about growth, investment, and where I'm taking the business next.",
     content: (
@@ -137,50 +137,50 @@ const testimonials: ExtendedTestimonialItem[] = [
       </div>
     ),
   },
-];
+]
 
 // --- Mobile/Tablet Card Component ---
 const MobileTestimonialCard: React.FC<{ item: ExtendedTestimonialItem }> = ({
   item,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const contentRef = useRef<HTMLDivElement>(null);
-  const innerRef = useRef<HTMLDivElement>(null);
-  const refresh = useDebouncedScrollTriggerRefresh();
+  const [isOpen, setIsOpen] = useState(false)
+  const contentRef = useRef<HTMLDivElement>(null)
+  const innerRef = useRef<HTMLDivElement>(null)
+  const refresh = useDebouncedScrollTriggerRefresh()
 
-  const toggle = useCallback(() => setIsOpen((v) => !v), []);
+  const toggle = useCallback(() => setIsOpen(v => !v), [])
 
   useLayoutEffect(() => {
-    const el = contentRef.current;
-    const inner = innerRef.current;
-    if (!el || !inner) return;
+    const el = contentRef.current
+    const inner = innerRef.current
+    if (!el || !inner) return
 
-    gsap.killTweensOf(el);
+    gsap.killTweensOf(el)
 
     if (isOpen) {
-      const h = inner.scrollHeight;
+      const h = inner.scrollHeight
       gsap.to(el, {
         height: h,
         duration: 0.5,
-        ease: "power2.out",
+        ease: 'power2.out',
         onComplete: () => {
           // let it adapt if content wraps differently
-          gsap.set(el, { height: "auto" });
-          refresh();
+          gsap.set(el, { height: 'auto' })
+          refresh()
         },
-      });
+      })
     } else {
       // if it's auto, lock it first before collapsing
-      const current = el.getBoundingClientRect().height;
-      gsap.set(el, { height: current });
+      const current = el.getBoundingClientRect().height
+      gsap.set(el, { height: current })
       gsap.to(el, {
         height: 0,
         duration: 0.4,
-        ease: "power2.out",
+        ease: 'power2.out',
         onComplete: refresh,
-      });
+      })
     }
-  }, [isOpen, refresh]);
+  }, [isOpen, refresh])
 
   return (
     <div className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-brand-dark/5 flex flex-col gap-6">
@@ -225,26 +225,26 @@ const MobileTestimonialCard: React.FC<{ item: ExtendedTestimonialItem }> = ({
         className="w-full py-3 mt-auto rounded-xl border border-brand-dark/10 text-brand-primary font-bold hover:bg-brand-cream hover:border-brand-primary/20 transition-[background-color,border-color] duration-300 flex items-center justify-center gap-2 group"
       >
         <span className="text-sm uppercase tracking-widest">
-          {isOpen ? "Read Less" : "Read Full Story"}
+          {isOpen ? 'Read Less' : 'Read Full Story'}
         </span>
         <ChevronDown
           size={16}
           className={twMerge(
-            "transition-transform duration-300",
-            isOpen ? "rotate-180" : "group-hover:translate-y-0.5",
+            'transition-transform duration-300',
+            isOpen ? 'rotate-180' : 'group-hover:translate-y-0.5'
           )}
         />
       </button>
     </div>
-  );
-};
+  )
+}
 
 // --- Desktop Accordion Item ---
 interface AccordionItemProps {
-  item: ExtendedTestimonialItem;
-  isOpen: boolean;
-  onClick: () => void;
-  index: number;
+  item: ExtendedTestimonialItem
+  isOpen: boolean
+  onClick: () => void
+  index: number
 }
 
 const AccordionItem: React.FC<AccordionItemProps> = ({
@@ -252,60 +252,60 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
   isOpen,
   onClick,
 }) => {
-  const contentOuterRef = useRef<HTMLDivElement>(null);
-  const contentInnerRef = useRef<HTMLDivElement>(null);
-  const rowRef = useRef<HTMLDivElement>(null);
-  const refresh = useDebouncedScrollTriggerRefresh();
+  const contentOuterRef = useRef<HTMLDivElement>(null)
+  const contentInnerRef = useRef<HTMLDivElement>(null)
+  const rowRef = useRef<HTMLDivElement>(null)
+  const refresh = useDebouncedScrollTriggerRefresh()
 
   // set initial state once
   useLayoutEffect(() => {
-    const outer = contentOuterRef.current;
-    if (!outer) return;
-    gsap.set(outer, { height: 0, opacity: 0 });
-  }, []);
+    const outer = contentOuterRef.current
+    if (!outer) return
+    gsap.set(outer, { height: 0, opacity: 0 })
+  }, [])
 
   // Animate Height on Open/Close
   useGSAP(
     () => {
-      const outer = contentOuterRef.current;
-      const inner = contentInnerRef.current;
-      const row = rowRef.current;
-      if (!outer || !inner || !row) return;
+      const outer = contentOuterRef.current
+      const inner = contentInnerRef.current
+      const row = rowRef.current
+      if (!outer || !inner || !row) return
 
-      const h = inner.scrollHeight;
+      const h = inner.scrollHeight
 
       const t = gsap.timeline({
         onComplete: refresh,
-      });
+      })
 
       if (isOpen) {
         // if outer is auto from a previous open, lock it
-        const current = outer.getBoundingClientRect().height;
-        gsap.set(outer, { height: current });
+        const current = outer.getBoundingClientRect().height
+        gsap.set(outer, { height: current })
 
         t.to(outer, {
           height: h,
           opacity: 1,
           duration: 0.6,
-          ease: "expo.out",
-        }).set(outer, { height: "auto" });
+          ease: 'expo.out',
+        }).set(outer, { height: 'auto' })
 
-        t.set(row, { backgroundColor: "#ffffff" }, 0);
+        t.set(row, { backgroundColor: '#ffffff' }, 0)
       } else {
-        const current = outer.getBoundingClientRect().height;
-        gsap.set(outer, { height: current });
+        const current = outer.getBoundingClientRect().height
+        gsap.set(outer, { height: current })
 
         t.to(outer, {
           height: 0,
           opacity: 0,
           duration: 0.5,
-          ease: "power3.inOut",
-        });
-        t.set(row, { backgroundColor: "transparent" }, 0);
+          ease: 'power3.inOut',
+        })
+        t.set(row, { backgroundColor: 'transparent' }, 0)
       }
     },
-    { scope: rowRef, dependencies: [isOpen, refresh] },
-  );
+    { scope: rowRef, dependencies: [isOpen, refresh] }
+  )
 
   return (
     <div
@@ -316,8 +316,8 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
       <button
         onClick={onClick}
         className={twMerge(
-          "w-full py-12 px-4 md:px-0 grid grid-cols-12 gap-6 items-start text-left group transition-[background-color,color] duration-300",
-          isOpen ? "text-brand-dark" : "text-brand-dark hover:bg-white",
+          'w-full py-12 px-4 md:px-0 grid grid-cols-12 gap-6 items-start text-left group transition-[background-color,color] duration-300',
+          isOpen ? 'text-brand-dark' : 'text-brand-dark hover:bg-white'
         )}
       >
         {/* 1. Info (Col 1-3) - Name & Company - Sticky-ish alignment */}
@@ -337,8 +337,8 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
         <div className="col-span-8 px-4">
           <p
             className={twMerge(
-              "max-w-3xl font-serif text-2xl/8 text-brand-dark line-clamp-4 transition-opacity duration-100",
-              isOpen ? "opacity-0" : "opacity-100",
+              'max-w-3xl font-serif text-2xl/8 text-brand-dark line-clamp-4 transition-opacity duration-100',
+              isOpen ? 'opacity-0' : 'opacity-100'
             )}
           >
             <span className="text-brand-accent pr-2"> &ldquo;</span>
@@ -351,16 +351,16 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
         <div className="col-span-1 flex items-start justify-end pr-8 pt-1">
           <div
             className={twMerge(
-              "relative w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500",
+              'relative w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500',
               isOpen
-                ? "rotate-45 bg-brand-dark/5"
-                : "group-hover:bg-brand-dark/5",
+                ? 'rotate-45 bg-brand-dark/5'
+                : 'group-hover:bg-brand-dark/5'
             )}
           >
             <Plus
               className={twMerge(
-                "w-6 h-6",
-                isOpen ? "text-brand-dark" : "text-brand-dark/40",
+                'w-6 h-6',
+                isOpen ? 'text-brand-dark' : 'text-brand-dark/40'
               )}
             />
           </div>
@@ -404,39 +404,39 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 export const Testimonials: React.FC = () => {
   // Use a state array to allow multiple items to be open at once
-  const [activeIndices, setActiveIndices] = useState<number[]>([]);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const headerRef = useRef<HTMLDivElement>(null);
-  const desktopListRef = useRef<HTMLDivElement>(null);
-  const mobileListRef = useRef<HTMLDivElement>(null);
+  const [activeIndices, setActiveIndices] = useState<number[]>([])
+  const containerRef = useRef<HTMLDivElement>(null)
+  const headerRef = useRef<HTMLDivElement>(null)
+  const desktopListRef = useRef<HTMLDivElement>(null)
+  const mobileListRef = useRef<HTMLDivElement>(null)
 
   const handleToggle = useCallback((index: number) => {
-    setActiveIndices((prev) =>
-      prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index],
-    );
-  }, []);
+    setActiveIndices(prev =>
+      prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index]
+    )
+  }, [])
 
   useGSAP(
     () => {
-      const root = containerRef.current;
-      if (!root) return;
+      const root = containerRef.current
+      if (!root) return
 
       // Header Animation
       gsap.from(headerRef.current, {
         opacity: 0,
         y: 20,
         duration: 1,
-        ease: "power3.out",
+        ease: 'power3.out',
         scrollTrigger: {
           trigger: containerRef.current,
-          start: "top 80%",
+          start: 'top 80%',
         },
-      });
+      })
 
       // Desktop List Entrance
       if (desktopListRef.current) {
@@ -445,12 +445,12 @@ export const Testimonials: React.FC = () => {
           y: 40,
           duration: 0.8,
           stagger: 0.15,
-          ease: "power2.out",
+          ease: 'power2.out',
           scrollTrigger: {
             trigger: desktopListRef.current,
-            start: "top 85%",
+            start: 'top 85%',
           },
-        });
+        })
       }
 
       // Mobile List Entrance
@@ -460,16 +460,16 @@ export const Testimonials: React.FC = () => {
           y: 40,
           duration: 0.8,
           stagger: 0.15,
-          ease: "power2.out",
+          ease: 'power2.out',
           scrollTrigger: {
             trigger: mobileListRef.current,
-            start: "top 85%",
+            start: 'top 85%',
           },
-        });
+        })
       }
     },
-    { scope: containerRef, dependencies: [] },
-  );
+    { scope: containerRef, dependencies: [] }
+  )
 
   return (
     <section
@@ -490,7 +490,7 @@ export const Testimonials: React.FC = () => {
 
         {/* Mobile/Tablet View (Cards) - Visible below LG */}
         <div ref={mobileListRef} className="lg:hidden flex flex-col gap-6">
-          {testimonials.map((item) => (
+          {testimonials.map(item => (
             <MobileTestimonialCard key={item.id} item={item} />
           ))}
         </div>
@@ -512,5 +512,5 @@ export const Testimonials: React.FC = () => {
         </div>
       </div>
     </section>
-  );
-};
+  )
+}

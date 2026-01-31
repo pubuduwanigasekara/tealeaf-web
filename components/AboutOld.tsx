@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react'
 
 export const About: React.FC = () => {
   // Using a direct string path instead of an ESM import
-  const founderImgPath = "./assets/founder.png";
+  const founderImgPath = './assets/founder.png'
 
   return (
     <section id="about" className="py-24 bg-white">
@@ -14,9 +14,9 @@ export const About: React.FC = () => {
               <img
                 src={founderImgPath}
                 alt="Angela Sweeney"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src =
-                    "https://picsum.photos/800/800?grayscale";
+                onError={e => {
+                  ;(e.target as HTMLImageElement).src =
+                    'https://picsum.photos/800/800?grayscale'
                 }}
                 className="w-full h-full object-cover rounded-2xl relative z-10 shadow-xl filter grayscale hover:grayscale-0 transition-[filter] duration-700"
               />
@@ -51,21 +51,21 @@ export const About: React.FC = () => {
               <p>
                 Founded by Angela Sweeney, a visionary CFO and strategic
                 operator, Tealeaf brings over two decades of hands-on experience
-                across{" "}
+                across{' '}
                 <span className="font-semibold text-brand-dark">
                   14 startups
-                </span>{" "}
-                and{" "}
+                </span>{' '}
+                and{' '}
                 <span className="font-semibold text-brand-dark">
                   16 M&A transactions
                 </span>
                 .
               </p>
               <p>
-                With more than{" "}
+                With more than{' '}
                 <span className="text-brand-primary font-bold">
                   $100 million
-                </span>{" "}
+                </span>{' '}
                 raised in capital and a track record spanning SaaS, biotech,
                 fintech, and emerging technologies, Angela builds the financial
                 and operational frameworks that turn ambition into sustainable
@@ -107,5 +107,5 @@ export const About: React.FC = () => {
         </div>
       </div>
     </section>
-  );
-};
+  )
+}

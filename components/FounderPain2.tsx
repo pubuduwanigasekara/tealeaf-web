@@ -1,14 +1,14 @@
-import React, { useLayoutEffect, useRef } from "react";
+import React, { useLayoutEffect, useRef } from 'react'
 import {
   MessageCircleQuestion,
   TrendingDown,
   FileSpreadsheet,
   UserCog,
   ArrowRight,
-} from "lucide-react";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
-import SplitType from "split-type";
-import { useGSAP } from "@gsap/react";
+} from 'lucide-react'
+import { gsap, ScrollTrigger } from '@/lib/gsap'
+import SplitType from 'split-type'
+import { useGSAP } from '@gsap/react'
 
 const painPoints = [
   {
@@ -18,35 +18,35 @@ const painPoints = [
   },
   {
     id: 2,
-    text: "Cash burn feels unclear month-to-month.",
+    text: 'Cash burn feels unclear month-to-month.',
     icon: TrendingDown,
   },
   {
     id: 3,
-    text: "Financials held together by spreadsheets and workarounds.",
+    text: 'Financials held together by spreadsheets and workarounds.',
     icon: FileSpreadsheet,
   },
   {
     id: 4,
-    text: "You know you need CFO-level insight, just not full-time.",
+    text: 'You know you need CFO-level insight, just not full-time.',
     icon: UserCog,
   },
-];
+]
 
 export const FounderPain: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const listRef = useRef<HTMLDivElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const ctaRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null)
+  const listRef = useRef<HTMLDivElement>(null)
+  const titleRef = useRef<HTMLHeadingElement>(null)
+  const ctaRef = useRef<HTMLDivElement>(null)
 
   useGSAP(
     () => {
       // 1. Title Animation
-      const title = titleRef.current;
+      const title = titleRef.current
       if (title) {
         // Set visible immediately before split to avoid issues, but start with opacity 0 in CSS via initial render or set here
-        gsap.set(title, { opacity: 1 });
-        const titleSplit = new SplitType(title, { types: "words,chars" });
+        gsap.set(title, { opacity: 1 })
+        const titleSplit = new SplitType(title, { types: 'words,chars' })
 
         gsap.fromTo(
           titleSplit.chars,
@@ -54,46 +54,46 @@ export const FounderPain: React.FC = () => {
           {
             scrollTrigger: {
               trigger: title,
-              start: "top 80%",
+              start: 'top 80%',
             },
             y: 0,
             opacity: 1,
             duration: 1,
             stagger: 0.02,
-            ease: "back.out(1.2)",
-          },
-        );
+            ease: 'back.out(1.2)',
+          }
+        )
       }
 
       // 2. Rows Animation
-      const rows = gsap.utils.toArray<HTMLElement>(".pain-row");
+      const rows = gsap.utils.toArray<HTMLElement>('.pain-row')
 
-      rows.forEach((row) => {
-        const icon = row.querySelector(".pain-icon");
-        const text = row.querySelector(".pain-text");
+      rows.forEach(row => {
+        const icon = row.querySelector('.pain-icon')
+        const text = row.querySelector('.pain-text')
 
         // Initial states
-        gsap.set(icon, { scale: 0, opacity: 0 });
+        gsap.set(icon, { scale: 0, opacity: 0 })
 
         if (text) {
-          const split = new SplitType(text as HTMLElement, { types: "words" });
+          const split = new SplitType(text as HTMLElement, { types: 'words' })
           // Ensure words are hidden initially
-          gsap.set(split.words, { opacity: 0, y: 15 });
+          gsap.set(split.words, { opacity: 0, y: 15 })
 
           const tl = gsap.timeline({
             scrollTrigger: {
               trigger: row,
-              start: "top 80%", // Trigger slightly earlier
+              start: 'top 80%', // Trigger slightly earlier
             },
-          });
+          })
 
           // Icon Pop
           tl.to(icon, {
             scale: 1,
             opacity: 1,
             duration: 0.6,
-            ease: "power2.out",
-          });
+            ease: 'power2.out',
+          })
 
           // Word by word reveal
           tl.to(
@@ -103,12 +103,12 @@ export const FounderPain: React.FC = () => {
               opacity: 1,
               duration: 0.8,
               stagger: 0.04,
-              ease: "power2.out",
+              ease: 'power2.out',
             },
-            "-=0.4",
-          );
+            '-=0.4'
+          )
         }
-      });
+      })
 
       // 3. CTA Animation
       if (ctaRef.current) {
@@ -119,26 +119,26 @@ export const FounderPain: React.FC = () => {
             opacity: 1,
             y: 0,
             duration: 1,
-            ease: "power3.out",
+            ease: 'power3.out',
             scrollTrigger: {
               trigger: listRef.current,
-              start: "bottom 80%",
+              start: 'bottom 80%',
             },
-          },
-        );
+          }
+        )
       }
 
       // Refresh needed for SplitType calculation sometimes
       const timer = setTimeout(() => {
-        ScrollTrigger.refresh();
-      }, 200);
+        ScrollTrigger.refresh()
+      }, 200)
 
       return () => {
-        clearTimeout(timer);
-      };
+        clearTimeout(timer)
+      }
     },
-    { scope: containerRef },
-  );
+    { scope: containerRef }
+  )
 
   return (
     <section className="py-24 bg-white relative overflow-hidden">
@@ -157,7 +157,7 @@ export const FounderPain: React.FC = () => {
           ref={listRef}
           className="flex flex-col gap-12 max-w-3xl mx-auto mb-20"
         >
-          {painPoints.map((point) => (
+          {painPoints.map(point => (
             <div
               key={point.id}
               className="pain-row flex items-center gap-6 md:gap-8 group"
@@ -180,8 +180,8 @@ export const FounderPain: React.FC = () => {
           <button
             onClick={() =>
               document
-                .getElementById("why")
-                ?.scrollIntoView({ behavior: "smooth" })
+                .getElementById('why')
+                ?.scrollIntoView({ behavior: 'smooth' })
             }
             className="group relative flex items-center gap-4 py-4 px-8 rounded-full transition-colors duration-500 hover:bg-brand-cream/50"
           >
@@ -198,5 +198,5 @@ export const FounderPain: React.FC = () => {
         </div>
       </div>
     </section>
-  );
-};
+  )
+}
