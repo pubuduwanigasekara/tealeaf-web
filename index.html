@@ -55,6 +55,157 @@
       name="twitter:image"
       content="https://www.tealeafconsult.com/static/og-image.png"
     />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://www.tealeafconsult.com/#organization",
+            "name": "Tealeaf Consulting",
+            "legalName": "Tealeaf Consulting",
+            "url": "https://www.tealeafconsult.com",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://www.tealeafconsult.com/static/logo.png",
+              "width": 864,
+              "height": 327
+            },
+            "description": "Strategic financial leadership for venture-backed founders. We build the investor-ready financial infrastructure you need to scale, raise capital, and exit with confidence.",
+            "founder": {
+              "@type": "Person",
+              "@id": "https://www.tealeafconsult.com/#founder",
+              "name": "Angela Sweeney",
+              "jobTitle": "Founder & Strategic Financial Advisor",
+              "image": "https://www.tealeafconsult.com/static/founder.png"
+            },
+            "areaServed": [
+              {
+                "@type": "Place",
+                "name": "North America"
+              },
+              {
+                "@type": "Place",
+                "name": "International"
+              }
+            ],
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "email": "hello@tealeafconsult.com",
+              "contactType": "customer service",
+              "availableLanguage": "English"
+            },
+            "sameAs": ["https://www.linkedin.com/in/angelajsweeney"]
+          },
+          {
+            "@type": "ProfessionalService",
+            "@id": "https://www.tealeafconsult.com/#service",
+            "name": "Tealeaf Consulting",
+            "url": "https://www.tealeafconsult.com",
+            "logo": "https://www.tealeafconsult.com/static/logo.png",
+            "description": "Strategic financial leadership for venture-backed founders",
+            "areaServed": [
+              {
+                "@type": "Place",
+                "name": "North America"
+              },
+              {
+                "@type": "Place",
+                "name": "International"
+              }
+            ],
+            "hasOfferCatalog": {
+              "@type": "OfferCatalog",
+              "name": "Financial Services",
+              "itemListElement": [
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Bookkeeping and Accounting",
+                    "description": "Building scalable financial systems from day one."
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Financial Controller Services",
+                    "description": "Optimizing performance through strategic financial management."
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Fractional CFO Partnership",
+                    "description": "Partner with financial leadership for critical decisions."
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://www.tealeafconsult.com/#website",
+            "url": "https://www.tealeafconsult.com",
+            "name": "Tealeaf Consulting",
+            "description": "Strategic Financial Leadership for Founders",
+            "publisher": {
+              "@id": "https://www.tealeafconsult.com/#organization"
+            },
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "Review",
+            "@id": "https://www.tealeafconsult.com/#review1",
+            "itemReviewed": {
+              "@id": "https://www.tealeafconsult.com/#organization"
+            },
+            "author": {
+              "@type": "Person",
+              "name": "Sean S. Murphy",
+              "jobTitle": "CEO",
+              "worksFor": {
+                "@type": "Organization",
+                "name": "Helix Decision Science"
+              }
+            },
+            "reviewRating": {
+              "@type": "Rating",
+              "ratingValue": 5,
+              "bestRating": 5
+            },
+            "reviewBody": "Angela does not just \"manage the financial infrastructure\" - she stewards value creation. She understands the \"tollgate\" fundraising model, ensuring that a company hits specific, measurable milestones at every phase to unlock new rounds of capital."
+          },
+          {
+            "@type": "Review",
+            "@id": "https://www.tealeafconsult.com/#review2",
+            "itemReviewed": {
+              "@id": "https://www.tealeafconsult.com/#organization"
+            },
+            "author": {
+              "@type": "Person",
+              "name": "Angela Nibbs",
+              "jobTitle": "Founder & CEO",
+              "worksFor": {
+                "@type": "Organization",
+                "name": "Maven PR"
+              }
+            },
+            "reviewRating": {
+              "@type": "Rating",
+              "ratingValue": 5,
+              "bestRating": 5
+            },
+            "reviewBody": "Angela Sweeney has been an invaluable partner to Maven. She brings clarity to our financial picture while always keeping the long-term vision in focus. Her guidance helps me make confident decisions about growth, investment, and where I'm taking the business next."
+          }
+        ]
+      }
+    </script>
+
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="shortcut icon" href="/favicon.ico" />
