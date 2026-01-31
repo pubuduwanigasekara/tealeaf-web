@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { gsap, ScrollTrigger } from '@/lib/gsap';
 
 import { TestimonialItem } from '@/lib/types';

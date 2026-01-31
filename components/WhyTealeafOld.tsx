@@ -32,10 +32,10 @@ export const WhyTealeaf: React.FC = () => {
             </p>
             <p>
               Our mission is to build the financial backbone that transforms
-              promising startups into market-leading companies. We don't just
-              handle your finances; we architect the systems, strategies, and
-              insights that fuel sustainable growth from seedling to successful
-              exit.
+              promising startups into market-leading companies. We don&apos;t
+              just handle your finances; we architect the systems, strategies,
+              and insights that fuel sustainable growth from seedling to
+              successful exit.
             </p>
             <p>
               From fundraising preparation to building investor-ready financial

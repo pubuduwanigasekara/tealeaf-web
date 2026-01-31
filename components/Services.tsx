@@ -137,6 +137,7 @@ const ServiceCard = React.forwardRef<
             {/* CTA Action */}
             <div className="pt-2">
               <button
+                type="button"
                 className="group/btn inline-flex items-center gap-2 text-brand-primary font-bold hover:text-brand-accent transition-colors duration-500"
                 onClick={() => {
                   const smoother = ScrollSmoother.get();

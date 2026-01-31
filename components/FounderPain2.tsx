@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import {
   MessageCircleQuestion,
   TrendingDown,
@@ -175,6 +175,7 @@ export const FounderPain: React.FC = () => {
         {/* CTA */}
         <div ref={ctaRef} className="flex justify-center opacity-0">
           <button
+            type="button"
             onClick={() =>
               document
                 .getElementById('why')

@@ -56,6 +56,7 @@ export const Footer: React.FC = () => {
 
           {/* Scroll To Top - Hidden on Mobile */}
           <button
+            type="button"
             onClick={scrollToTop}
             className="hidden md:flex w-11 h-11 rounded-full bg-white/5 border border-white/5 items-center justify-center text-gray-400 hover:bg-brand-primary hover:text-white hover:border-brand-primary transition-[background,color,border-color] duration-300"
             aria-label="Back to top">

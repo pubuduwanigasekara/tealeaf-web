@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { gsap, ScrollTrigger } from '@/lib/gsap';
 import { useGSAP } from '@gsap/react';
 
@@ -130,7 +130,7 @@ export const WhyTealeaf: React.FC = () => {
           {/* Headline */}
           <div className="max-w-xl">
             <h2 className="text-4xl md:text-6xl font-serif font-medium leading-[1.15] tracking-tight">
-              We don't just handle your finances, we{' '}
+              We don&apos;t just handle your finances, we{' '}
               <span className="relative inline-block">
                 <span className="relative z-10">architect</span>
                 <span className="absolute bottom-1 left-0 w-full h-3 bg-brand-accent/90 rounded-sm z-0"></span>
@@ -156,9 +156,9 @@ export const WhyTealeaf: React.FC = () => {
             {/* Quote Block */}
             <blockquote className="border-l-4 border-brand-accent pl-6 py-1 my-6">
               <p className="text-xl text-white font-medium tracking-wide">
-                "Our comprehensive approach ensures every financial decision
-                strengthens your competitive position and accelerates your path
-                to scale."
+                &quot;Our comprehensive approach ensures every financial
+                decision strengthens your competitive position and accelerates
+                your path to scale.&quot;
               </p>
             </blockquote>
           </div>

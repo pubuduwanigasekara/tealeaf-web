@@ -60,7 +60,7 @@ export const Button: React.FC<ButtonProps> = ({
   }
 
   return (
-    <button className={combinedClasses} {...props}>
+    <button type="button" className={combinedClasses} {...props}>
       {children}
       {icon && (
         <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 duration-300 transition-transform" />

@@ -36,10 +36,11 @@ export const PrivacyPolicyPage: React.FC = () => {
               Introduction
             </h2>
             <p className="mb-4">
-              Tealeaf Consulting ("we," "our," or "us") is committed to
-              protecting your privacy. This Privacy Policy explains how we
-              collect, use, disclose, and safeguard your information when you
-              visit our website or use our services.
+              Tealeaf Consulting (&quot;we,&quot; &quot;our,&quot; or
+              &quot;us&quot;) is committed to protecting your privacy. This
+              Privacy Policy explains how we collect, use, disclose, and
+              safeguard your information when you visit our website or use our
+              services.
             </p>
             <p>
               Please read this privacy policy carefully. If you do not agree

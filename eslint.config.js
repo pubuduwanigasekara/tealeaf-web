@@ -1,3 +1,4 @@
+import { defineConfig } from 'eslint/config';
 import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import react from 'eslint-plugin-react';
@@ -6,8 +7,17 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 import prettierConfig from 'eslint-config-prettier';
 import prettierPlugin from 'eslint-plugin-prettier';
 
-export default tseslint.config(
-  { ignores: ['dist', 'node_modules'] },
+export default defineConfig(
+  {
+    ignores: [
+      'dist',
+      'node_modules',
+      'build',
+      '.env',
+      '.env.local',
+      'vite.config.ts',
+    ],
+  },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ['**/*.{ts,tsx}'],

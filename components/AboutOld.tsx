@@ -72,8 +72,9 @@ export const About: React.FC = () => {
                 systems that actually scale.
               </p>
               <p className="font-medium italic text-brand-dark">
-                "We believe that growth should be deliberate, financially sound,
-                well-supported, and most importantly - built to last."
+                &quot;We believe that growth should be deliberate, financially
+                sound, well-supported, and most importantly - built to
+                last.&quot;
               </p>
             </div>
 

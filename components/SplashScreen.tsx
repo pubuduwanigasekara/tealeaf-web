@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { gsap } from '@/lib/gsap';
 import { useGSAP } from '@gsap/react';
 

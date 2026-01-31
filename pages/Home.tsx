@@ -39,7 +39,7 @@ export const HomePage: React.FC = () => {
       // Default scroll to top
       smoother?.scrollTo(0, true);
     }
-  }, [location]);
+  }, [location, smoother]);
 
   return (
     <>

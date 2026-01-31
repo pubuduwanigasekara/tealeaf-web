@@ -41,9 +41,9 @@ export const NotFoundPage: React.FC = () => {
             Strategic Detour.
           </h2>
           <p className="text-lg md:text-xl text-brand-gray/70 leading-relaxed max-w-lg mx-auto font-light">
-            The path to scaling isn't always linear.{' '}
+            The path to scaling isn&apos;t always linear.{' '}
             <br className="hidden sm:block" />
-            Let's get you back to the right trajectory.
+            Let&apos;s get you back to the right trajectory.
           </p>
         </div>
 

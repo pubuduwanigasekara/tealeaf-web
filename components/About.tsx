@@ -212,8 +212,8 @@ const FounderImg = () => {
           {/* Quote Text */}
           <div className="absolute bottom-0 left-0 right-0 p-8 z-20">
             <p className="text-xl md:text-2xl font-serif font-medium italic text-white mb-4 leading-snug drop-shadow-sm">
-              "We believe that growth should be deliberate, financially sound,
-              and built to last."
+              &quot;We believe that growth should be deliberate, financially
+              sound, and built to last.&quot;
             </p>
             <div className="flex items-center gap-3">
               <div className="h-[2px] w-8 bg-brand-accent"></div>

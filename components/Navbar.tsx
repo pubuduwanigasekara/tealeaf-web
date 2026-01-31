@@ -134,6 +134,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
 
           {/* Close Button */}
           <button
+            type="button"
             className="p-2 text-brand-dark hover:text-brand-accent transition-colors"
             onClick={onClose}
             aria-label="Close menu">
@@ -218,7 +219,6 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
 export const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [scrollbarWidth, setScrollbarWidth] = useState(0);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -230,22 +230,27 @@ export const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Handle Scrollbar Width compensation & Body Lock
+  // Handle Body Lock
   useEffect(() => {
     if (isMobileMenuOpen) {
       const width = window.innerWidth - document.documentElement.clientWidth;
-      setScrollbarWidth(width);
       document.body.style.overflow = 'hidden';
       document.body.style.paddingRight = `${width}px`;
     } else {
       const timer = setTimeout(() => {
         document.body.style.overflow = '';
         document.body.style.paddingRight = '';
-        setScrollbarWidth(0);
       }, 2000);
       return () => clearTimeout(timer);
     }
   }, [isMobileMenuOpen]);
+
+  // Calculate scrollbar width when needed
+  const getScrollbarWidth = () => {
+    return isMobileMenuOpen
+      ? window.innerWidth - document.documentElement.clientWidth
+      : 0;
+  };
 
   // Unified navigation handler
   const handleNavigation = (id: string, offset?: number) => {
@@ -274,7 +279,9 @@ export const Navbar: React.FC = () => {
           paddingClass,
           bgClass
         )}
-        style={{ paddingRight: isMobileMenuOpen ? `${scrollbarWidth}px` : '' }}>
+        style={{
+          paddingRight: isMobileMenuOpen ? `${getScrollbarWidth()}px` : '',
+        }}>
         <div className="container mx-auto px-6 flex justify-between items-center">
           {/* Logo */}
           <Link
@@ -318,6 +325,7 @@ export const Navbar: React.FC = () => {
 
           {/* Mobile Menu Button */}
           <button
+            type="button"
             className="lg:hidden text-brand-dark hover:text-brand-accent transition-colors p-2"
             onClick={() => setIsMobileMenuOpen(true)}
             aria-label="Open menu">

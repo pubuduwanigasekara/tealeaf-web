@@ -24,8 +24,9 @@ export const CallToAction: React.FC = () => {
             <span className="text-brand-accent italic">intention?</span>
           </h2>
           <p className="text-xl text-gray-300 mb-12 max-w-2xl mx-auto">
-            In 30 minutes, we'll identify gaps in your financial foundation and
-            outline exactly what's needed to support your next stage of growth.
+            In 30 minutes, we&apos;ll identify gaps in your financial foundation
+            and outline exactly what&apos;s needed to support your next stage of
+            growth.
           </p>
         </div>
 
