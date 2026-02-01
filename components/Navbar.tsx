@@ -262,8 +262,8 @@ export const Navbar: React.FC = () => {
   // Unified navigation handler
   const handleNavigation = (id: string, offset?: number) => {
     if (pathname !== "/") {
-      // If we are not on home, navigate to home and pass the target ID in state
-      router.push(`/?scrollTo=${id}`);
+      // If we are not on home, navigate to home
+      router.push("/");
     } else {
       const smoother = ScrollSmoother.get();
       smoother?.scrollTo(`#${id}`, true, offset ? `top ${offset}px` : "top");
@@ -306,38 +306,42 @@ export const Navbar: React.FC = () => {
             />
           </Link>
 
-          {/* Desktop Links */}
-          <div className="hidden lg:flex items-center space-x-8">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                onClick={(e: React.MouseEvent) => {
-                  e.preventDefault();
-                  handleNavigation(link.id, link.offset);
-                }}
-                className={twMerge(
-                  "text-sm font-medium transition-colors uppercase tracking-wider hover:text-brand-accent",
-                  isScrolled ? "text-brand-dark/80" : "text-brand-dark/90"
-                )}>
-                {link.name}
-              </Link>
-            ))}
-            <Button
-              variant="primary"
-              onClick={() => handleNavigation("contact", 80)}>
-              Contact Us
-            </Button>
-          </div>
+          {/* Desktop Links - Only show on home page */}
+          {pathname === "/" && (
+            <div className="hidden lg:flex items-center space-x-8">
+              {NAV_LINKS.map((link) => (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  onClick={(e: React.MouseEvent) => {
+                    e.preventDefault();
+                    handleNavigation(link.id, link.offset);
+                  }}
+                  className={twMerge(
+                    "text-sm font-medium transition-colors uppercase tracking-wider hover:text-brand-accent",
+                    isScrolled ? "text-brand-dark/80" : "text-brand-dark/90"
+                  )}>
+                  {link.name}
+                </Link>
+              ))}
+              <Button
+                variant="primary"
+                onClick={() => handleNavigation("contact", 80)}>
+                Contact Us
+              </Button>
+            </div>
+          )}
 
-          {/* Mobile Menu Button */}
-          <button
-            type="button"
-            className="lg:hidden text-brand-dark hover:text-brand-accent transition-colors p-2"
-            onClick={() => setIsMobileMenuOpen(true)}
-            aria-label="Open menu">
-            <Menu size={28} />
-          </button>
+          {/* Mobile Menu Button - Only show on home page */}
+          {pathname === "/" && (
+            <button
+              type="button"
+              className="lg:hidden text-brand-dark hover:text-brand-accent transition-colors p-2"
+              onClick={() => setIsMobileMenuOpen(true)}
+              aria-label="Open menu">
+              <Menu size={28} />
+            </button>
+          )}
         </div>
       </nav>
 

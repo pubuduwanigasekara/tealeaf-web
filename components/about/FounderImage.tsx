@@ -78,10 +78,9 @@ export const FounderImage = () => {
             ref={imgRef}
             src={founderImg}
             alt="Angela Sweeney"
-            className="object-cover filter grayscale"
-            fill
-            sizes="(max-width: 768px) 100vw, 50vw"
+            className="w-full h-full object-cover filter grayscale"
             loading="lazy"
+            placeholder="blur"
           />
 
           {/* Gradient Overlay for text readability at bottom */}

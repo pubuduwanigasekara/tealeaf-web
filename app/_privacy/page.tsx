@@ -1,10 +1,9 @@
-import React from "react";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
-export const PrivacyPolicyPage: React.FC = () => {
+export default function PrivacyPolicyPage() {
   return (
-    <div className="pt-32 pb-24 bg-brand-cream min-h-screen">
+    <div className="pt-48 pb-24 bg-brand-cream min-h-screen">
       <div className="container mx-auto px-6 max-w-3xl">
         {/* Header Section */}
         <div className="mb-12">
@@ -297,4 +296,4 @@ export const PrivacyPolicyPage: React.FC = () => {
       </div>
     </div>
   );
-};
+}

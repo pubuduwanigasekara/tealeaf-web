@@ -83,11 +83,10 @@ export const Hero: React.FC = () => {
             <Button
               variant="primary"
               icon
-              onClick={() =>
-                document
-                  .getElementById("contact")
-                  ?.scrollIntoView({ behavior: "smooth" })
-              }
+              onClick={() => {
+                const smoother = ScrollSmoother.get();
+                smoother?.scrollTo("#contact", true, "top 80px");
+              }}
               className="sm:hidden">
               Book a Call
             </Button>

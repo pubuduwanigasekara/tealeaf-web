@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState, useLayoutEffect, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { gsap, ScrollTrigger, ScrollSmoother } from "@/lib/gsap";
 import { SplashScreen } from "./SplashScreen";
 
@@ -25,10 +26,21 @@ export function SmoothScrollProvider({
   // Always show splash screen on initial load/refresh
   const [showSplash, setShowSplash] = useState(true);
   const [contentReady, setContentReady] = useState(false);
+  const pathname = usePathname();
 
   const handleSplashComplete = () => {
     setShowSplash(false);
   };
+
+  // Scroll to top on route change
+  useEffect(() => {
+    if (contentReady) {
+      const smoother = ScrollSmoother.get();
+      if (smoother) {
+        smoother.scrollTo(0, false); // Instant scroll to top, no animation
+      }
+    }
+  }, [pathname, contentReady]);
 
   useLayoutEffect(() => {
     setTimeout(() => {

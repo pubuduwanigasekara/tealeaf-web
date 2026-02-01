@@ -93,7 +93,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-100 flex flex-col items-center justify-center bg-linear-to-br from-[#fffdfa] via-[#fff5f0] to-[#fceee9] text-brand-dark overflow-hidden">
+      className="fixed inset-0 z-100 flex flex-col items-center justify-center bg-linear-to-br from-[#fffdfa] via-[#fff5f0] to-[#fceee9] text-brand-dark overflow-hidden translate-y-[0%]">
       {/* Background decoration */}
       <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
         {/* Warm main glow - Top Right */}
@@ -180,19 +180,19 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
           ref={logoRef}
           src={logoSmall}
           alt="Tealeaf Logo"
-          className="h-16 w-auto mb-10"
+          className="h-16 w-auto mb-10 opacity-0 translate-y-[20px]"
           loading="eager"
         />
 
         <div className="overflow-hidden mb-2">
           <h1
             ref={textRef}
-            className="text-4xl md:text-5xl font-serif italic font-medium leading-normal! text-brand-dark"
+            className="text-4xl md:text-5xl font-serif italic leading-normal! text-brand-dark"
             aria-label={brandName}>
             {brandName.split("").map((char, index) => (
               <span
                 key={index}
-                className="char inline-block whitespace-pre will-change-transform">
+                className="char inline-block whitespace-pre will-change-transform opacity-0 translate-y-[40px]">
                 {char}
               </span>
             ))}
@@ -202,7 +202,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
         {/* Accent Line */}
         <div
           ref={lineRef}
-          className="h-1 bg-brand-accent w-24 md:w-32 rounded-full mt-6"
+          className="h-1 bg-brand-accent w-24 md:w-32 rounded-full mt-6 scale-x-0 transform-origin-left"
         />
       </div>
     </div>

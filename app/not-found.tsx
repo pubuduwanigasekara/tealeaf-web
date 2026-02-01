@@ -50,7 +50,7 @@ export default function NotFound() {
             <Button
               variant="primary"
               icon
-              className="px-10! py-4! text-lg shadow-xl hover:shadow-2xl hover:shadow-brand-accent/20 transition-transform hover:-translate-y-1">
+              className="px-10 py-4 text-lg shadow-xl hover:shadow-2xl hover:shadow-brand-accent/20 transition-transform hover:-translate-y-1">
               Return to Home
             </Button>
           </Link>
