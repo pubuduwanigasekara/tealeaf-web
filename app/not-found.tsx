@@ -1,10 +1,7 @@
-import React from 'react';
-import { Button } from '../components/ui/Button';
-import { useNavigate } from 'react-router-dom';
+import Link from "next/link";
+import { Button } from "@/components/Button";
 
-export const NotFoundPage: React.FC = () => {
-  const navigate = useNavigate();
-
+export default function NotFound() {
   return (
     <div className="relative min-h-screen flex flex-col items-center justify-center bg-[#f8fcfd] overflow-hidden text-center px-6">
       {/* Subtle Background Pattern - Light grid/mesh */}
@@ -41,7 +38,7 @@ export const NotFoundPage: React.FC = () => {
             Strategic Detour.
           </h2>
           <p className="text-lg md:text-xl text-brand-gray/70 leading-relaxed max-w-lg mx-auto font-light">
-            The path to scaling isn&apos;t always linear.{' '}
+            The path to scaling isn&apos;t always linear.{" "}
             <br className="hidden sm:block" />
             Let&apos;s get you back to the right trajectory.
           </p>
@@ -49,15 +46,16 @@ export const NotFoundPage: React.FC = () => {
 
         {/* Action Button */}
         <div className="pt-10">
-          <Button
-            onClick={() => navigate('/')}
-            variant="primary"
-            icon
-            className="px-10! py-4! text-lg shadow-xl hover:shadow-2xl hover:shadow-brand-accent/20 transition-transform hover:-translate-y-1">
-            Return to Home
-          </Button>
+          <Link href="/">
+            <Button
+              variant="primary"
+              icon
+              className="px-10! py-4! text-lg shadow-xl hover:shadow-2xl hover:shadow-brand-accent/20 transition-transform hover:-translate-y-1">
+              Return to Home
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
   );
-};
+}

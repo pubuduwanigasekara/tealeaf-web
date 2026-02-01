@@ -1,18 +1,8 @@
-import React, { useState, useLayoutEffect } from 'react';
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Outlet,
-} from 'react-router-dom';
-import { gsap, ScrollTrigger, ScrollSmoother } from './lib/gsap';
+"use client";
 
-import { Navbar } from './components/Navbar';
-import { Footer } from './components/Footer';
-import { SplashScreen } from './components/SplashScreen';
-import { HomePage } from './pages/Home';
-// import { PrivacyPolicyPage } from './pages/PrivacyPolicy';
-import { NotFoundPage } from './pages/NotFound';
+import React, { useState, useLayoutEffect } from "react";
+import { gsap, ScrollTrigger, ScrollSmoother } from "@/lib/gsap";
+import { SplashScreen } from "./SplashScreen";
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
@@ -27,17 +17,11 @@ gsap.config({
   nullTargetWarn: false,
 });
 
-// Layout component - Navbar is now outside smooth-content, so layout only has main + footer
-const MainLayoutWithoutNavbar = () => (
-  <>
-    <main className="grow">
-      <Outlet />
-    </main>
-    <Footer />
-  </>
-);
-
-function App() {
+export function SmoothScrollProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   // Always show splash screen on initial load/refresh
   const [showSplash, setShowSplash] = useState(true);
   const [contentReady, setContentReady] = useState(false);
@@ -65,12 +49,12 @@ function App() {
        * This prevents null reference errors
        */
       ScrollTrigger.defaults({
-        scroller: '#smooth-content',
+        scroller: "#smooth-content",
       });
 
       ScrollSmoother.create({
-        wrapper: '#smooth-wrapper',
-        content: '#smooth-content',
+        wrapper: "#smooth-wrapper",
+        content: "#smooth-content",
         smooth: 1, // How long (in seconds) it takes to "catch up" to native scroll - faster than 1.2
         effects: true, // Enable data-speed and data-lag attributes
         smoothTouch: false, // Disable smooth scrolling on touch devices
@@ -82,34 +66,16 @@ function App() {
   }, [contentReady]);
 
   return (
-    <Router>
+    <>
       {/* Splash screen - renders first and alone */}
       {showSplash && <SplashScreen onComplete={handleSplashComplete} />}
 
       {/* Main content - only renders after splash completes */}
       {contentReady && (
-        <>
-          <Navbar />
-
-          <div id="smooth-wrapper">
-            <div id="smooth-content">
-              <div className="min-h-screen font-sans bg-brand-cream text-brand-dark selection:bg-brand-accent selection:text-white flex flex-col">
-                <Routes>
-                  {/* Routes wrapped in MainLayout will have Footer */}
-                  <Route element={<MainLayoutWithoutNavbar />}>
-                    <Route path="/" element={<HomePage />} />
-                  </Route>
-
-                  {/* <Route path="/privacy" element={<PrivacyPolicyPage />} /> */}
-                  <Route path="*" element={<NotFoundPage />} />
-                </Routes>
-              </div>
-            </div>
-          </div>
-        </>
+        <div id="smooth-wrapper">
+          <div id="smooth-content">{children}</div>
+        </div>
       )}
-    </Router>
+    </>
   );
 }
-
-export default App;

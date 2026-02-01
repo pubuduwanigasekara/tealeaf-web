@@ -1,6 +1,9 @@
-import React, { useRef } from 'react';
-import { gsap } from '@/lib/gsap';
-import { useGSAP } from '@gsap/react';
+import React, { useRef } from "react";
+import Image from "next/image";
+import { gsap } from "@/lib/gsap";
+import { useGSAP } from "@gsap/react";
+
+import logoSmall from "@/public/static/logo_small2.png";
 
 interface SplashScreenProps {
   onComplete: () => void;
@@ -12,7 +15,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
   const textRef = useRef<HTMLHeadingElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
 
-  const brandName = 'Tealeaf Consulting';
+  const brandName = "Tealeaf Consulting";
 
   useGSAP(
     () => {
@@ -25,28 +28,28 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
       // 1. Initial State
       gsap.set(containerRef.current, { yPercent: 0 });
       gsap.set(logoRef.current, { opacity: 0, y: 20 });
-      gsap.set(lineRef.current, { scaleX: 0, transformOrigin: 'left' });
+      gsap.set(lineRef.current, { scaleX: 0, transformOrigin: "left" });
 
       // Set initial state for characters
-      gsap.set('.char', { opacity: 0, y: 40 });
+      gsap.set(".char", { opacity: 0, y: 40 });
 
       // 2. Animation Sequence
       tl.to(logoRef.current, {
         duration: 1.2,
         opacity: 1,
         y: 0,
-        ease: 'power3.out',
+        ease: "power3.out",
       })
         .to(
-          '.char',
+          ".char",
           {
             duration: 1.0,
             opacity: 1,
             y: 0,
             stagger: 0.03,
-            ease: 'back.out(1.2)',
+            ease: "back.out(1.2)",
           },
-          '-=0.8'
+          "-=0.8"
         )
         // Draw the accent line
         .to(
@@ -54,9 +57,9 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
           {
             duration: 1.2,
             scaleX: 1,
-            ease: 'expo.inOut',
+            ease: "expo.inOut",
           },
-          '-=0.6'
+          "-=0.6"
         )
         // Hold for a moment to let the brand register and rest of the page load
         .to({}, { duration: 3 })
@@ -65,23 +68,23 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
           duration: 0.5,
           opacity: 0,
           y: -20,
-          ease: 'power2.in',
+          ease: "power2.in",
         })
         .to(
           lineRef.current,
           {
             duration: 0.4,
             scaleX: 0,
-            transformOrigin: 'right',
-            ease: 'power2.in',
+            transformOrigin: "right",
+            ease: "power2.in",
           },
-          '<'
+          "<"
         )
         // The Curtain Lift
         .to(containerRef.current, {
           duration: 1.2,
           yPercent: -100,
-          ease: 'power4.inOut', // Dramatic, elegant easing
+          ease: "power4.inOut", // Dramatic, elegant easing
         });
     },
     { scope: containerRef, dependencies: [] }
@@ -173,12 +176,12 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
       </div>
 
       <div className="relative flex flex-col items-center justify-center p-10 z-10">
-        <img
+        <Image
           ref={logoRef}
-          src="/static/logo_small2.png"
+          src={logoSmall}
           alt="Tealeaf Logo"
           className="h-16 w-auto mb-10"
-          fetchPriority="high"
+          loading="eager"
         />
 
         <div className="overflow-hidden mb-2">
@@ -186,7 +189,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
             ref={textRef}
             className="text-4xl md:text-5xl font-serif italic font-medium leading-normal! text-brand-dark"
             aria-label={brandName}>
-            {brandName.split('').map((char, index) => (
+            {brandName.split("").map((char, index) => (
               <span
                 key={index}
                 className="char inline-block whitespace-pre will-change-transform">
