@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useLayoutEffect, useEffect } from "react";
+import React, { useState, useLayoutEffect, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { gsap, ScrollTrigger, ScrollSmoother } from "@/lib/gsap";
 import { SplashScreen } from "./SplashScreen";
@@ -26,6 +26,7 @@ export function SmoothScrollProvider({
   // Always show splash screen on initial load/refresh
   const [showSplash, setShowSplash] = useState(true);
   const [contentReady, setContentReady] = useState(false);
+  const smoothScrollRef = useRef<ScrollSmoother | null>(null);
   const pathname = usePathname();
 
   const handleSplashComplete = () => {
@@ -35,7 +36,7 @@ export function SmoothScrollProvider({
   // Scroll to top on route change
   useEffect(() => {
     if (contentReady) {
-      const smoother = ScrollSmoother.get();
+      const smoother = smoothScrollRef.current;
       if (smoother) {
         smoother.scrollTo(0, false); // Instant scroll to top, no animation
       }
@@ -64,7 +65,7 @@ export function SmoothScrollProvider({
         scroller: "#smooth-content",
       });
 
-      ScrollSmoother.create({
+      smoothScrollRef.current = ScrollSmoother.create({
         wrapper: "#smooth-wrapper",
         content: "#smooth-content",
         smooth: 1, // How long (in seconds) it takes to "catch up" to native scroll - faster than 1.2
@@ -74,7 +75,12 @@ export function SmoothScrollProvider({
       });
     }, 100);
 
-    return () => clearTimeout(timer);
+    const smRef = smoothScrollRef.current;
+
+    return () => {
+      clearTimeout(timer);
+      smRef?.kill();
+    };
   }, [contentReady]);
 
   return (

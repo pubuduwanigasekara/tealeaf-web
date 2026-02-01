@@ -7,6 +7,7 @@ import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
 import { ROOT_URL } from "@/lib/data";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/footer/Footer";
+import { MouseFollower } from "@/components/MouseFollower";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -242,6 +243,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <meta name="apple-mobile-web-app-title" content="Tealeaf" />
+
         {/* JSON-LD Structured Data */}
         <Script
           id="root-json-ld"
@@ -252,7 +255,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${manrope.variable} ${playfairDisplay.variable} antialiased min-h-screen 
+        className={`${manrope.variable} ${playfairDisplay.variable} antialiased min-h-[calc(100vh+1rem)] 
       font-sans bg-brand-cream text-brand-dark selection:bg-brand-accent selection:text-white tracking-[0.025em]`}
         suppressHydrationWarning>
         <Navbar />
@@ -261,6 +264,8 @@ export default function RootLayout({
           <main>{children}</main>
           <Footer />
         </SmoothScrollProvider>
+
+        <MouseFollower />
       </body>
     </html>
   );

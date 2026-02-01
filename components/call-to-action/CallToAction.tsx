@@ -1,22 +1,15 @@
 import React from "react";
 import { Check } from "lucide-react";
 
-import { Button } from "./Button";
+import { CallToActionBackground } from "./CallToActionBackground";
+import { Button } from "../Button";
 
 export const CallToAction: React.FC = () => {
   return (
     <section
       id="contact"
       className="py-24 bg-brand-dark text-white relative overflow-hidden lg:min-h-screen grid place-items-center">
-      {/* Abstract Background */}
-      <div className="absolute w-full h-1/2 left-0 bottom-0 lg:w-full lg:h-full lg:inset-0 z-0 opacity-10">
-        <svg
-          className="w-full h-full"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none">
-          <path d="M0 100 C 20 0 50 0 100 100 Z" fill="#00429B" />
-        </svg>
-      </div>
+      <CallToActionBackground />
 
       <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-4xl mx-auto text-center">

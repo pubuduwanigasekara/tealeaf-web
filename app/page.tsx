@@ -1,12 +1,12 @@
 import Script from "next/script";
 
 import { Hero } from "@/components/Hero";
-import { WhyTealeaf } from "@/components/whytealeaf/WhyTealeaf";
+import { WhyTealeaf } from "@/components/why-tealeaf/WhyTealeaf";
 import { Services } from "@/components/Services";
 import { About } from "@/components/about/About";
 import { Testimonials } from "@/components/Testimonials";
 import { FounderPain } from "@/components/FounderPain";
-import { CallToAction } from "@/components/CallToAction";
+import { CallToAction } from "@/components/call-to-action/CallToAction";
 import { ROOT_URL } from "@/lib/data";
 
 const jsonld = {
