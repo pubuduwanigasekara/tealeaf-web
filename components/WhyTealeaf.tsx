@@ -155,7 +155,7 @@ export const WhyTealeaf: React.FC = () => {
 
             {/* Quote Block */}
             <blockquote className="border-l-4 border-brand-accent pl-6 py-1 my-6">
-              <p className="text-xl text-white font-medium tracking-wide">
+              <p className="text-xl text-white font-medium italic tracking-wide">
                 &quot;Our comprehensive approach ensures every financial
                 decision strengthens your competitive position and accelerates
                 your path to scale.&quot;

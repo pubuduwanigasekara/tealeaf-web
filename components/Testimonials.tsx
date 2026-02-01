@@ -106,7 +106,7 @@ const testimonials: ExtendedTestimonialItem[] = [
         </div>
 
         <blockquote className="border-l-4 border-brand-accent pl-6 pr-4 py-2 my-6 bg-brand-accent/5 rounded-r-lg">
-          <p className="text-lg text-brand-dark font-medium">
+          <p className="text-lg text-brand-dark font-medium italic">
             &quot;Angela&apos;s hands-on financial stewardship and
             milestone-based planning are essential for rapid scaling and future
             value realization.&quot;
@@ -190,7 +190,7 @@ const MobileTestimonialCard: React.FC<{ item: ExtendedTestimonialItem }> = ({
         <span className="text-6xl text-brand-primary/10 font-serif absolute -top-4 -left-2 font-bold select-none leading-none">
           “
         </span>
-        <p className="text-xl md:text-2xl font-serif text-brand-dark leading-relaxed relative z-10">
+        <p className="text-xl md:text-2xl text-brand-dark leading-relaxed relative z-10">
           {item.quote}
         </p>
       </div>
@@ -336,7 +336,7 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
         <div className="col-span-8 px-4">
           <p
             className={twMerge(
-              'max-w-3xl font-serif text-2xl/8 text-brand-dark line-clamp-4 transition-opacity duration-100',
+              'max-w-3xl text-2xl/8 text-brand-dark line-clamp-4 transition-opacity duration-100',
               isOpen ? 'opacity-0' : 'opacity-100'
             )}>
             <span className="text-brand-accent pr-2"> &ldquo;</span>
@@ -390,7 +390,7 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
 
           {/* Right: Rich Content (Col 4-11) */}
           <div className="col-span-8 pr-12">
-            <div className="text-xl/8 font-serif text-brand-dark max-w-4xl">
+            <div className="text-xl/8 text-brand-dark max-w-4xl">
               {item.content}
             </div>
           </div>

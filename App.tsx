@@ -73,8 +73,8 @@ function App() {
         content: '#smooth-content',
         smooth: 1, // How long (in seconds) it takes to "catch up" to native scroll - faster than 1.2
         effects: true, // Enable data-speed and data-lag attributes
-        smoothTouch: 0.1, // Smooth scrolling on touch devices
-        normalizeScroll: true, // Forces scrolling to happen on the main JS thread
+        smoothTouch: false, // Disable smooth scrolling on touch devices
+        normalizeScroll: false, // Disabled to respect smoothTouch: false on mobile
       });
     }, 100);
 

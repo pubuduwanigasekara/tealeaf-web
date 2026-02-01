@@ -150,7 +150,7 @@ const FounderImg = () => {
           .timeline({
             scrollTrigger: {
               trigger: triggerRef.current,
-              start: 'top 50%',
+              start: 'top 60%',
               toggleActions: 'play none none none',
             },
           })

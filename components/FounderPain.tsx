@@ -44,7 +44,7 @@ export const FounderPain: React.FC = () => {
       // 1. Title Animation
       const title = titleRef.current;
       if (title) {
-        const titleSplit = new SplitType(title, { types: 'chars' });
+        const titleSplit = new SplitType(title, { types: 'words,chars' });
 
         // Keep parent visible so split text is rendered, but chars start invisible
         gsap.set(title, { opacity: 1 });
@@ -122,7 +122,7 @@ export const FounderPain: React.FC = () => {
       <div ref={containerRef} className="container mx-auto px-6 relative z-10">
         <h2
           ref={titleRef}
-          className="text-4xl md:text-5xl font-serif text-brand-dark text-center mb-24 md:mb-32 opacity-0 [&>div]:opacity-0 [&>div]:will-change-transform">
+          className="text-4xl md:text-5xl font-serif text-brand-dark text-center mb-24 md:mb-32 opacity-0 [&_.char]:opacity-0 [&_.char]:will-change-transform">
           Does This Sound Familiar?
         </h2>
 
