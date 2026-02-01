@@ -1,0 +1,93 @@
+@import 'tailwindcss';
+
+:root {
+  --color-primary: #1d395e;
+  --color-accent: #ff6b35;
+  --color-dark: #0f172a;
+  --color-cream: #f7f9fb;
+  --color-gray: #334155;
+}
+
+@theme inline {
+  --color-brand-primary: var(--color-primary);
+  --color-brand-accent: var(--color-accent);
+  --color-brand-dark: var(--color-dark);
+  --color-brand-cream: var(--color-cream);
+  --color-brand-gray: var(--color-gray);
+
+  --font-sans: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Playfair Display', ui-serif, Georgia, Cambria, serif;
+
+  --animate-float: float 6s ease-in-out infinite;
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+}
+
+body {
+  letter-spacing: 0.025em;
+  /* scroll-padding-top: 80px; */
+}
+
+/* GSAP ScrollSmoother required styles */
+#smooth-wrapper {
+  overflow: hidden;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+#smooth-content {
+  overflow: visible;
+  width: 100%;
+}
+
+/* 
+ * ScrollSmoother Optimizations
+ * Prevent jittering on text and elements during smooth scroll
+ */
+
+/* Apply GPU acceleration to all sections to prevent jitter */
+#smooth-content section {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Optimize text rendering during smooth scroll */
+#smooth-content {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Apply GPU acceleration to text elements to prevent sub-pixel jitter */
+#smooth-content p,
+#smooth-content h1,
+#smooth-content h2,
+#smooth-content h3,
+#smooth-content h4,
+#smooth-content h5,
+#smooth-content h6,
+#smooth-content span {
+  transform: translate3d(0, 0, 0);
+}
+
+#smooth-content h1,
+#smooth-content h2,
+#smooth-content h3 {
+  will-change: transform;
+}
+
+button,
+a {
+  cursor: pointer;
+}
