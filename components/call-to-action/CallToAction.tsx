@@ -1,26 +1,20 @@
-import React from 'react';
-import { Button } from './ui/Button';
-import { Check } from 'lucide-react';
+import React from "react";
+import { Check } from "lucide-react";
+
+import { CallToActionBackground } from "./CallToActionBackground";
+import { Button } from "../Button";
 
 export const CallToAction: React.FC = () => {
   return (
     <section
       id="contact"
       className="py-24 bg-brand-dark text-white relative overflow-hidden lg:min-h-screen grid place-items-center">
-      {/* Abstract Background */}
-      <div className="absolute w-full h-1/2 left-0 bottom-0 lg:w-full lg:h-full lg:inset-0 z-0 opacity-10">
-        <svg
-          className="w-full h-full"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none">
-          <path d="M0 100 C 20 0 50 0 100 100 Z" fill="#00429B" />
-        </svg>
-      </div>
+      <CallToActionBackground />
 
       <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl md:text-6xl font-serif mb-6 leading-tight">
-            Ready to scale with{' '}
+            Ready to scale with{" "}
             <span className="text-brand-accent italic">intention?</span>
           </h2>
           <p className="text-xl text-gray-300 mb-12 max-w-2xl mx-auto">
@@ -37,10 +31,10 @@ export const CallToAction: React.FC = () => {
             </h3>
             <ul className="space-y-4">
               {[
-                'Assess your current financial infrastructure',
-                'Identify your biggest growth opportunities',
-                'Outline a clear path to bulletproof foundations',
-                'Get personalized recommendations',
+                "Assess your current financial infrastructure",
+                "Identify your biggest growth opportunities",
+                "Outline a clear path to bulletproof foundations",
+                "Get personalized recommendations",
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-3">
                   <div className="bg-brand-accent/20 p-1 rounded-full mt-0.5">
@@ -75,7 +69,7 @@ export const CallToAction: React.FC = () => {
                   Book Now
                 </Button>
                 <p className="text-sm text-gray-400">
-                  Or email us at{' '}
+                  Or email us at{" "}
                   <a
                     href="mailto:hello@tealeafconsult.com"
                     className="text-brand-accent hover:text-white transition-colors">

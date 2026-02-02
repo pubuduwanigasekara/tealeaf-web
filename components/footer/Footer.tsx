@@ -1,29 +1,21 @@
-import React from 'react';
-import { Linkedin, ArrowUp, Mail } from 'lucide-react';
-import { ScrollSmoother } from '@/lib/gsap';
+import React from "react";
+import Image from "next/image";
+import { Linkedin, Mail } from "lucide-react";
+
+import { ScrollTopButton } from "./ScrollTopButton";
+import logo from "@/public/static/logo2.png";
 
 export const Footer: React.FC = () => {
-  const scrollToTop = () => {
-    const smoother = ScrollSmoother.get();
-    smoother?.scrollTo(0, true);
-  };
-
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer
-      className="bg-[#0b1120] text-white py-12 font-sans relative"
-      style={{
-        transform: 'translate3d(0, 0, 0)',
-        backfaceVisibility: 'hidden',
-        marginTop: '-1px',
-      }}>
+    <footer className="bg-[#0b1120] text-white py-12 font-sans relative -mt-px">
       <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center relative">
         {/* 1. Left Section: Logo */}
         <div className="flex flex-col items-center md:items-start gap-4 order-1">
           <div className="flex items-center gap-3">
-            <img
-              src="/static/logo2.png"
+            <Image
+              src={logo}
               alt="Tealeaf Logo"
               className="h-12 w-auto brightness-25 invert"
               loading="lazy"
@@ -61,13 +53,7 @@ export const Footer: React.FC = () => {
           <div className="h-6 w-px bg-white/10 mx-1 hidden md:block"></div>
 
           {/* Scroll To Top - Hidden on Mobile */}
-          <button
-            type="button"
-            onClick={scrollToTop}
-            className="hidden md:flex w-11 h-11 rounded-full bg-white/5 border border-white/5 items-center justify-center text-gray-400 hover:bg-brand-primary hover:text-white hover:border-brand-primary transition-[background,color,border-color] duration-300"
-            aria-label="Back to top">
-            <ArrowUp size={18} />
-          </button>
+          <ScrollTopButton />
         </div>
 
         {/* 4. Mobile-Only Copyright: Bottom of stack */}
