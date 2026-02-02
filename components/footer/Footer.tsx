@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { Linkedin, Mail } from "lucide-react";
+import Link from "next/link";
 
 import { ScrollTopButton } from "./ScrollTopButton";
 import logo from "@/public/static/logo2.png";
@@ -10,9 +11,9 @@ export const Footer: React.FC = () => {
 
   return (
     <footer className="bg-[#0b1120] text-white py-12 font-sans relative -mt-px">
-      <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center relative">
-        {/* 1. Left Section: Logo */}
-        <div className="flex flex-col items-center md:items-start gap-4 order-1">
+      <div className="container mx-auto px-6">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6 md:gap-0">
+          {/* Logo */}
           <div className="flex items-center gap-3">
             <Image
               src={logo}
@@ -21,47 +22,49 @@ export const Footer: React.FC = () => {
               loading="lazy"
             />
           </div>
-          {/* Tablet-Only Copyright: Stacked under logo (Matches "current" layout for tablet) */}
-          <p className="hidden md:block lg:hidden text-gray-500 text-sm">
+
+          {/* Socials & Actions */}
+          <div className="flex items-center gap-4 mt-4 md:mt-0">
+            <Link
+              href="https://www.linkedin.com/in/angelajsweeney?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
+              className="w-12 h-12 sm:w-11 sm:h-11 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors text-gray-400 hover:text-white"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Linkedin">
+              <Linkedin size={18} />
+            </Link>
+            <a
+              href="mailto:hello@tealeafconsult.com"
+              className="w-12 h-12 sm:w-11 sm:h-11 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors text-gray-400 hover:text-white"
+              aria-label="Email">
+              <Mail size={18} />
+            </a>
+
+            <div className="h-6 w-px bg-white/10 mx-1 hidden md:block"></div>
+
+            <ScrollTopButton />
+          </div>
+        </div>
+
+        {/* Divider */}
+        <div className="w-full h-px bg-white/10 my-8"></div>
+
+        {/* Copyright & Credits */}
+        <div className="flex flex-col md:flex-row justify-between items-center text-sm text-gray-400 gap-4">
+          <p className="order-2 md:order-1">
             &copy; {currentYear} Tealeaf Consulting. All rights reserved.
           </p>
+          <p className="order-1 md:order-2 flex items-center gap-1">
+            Developed by
+            <Link
+              href="https://en2h.tech"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-gray-200 transition-colors font-medium">
+              EN2H
+            </Link>
+          </p>
         </div>
-
-        {/* 2. Desktop-Only Copyright: Absolutely Centered */}
-        <div className="hidden lg:block absolute left-1/2 -translate-x-1/2 text-gray-400 text-sm whitespace-nowrap">
-          &copy; {currentYear} Tealeaf Consulting. All rights reserved.
-        </div>
-
-        {/* 3. Right Section: Socials & Actions */}
-        <div className="flex items-center gap-4 order-2 md:order-last mt-8 md:mt-0">
-          <a
-            href="https://www.linkedin.com/in/angelajsweeney?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
-            className="w-11 h-11 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors text-gray-400 hover:text-white"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Linkedin">
-            <Linkedin size={18} />
-          </a>
-          <a
-            href="mailto:hello@tealeafconsult.com"
-            className="w-11 h-11 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors text-gray-400 hover:text-white"
-            aria-label="Email">
-            <Mail size={18} />
-          </a>
-
-          {/* Divider - hidden on mobile */}
-          <div className="h-6 w-px bg-white/10 mx-1 hidden md:block"></div>
-
-          {/* Scroll To Top - Hidden on Mobile */}
-          <ScrollTopButton />
-        </div>
-
-        {/* 4. Mobile-Only Copyright: Bottom of stack */}
-        <p className="md:hidden order-3 mt-8 text-gray-400 text-sm text-center">
-          &copy; {currentYear} Tealeaf Consulting.
-          <br />
-          All rights reserved.
-        </p>
       </div>
     </footer>
   );
