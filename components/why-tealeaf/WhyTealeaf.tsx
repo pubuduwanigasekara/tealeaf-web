@@ -1,7 +1,11 @@
 import React from "react";
-
+import dynamic from "next/dynamic";
 import { FeatureCards } from "./FeatureCards";
-import { WhyTealeafBackground } from "./WhyTealeafBackground";
+
+const WhyTealeafBackground = dynamic(() => import("./WhyTealeafBackground"), {
+  ssr: true,
+  loading: () => null,
+});
 
 export const WhyTealeaf: React.FC = () => {
   return (

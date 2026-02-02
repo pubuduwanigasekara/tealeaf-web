@@ -99,7 +99,7 @@ const CallToActionBackgroundDesktop: React.FC = () => {
 
 CallToActionBackgroundDesktop.displayName = "CallToActionBackgroundDesktop";
 
-export const CallToActionBackground: React.FC = () => {
+const CallToActionBackground: React.FC = () => {
   const isMobile = useIsMobile();
 
   if (isMobile) {
@@ -117,3 +117,5 @@ export const CallToActionBackground: React.FC = () => {
 
   return <CallToActionBackgroundDesktop />;
 };
+
+export default CallToActionBackground;
