@@ -159,7 +159,7 @@ const WhyTealeafBackgroundDesktop: React.FC = () => {
 
 WhyTealeafBackgroundDesktop.displayName = "WhyTealeafBackgroundDesktop";
 
-export const WhyTealeafBackground: React.FC = () => {
+const WhyTealeafBackground: React.FC = () => {
   const isMobile = useIsMobile();
 
   if (isMobile) {
@@ -178,3 +178,5 @@ export const WhyTealeafBackground: React.FC = () => {
 
   return <WhyTealeafBackgroundDesktop />;
 };
+
+export default WhyTealeafBackground;

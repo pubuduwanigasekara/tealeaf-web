@@ -6,7 +6,7 @@ import "./globals.css";
 import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
 import { ROOT_URL } from "@/lib/data";
 import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/footer/Footer";
+import { Footer } from "@/components/Footer";
 import { MouseFollower } from "@/components/MouseFollower";
 
 const manrope = Manrope({

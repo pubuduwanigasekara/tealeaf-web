@@ -24,8 +24,6 @@ export const MouseFollower: React.FC = () => {
     () => {
       if (isMobile || !isVisible) return;
 
-      if (isMobile || !isVisible) return;
-
       // 1. Initial State: Hidden and at current mouse position if known, else center/hidden
       gsap.set(followerRef.current, {
         xPercent: -50,

@@ -1,8 +1,16 @@
 import React from "react";
 import { Check } from "lucide-react";
+import dynamic from "next/dynamic";
 
-import { CallToActionBackground } from "./CallToActionBackground";
 import { Button } from "../Button";
+
+const CallToActionBackground = dynamic(
+  () => import("./CallToActionBackground"),
+  {
+    ssr: true,
+    loading: () => null,
+  }
+);
 
 export const CallToAction: React.FC = () => {
   return (
