@@ -91,6 +91,8 @@ tealeaf-web/
 │   ├── layout.tsx          # Root layout with global providers and SEO
 │   ├── page.tsx            # Home page composition
 │   ├── globals.css         # Global Tailwind styles
+│   ├── error.tsx           # Error boundary for the app
+│   ├── global-error.tsx    # Root error boundary
 │   └── not-found.tsx       # 404 Page
 ├── components/             # React components
 │   ├── ui/                 # Reusable UI elements (Button, etc.)
