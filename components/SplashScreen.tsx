@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import Image from "next/image";
 import { gsap } from "@/lib/gsap";
 import { useGSAP } from "@gsap/react";
+import SplitType from "split-type";
 
 import logoSmall from "@/public/static/logo_small2.png";
 
@@ -15,10 +16,17 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
   const textRef = useRef<HTMLHeadingElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
 
-  const brandName = "Tealeaf Consulting";
-
   useGSAP(
     () => {
+      if (
+        !containerRef.current ||
+        !logoRef.current ||
+        !lineRef.current ||
+        !textRef.current
+      ) {
+        return;
+      }
+
       const tl = gsap.timeline({
         onComplete: () => {
           onComplete();
@@ -30,8 +38,12 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
       gsap.set(logoRef.current, { opacity: 0, y: 20 });
       gsap.set(lineRef.current, { scaleX: 0, transformOrigin: "left" });
 
-      // Set initial state for characters
-      gsap.set(".char", { opacity: 0, y: 40 });
+      const titleSplit = new SplitType(textRef.current, {
+        types: "words,chars",
+      });
+
+      // Keep parent visible so split text is rendered, but chars start invisible
+      gsap.set(textRef.current, { opacity: 1 });
 
       // 2. Animation Sequence
       tl.to(logoRef.current, {
@@ -40,8 +52,12 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
         y: 0,
         ease: "power3.out",
       })
-        .to(
-          ".char",
+        .fromTo(
+          titleSplit.chars,
+          {
+            opacity: 0,
+            y: 40,
+          },
           {
             duration: 1.0,
             opacity: 1,
@@ -62,7 +78,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
           "-=0.6"
         )
         // Hold for a moment to let the brand register and rest of the page load
-        .to({}, { duration: 3 })
+        .to({}, { duration: 2 })
         // Exit animation: Line zips away, text fades
         .to([logoRef.current, textRef.current], {
           duration: 0.5,
@@ -185,18 +201,12 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
         />
 
         <div className="overflow-hidden mb-2">
-          <h1
+          <p
             ref={textRef}
-            className="text-4xl md:text-5xl font-serif italic leading-normal! text-brand-dark"
-            aria-label={brandName}>
-            {brandName.split("").map((char, index) => (
-              <span
-                key={index}
-                className="char inline-block whitespace-pre will-change-transform opacity-0 translate-y-[40px]">
-                {char}
-              </span>
-            ))}
-          </h1>
+            className="text-4xl md:text-5xl font-serif italic leading-normal! text-center sm:text-left text-brand-dark opacity-0 [&_.char]:opacity-0 [&_.char]:translate-y-[40px] [&_.char]:will-change-transform"
+            aria-label="Tealeaf Consulting">
+            Tealeaf Consulting
+          </p>
         </div>
 
         {/* Accent Line */}
