@@ -100,9 +100,49 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
     onNavigate(id, offset);
   };
 
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const touchStartY = useRef<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartY.current = e.touches[0].clientY;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartY.current === null) return;
+
+    const touchEndY = e.changedTouches[0].clientY;
+    const diff = touchStartY.current - touchEndY;
+    const SWIPE_THRESHOLD = 100;
+
+    if (diff > SWIPE_THRESHOLD) {
+      // Swipe Up
+      const scrollEl = scrollContainerRef.current;
+
+      // If we are touching the scrollable content
+      if (scrollEl && scrollEl.contains(e.target as Node)) {
+        // Check if we are at the bottom
+        // tolerance of 5px
+        const isAtBottom =
+          Math.abs(
+            scrollEl.scrollHeight - scrollEl.scrollTop - scrollEl.clientHeight
+          ) < 5;
+        if (isAtBottom) {
+          onClose();
+        }
+      } else {
+        // Touching header or non-scrollable areas - always close on swipe up
+        onClose();
+      }
+    }
+
+    touchStartY.current = null;
+  };
+
   return (
     <div
       ref={containerRef}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
       className="fixed inset-0 z-50 bg-linear-to-br from-[#fffdfa] via-[#fff5f0] to-[#fceee9] text-brand-dark flex flex-col h-dvh -translate-y-full transform-gpu overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
@@ -149,7 +189,9 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
       </div>
 
       {/* Scrollable Content Container */}
-      <div className="container mx-auto px-6 flex-1 overflow-y-auto overflow-x-hidden flex flex-col relative z-10">
+      <div
+        ref={scrollContainerRef}
+        className="container mx-auto px-6 flex-1 overflow-y-auto overflow-x-hidden flex flex-col relative z-10">
         {/* Navigation Links */}
         <div
           ref={contentRef}

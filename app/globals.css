@@ -65,8 +65,6 @@ footer {
 #smooth-content h2,
 #smooth-content h3,
 #smooth-content h4,
-#smooth-content h5,
-#smooth-content h6,
 #smooth-content span {
   transform: translate3d(0, 0, 0);
 }
@@ -75,6 +73,13 @@ footer {
 #smooth-content h2,
 #smooth-content h3 {
   will-change: transform;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  text-wrap: balance;
 }
 
 button,

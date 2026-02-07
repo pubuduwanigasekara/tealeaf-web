@@ -13,7 +13,9 @@ export const Footer: React.FC = () => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText("hello@tealeafconsult.com");
+    navigator.clipboard.writeText("hello@tealeafconsult.com").catch(() => {
+      console.error("Failed to copy email");
+    });
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
