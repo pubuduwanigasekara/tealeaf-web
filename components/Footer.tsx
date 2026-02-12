@@ -86,7 +86,7 @@ export const Footer: React.FC = () => {
           <p className="order-2 md:order-1">
             &copy; {currentYear} Tealeaf Consulting. All rights reserved.
           </p>
-          <p className="order-1 md:order-2 flex items-center gap-1">
+          {/* <p className="order-1 md:order-2 flex items-center gap-1">
             Developed by
             <Link
               href="https://en2h.tech"
@@ -95,7 +95,7 @@ export const Footer: React.FC = () => {
               className="text-white hover:text-gray-200 transition-colors font-medium">
               EN2H
             </Link>
-          </p>
+          </p> */}
         </div>
       </div>
     </footer>
