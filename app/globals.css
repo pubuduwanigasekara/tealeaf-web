@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 :root {
   --color-primary: #1d395e;
@@ -15,8 +15,8 @@
   --color-brand-cream: var(--color-cream);
   --color-brand-gray: var(--color-gray);
 
-  --font-sans: 'Manrope', ui-sans-serif, system-ui, sans-serif;
-  --font-serif: 'Playfair Display', ui-serif, Georgia, Cambria, serif;
+  --font-sans: var(--font-manrope);
+  --font-serif: var(--font-playfair-display);
 
   --animate-float: float 6s ease-in-out infinite;
 
@@ -29,11 +29,6 @@
       transform: translateY(-10px);
     }
   }
-}
-
-body {
-  letter-spacing: 0.025em;
-  /* scroll-padding-top: 80px; */
 }
 
 /* GSAP ScrollSmoother required styles */
@@ -57,16 +52,11 @@ body {
  */
 
 /* Apply GPU acceleration to all sections to prevent jitter */
-#smooth-content section {
+#smooth-content section,
+footer {
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
   perspective: 1000px;
-}
-
-/* Optimize text rendering during smooth scroll */
-#smooth-content {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Apply GPU acceleration to text elements to prevent sub-pixel jitter */
@@ -75,8 +65,6 @@ body {
 #smooth-content h2,
 #smooth-content h3,
 #smooth-content h4,
-#smooth-content h5,
-#smooth-content h6,
 #smooth-content span {
   transform: translate3d(0, 0, 0);
 }
@@ -85,6 +73,13 @@ body {
 #smooth-content h2,
 #smooth-content h3 {
   will-change: transform;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  text-wrap: balance;
 }
 
 button,

@@ -1,22 +1,14 @@
-import React, { useEffect } from 'react';
-import { ArrowLeft } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { ScrollSmoother } from '@/lib/gsap';
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
 
-export const PrivacyPolicyPage: React.FC = () => {
-  // Ensure we start at the top of the page when mounted
-  useEffect(() => {
-    const smoother = ScrollSmoother.get();
-    smoother?.scrollTo(0, false);
-  }, []);
-
+export default function PrivacyPolicyPage() {
   return (
-    <div className="pt-32 pb-24 bg-brand-cream min-h-screen">
+    <div className="pt-48 pb-24 bg-brand-cream min-h-screen">
       <div className="container mx-auto px-6 max-w-3xl">
         {/* Header Section */}
         <div className="mb-12">
           <Link
-            to="/"
+            href="/"
             className="inline-flex items-center text-brand-primary font-bold mb-8 hover:text-brand-accent transition-colors">
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Home
@@ -304,4 +296,4 @@ export const PrivacyPolicyPage: React.FC = () => {
       </div>
     </div>
   );
-};
+}

@@ -1,10 +1,6 @@
-import React from 'react';
-import { Button } from '../components/ui/Button';
-import { useNavigate } from 'react-router-dom';
+import { Button } from "./Button";
 
-export const NotFoundPage: React.FC = () => {
-  const navigate = useNavigate();
-
+export const ErrorCom = ({ reset }: { reset: () => void }) => {
   return (
     <div className="relative min-h-screen flex flex-col items-center justify-center bg-[#f8fcfd] overflow-hidden text-center px-6">
       {/* Subtle Background Pattern - Light grid/mesh */}
@@ -26,34 +22,41 @@ export const NotFoundPage: React.FC = () => {
         </svg>
       </div>
 
-      {/* Decorative blurred circle behind 404 - warm glow */}
+      {/* Decorative blurred circle - lighter accent/red for error state */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-160 h-160 bg-brand-accent/5 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="relative z-10 max-w-3xl mx-auto space-y-2">
-        {/* The 404 Number */}
-        <h1 className="text-[10rem] sm:text-[13rem] md:text-[16rem] leading-none font-serif text-brand-primary font-medium tracking-tighter select-none">
-          404
+      <div className="relative z-10 max-w-4xl mx-auto space-y-2">
+        {/* Large Background Text */}
+        <h1 className="text-[10rem] sm:text-[13rem] md:text-[18rem] leading-none font-serif text-brand-primary/5 font-medium tracking-tighter select-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-0 whitespace-nowrap">
+          Paused
         </h1>
 
         {/* Text Content */}
         <div className="space-y-6 relative z-20">
           <h2 className="text-4xl md:text-5xl font-serif text-brand-dark font-bold tracking-tight">
-            Strategic Detour.
+            System Interrupted.
           </h2>
           <p className="text-lg md:text-xl text-brand-gray/70 leading-relaxed max-w-lg mx-auto font-light">
-            The path to scaling isn&apos;t always linear.{' '}
+            Even the best strategies encounter friction.{" "}
             <br className="hidden sm:block" />
-            Let&apos;s get you back to the right trajectory.
+            We&apos;ve logged this issue. Let&apos;s get you back on track.
           </p>
         </div>
 
-        {/* Action Button */}
-        <div className="pt-10">
+        {/* Action Buttons */}
+        <div className="pt-12 flex flex-col sm:flex-row gap-4 justify-center items-center relative z-20">
           <Button
-            onClick={() => navigate('/')}
+            onClick={reset}
             variant="primary"
             icon
-            className="px-10! py-4! text-lg shadow-xl hover:shadow-2xl hover:shadow-brand-accent/20 transition-transform hover:-translate-y-1">
+            className="px-10 py-4 text-lg shadow-xl hover:shadow-2xl hover:shadow-brand-accent/20 transition-transform hover:-translate-y-1">
+            Try Again
+          </Button>
+
+          <Button
+            href="/"
+            variant="outline"
+            className="px-10 py-4 text-lg bg-white/50 backdrop-blur-sm">
             Return to Home
           </Button>
         </div>

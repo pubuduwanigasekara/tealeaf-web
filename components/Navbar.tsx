@@ -1,20 +1,25 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Menu, X, Linkedin, Mail } from 'lucide-react';
-import { gsap, ScrollSmoother } from '@/lib/gsap';
-import { useNavigate, useLocation, Link } from 'react-router-dom';
-import { twMerge } from 'tailwind-merge';
-import { useGSAP } from '@gsap/react';
+"use client";
 
-import { Button } from './ui/Button';
+import React, { useState, useEffect, useRef } from "react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import Image from "next/image";
+import { Menu, X, Linkedin, Mail } from "lucide-react";
+import { gsap, ScrollSmoother } from "@/lib/gsap";
+import { twMerge } from "tailwind-merge";
+import { useGSAP } from "@gsap/react";
 
-const navLinks = [
-  { name: 'Why Tealeaf', href: '#why', id: 'why', offset: 80 },
-  { name: 'Services', href: '#services', id: 'services' },
-  { name: 'About Us', href: '#about', id: 'about', offset: 80 },
+import { Button } from "./Button";
+import logo from "@/public/static/logo2.png";
+
+const NAV_LINKS = [
+  { name: "Why Tealeaf", href: "#why", id: "why", offset: 80 },
+  { name: "Services", href: "#services", id: "services" },
+  { name: "About Us", href: "#about", id: "about", offset: 80 },
   {
-    name: 'Testimonials',
-    href: '#testimonials',
-    id: 'testimonials',
+    name: "Testimonials",
+    href: "#testimonials",
+    id: "testimonials",
     offset: 80,
   },
 ];
@@ -23,7 +28,7 @@ interface MobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
   isScrolled: boolean;
-  onNavigate: (id: string) => void;
+  onNavigate: (id: string, offset?: number) => void;
 }
 
 const MobileMenu: React.FC<MobileMenuProps> = ({
@@ -38,7 +43,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
   const timeline = useRef<gsap.core.Timeline | null>(null);
 
   // Sync padding with main navbar
-  const paddingClass = isScrolled ? 'py-4' : 'py-6';
+  const paddingClass = isScrolled ? "py-4" : "py-6";
 
   useGSAP(
     () => {
@@ -46,21 +51,21 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
       timeline.current = gsap
         .timeline({ paused: true })
         .to(containerRef.current, {
-          y: '0%',
+          y: "0%",
           duration: 1.2, // Slowed down from 0.6
-          ease: 'power4.inOut',
+          ease: "power4.inOut",
         })
         // Animate links
         .from(
-          '.mobile-link-item',
+          ".mobile-link-item",
           {
             y: 40,
             opacity: 0,
             stagger: 0.15, // Slowed stagger
             duration: 1.0, // Slowed down from 0.5
-            ease: 'power3.out',
+            ease: "power3.out",
           },
-          '-=0.8'
+          "-=0.8"
         ) // Adjusted overlap
         // Animate footer
         .from(
@@ -69,9 +74,9 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
             opacity: 0,
             y: 20,
             duration: 1.0, // Slowed down from 0.5
-            ease: 'power2.out',
+            ease: "power2.out",
           },
-          '-=0.8'
+          "-=0.8"
         );
     },
     { scope: containerRef, dependencies: [] }
@@ -95,9 +100,49 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
     onNavigate(id, offset);
   };
 
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const touchStartY = useRef<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartY.current = e.touches[0].clientY;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartY.current === null) return;
+
+    const touchEndY = e.changedTouches[0].clientY;
+    const diff = touchStartY.current - touchEndY;
+    const SWIPE_THRESHOLD = 100;
+
+    if (diff > SWIPE_THRESHOLD) {
+      // Swipe Up
+      const scrollEl = scrollContainerRef.current;
+
+      // If we are touching the scrollable content
+      if (scrollEl && scrollEl.contains(e.target as Node)) {
+        // Check if we are at the bottom
+        // tolerance of 5px
+        const isAtBottom =
+          Math.abs(
+            scrollEl.scrollHeight - scrollEl.scrollTop - scrollEl.clientHeight
+          ) < 5;
+        if (isAtBottom) {
+          onClose();
+        }
+      } else {
+        // Touching header or non-scrollable areas - always close on swipe up
+        onClose();
+      }
+    }
+
+    touchStartY.current = null;
+  };
+
   return (
     <div
       ref={containerRef}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
       className="fixed inset-0 z-50 bg-linear-to-br from-[#fffdfa] via-[#fff5f0] to-[#fceee9] text-brand-dark flex flex-col h-dvh -translate-y-full transform-gpu overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
@@ -117,18 +162,18 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
       */}
       <div
         className={twMerge(
-          'w-full flex-none transition-padding duration-300',
+          "w-full flex-none transition-padding duration-300",
           paddingClass,
-          'relative z-10'
+          "relative z-10"
         )}>
         <div className="container mx-auto px-6 flex justify-between items-center">
           {/* Logo */}
           <div className="text-2xl flex items-center gap-3">
-            <img
-              src="/static/logo2.png"
+            <Image
+              src={logo}
               alt="Tealeaf Logo"
               className="h-10 sm:h-12 w-auto"
-              fetchPriority="high"
+              loading="eager"
             />
           </div>
 
@@ -144,17 +189,21 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
       </div>
 
       {/* Scrollable Content Container */}
-      <div className="container mx-auto px-6 flex-1 overflow-y-auto overflow-x-hidden flex flex-col relative z-10">
+      <div
+        ref={scrollContainerRef}
+        className="container mx-auto px-6 flex-1 overflow-y-auto overflow-x-hidden flex flex-col relative z-10">
         {/* Navigation Links */}
         <div
           ref={contentRef}
           className="flex-1 flex flex-col justify-center space-y-6 min-h-[300px]">
-          {navLinks.map((link, index) => (
+          {NAV_LINKS.map((link, index) => (
             <Link
               key={link.name}
-              to={link.href}
+              href={link.href}
               className="mobile-link-item group flex items-baseline gap-4 sm:gap-6 pl-2 will-change-transform"
-              onClick={(e) => handleLinkClick(e, link.id, link.offset)}>
+              onClick={(e: React.MouseEvent) =>
+                handleLinkClick(e, link.id, link.offset)
+              }>
               <span className="text-xl sm:text-2xl font-serif italic text-brand-accent font-medium min-w-[2ch]">
                 0{index + 1}
               </span>
@@ -186,7 +235,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
                 className="w-full sm:w-fit py-4! px-20!"
                 onClick={() => {
                   onClose();
-                  onNavigate('contact', 80);
+                  onNavigate("contact", 80);
                 }}>
                 Contact Us
               </Button>
@@ -219,27 +268,27 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
 export const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // Handle Body Lock
   useEffect(() => {
     if (isMobileMenuOpen) {
       const width = window.innerWidth - document.documentElement.clientWidth;
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
       document.body.style.paddingRight = `${width}px`;
     } else {
       const timer = setTimeout(() => {
-        document.body.style.overflow = '';
-        document.body.style.paddingRight = '';
+        document.body.style.overflow = "";
+        document.body.style.paddingRight = "";
       }, 2000);
       return () => clearTimeout(timer);
     }
@@ -254,83 +303,87 @@ export const Navbar: React.FC = () => {
 
   // Unified navigation handler
   const handleNavigation = (id: string, offset?: number) => {
-    if (location.pathname !== '/') {
-      // If we are not on home, navigate to home and pass the target ID in state
-      navigate('/', { state: { scrollTo: id } });
+    if (pathname !== "/") {
+      // If we are not on home, navigate to home
+      router.push("/");
     } else {
       const smoother = ScrollSmoother.get();
-      smoother?.scrollTo(`#${id}`, true, offset ? `top ${offset}px` : 'top');
+      smoother?.scrollTo(`#${id}`, true, offset ? `top ${offset}px` : "top");
     }
   };
 
-  const paddingClass = isScrolled ? 'py-4' : 'py-6';
+  const paddingClass = isScrolled ? "py-4" : "py-6";
 
   // Background Logic:
   const bgClass = isScrolled
-    ? 'bg-brand-cream/95 backdrop-blur-md shadow-sm'
-    : 'bg-transparent';
+    ? "bg-brand-cream/95 backdrop-blur-md shadow-sm"
+    : "bg-transparent";
 
   return (
     <>
       <nav
         data-scroll-section="false"
         className={twMerge(
-          'fixed w-full z-40 transition-all duration-300',
+          "fixed w-full z-40 transition-all duration-300",
           paddingClass,
           bgClass
         )}
         style={{
-          paddingRight: isMobileMenuOpen ? `${getScrollbarWidth()}px` : '',
+          paddingRight: isMobileMenuOpen ? `${getScrollbarWidth()}px` : "",
         }}>
         <div className="container mx-auto px-6 flex justify-between items-center">
           {/* Logo */}
           <Link
-            to="/"
-            onClick={(e) => {
+            href="/"
+            onClick={(e: React.MouseEvent) => {
               e.preventDefault();
-              handleNavigation('hero');
+              handleNavigation("hero");
             }}
             className="flex items-center gap-3 transition-colors">
-            <img
-              src="/static/logo2.png"
+            <Image
+              src={logo}
               alt="Tealeaf Logo"
               className="h-12 w-auto"
-              fetchPriority="high"
+              loading="eager"
             />
           </Link>
 
-          {/* Desktop Links */}
-          <div className="hidden lg:flex items-center space-x-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                to={link.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleNavigation(link.id, link.offset);
-                }}
-                className={twMerge(
-                  'text-sm font-medium transition-colors uppercase tracking-wider hover:text-brand-accent',
-                  isScrolled ? 'text-brand-dark/80' : 'text-brand-dark/90'
-                )}>
-                {link.name}
-              </Link>
-            ))}
-            <Button
-              variant="primary"
-              onClick={() => handleNavigation('contact', 80)}>
-              Contact Us
-            </Button>
-          </div>
+          {/* Desktop Links - Only show on home page */}
+          {pathname === "/" && (
+            <div className="hidden lg:flex items-center space-x-8">
+              {NAV_LINKS.map((link) => (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  onClick={(e: React.MouseEvent) => {
+                    e.preventDefault();
+                    handleNavigation(link.id, link.offset);
+                  }}
+                  className={twMerge(
+                    "text-sm font-medium transition-colors uppercase tracking-wider hover:text-brand-accent",
+                    isScrolled ? "text-brand-dark/80" : "text-brand-dark/90"
+                  )}>
+                  {link.name}
+                </Link>
+              ))}
+              <Button
+                variant="primary"
+                onClick={() => handleNavigation("contact", 80)}>
+                Contact Us
+              </Button>
+            </div>
+          )}
 
-          {/* Mobile Menu Button */}
-          <button
-            type="button"
-            className="lg:hidden text-brand-dark hover:text-brand-accent transition-colors p-2"
-            onClick={() => setIsMobileMenuOpen(true)}
-            aria-label="Open menu">
-            <Menu size={28} />
-          </button>
+          {/* Mobile Menu Button - Only show on home page */}
+          {pathname === "/" && (
+            <button
+              type="button"
+              className="lg:hidden text-brand-dark hover:text-brand-accent transition-colors p-2"
+              onClick={() => setIsMobileMenuOpen(true)}
+              aria-label="Open menu">
+              <Menu size={28} />
+            </button>
+          )}
         </div>
       </nav>
 
