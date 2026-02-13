@@ -46,7 +46,7 @@ export function SmoothScrollProvider({
   useLayoutEffect(() => {
     setTimeout(() => {
       setContentReady(true);
-    }, 3400);
+    }, 3000);
   }, []);
 
   useLayoutEffect(() => {

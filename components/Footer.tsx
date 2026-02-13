@@ -28,7 +28,7 @@ export const Footer: React.FC = () => {
   return (
     <footer className="bg-[#0b1120] text-white py-12 font-sans relative -mt-px">
       <div className="container mx-auto px-6">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6 md:gap-0">
+        <div className="flex flex-col lg:flex-row justify-between items-center gap-6 lg:gap-0">
           {/* Logo */}
           <div className="flex items-center gap-3">
             <Image
@@ -37,6 +37,23 @@ export const Footer: React.FC = () => {
               className="h-12 w-auto brightness-25 invert"
               loading="lazy"
             />
+          </div>
+
+          {/* Copyright & Credits */}
+          <div className="lg:flex hidden flex-col md:flex-row justify-center items-center text-sm text-gray-400 gap-4">
+            <p className="order-2 md:order-1">
+              &copy; {currentYear} Tealeaf Consulting. All rights reserved.
+            </p>
+            {/* <p className="order-1 md:order-2 flex items-center gap-1">
+            Developed by
+            <Link
+              href="https://en2h.tech"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-gray-200 transition-colors font-medium">
+              EN2H
+            </Link>
+          </p> */}
           </div>
 
           {/* Socials & Actions */}
@@ -76,17 +93,13 @@ export const Footer: React.FC = () => {
               <ArrowUp size={18} />
             </button>
           </div>
-        </div>
 
-        {/* Divider */}
-        <div className="w-full h-px bg-white/10 my-8"></div>
-
-        {/* Copyright & Credits */}
-        <div className="flex flex-col md:flex-row justify-between items-center text-sm text-gray-400 gap-4">
-          <p className="order-2 md:order-1">
-            &copy; {currentYear} Tealeaf Consulting. All rights reserved.
-          </p>
-          {/* <p className="order-1 md:order-2 flex items-center gap-1">
+          {/* Copyright & Credits */}
+          <div className="flex lg:hidden flex-col md:flex-row justify-center items-center text-sm text-gray-400 gap-4">
+            <p className="order-2 md:order-1">
+              &copy; {currentYear} Tealeaf Consulting. All rights reserved.
+            </p>
+            {/* <p className="order-1 md:order-2 flex items-center gap-1">
             Developed by
             <Link
               href="https://en2h.tech"
@@ -96,7 +109,11 @@ export const Footer: React.FC = () => {
               EN2H
             </Link>
           </p> */}
+          </div>
         </div>
+
+        {/* Divider
+        <div className="w-full h-px bg-white/10 my-8"></div> */}
       </div>
     </footer>
   );
