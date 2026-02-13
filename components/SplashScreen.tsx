@@ -3,6 +3,7 @@ import Image from "next/image";
 import { gsap } from "@/lib/gsap";
 import { useGSAP } from "@gsap/react";
 import SplitType from "split-type";
+import { useIsMobile } from "@/lib/hooks";
 
 import logoSmall from "@/public/static/logo_small2.png";
 
@@ -13,8 +14,9 @@ interface SplashScreenProps {
 export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const logoRef = useRef<HTMLImageElement>(null);
-  const textRef = useRef<HTMLHeadingElement>(null);
+  const textRef = useRef<HTMLParagraphElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
 
   useGSAP(
     () => {
@@ -27,6 +29,8 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
         return;
       }
 
+      let titleSplit: SplitType | null = null;
+
       const tl = gsap.timeline({
         onComplete: () => {
           onComplete();
@@ -38,50 +42,60 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
       gsap.set(logoRef.current, { opacity: 0, y: 20 });
       gsap.set(lineRef.current, { scaleX: 0, transformOrigin: "left" });
 
-      const titleSplit = new SplitType(textRef.current, {
-        types: "words,chars",
-      });
+      let textTarget: HTMLElement | HTMLElement[] | null = textRef.current;
+      let textFromVars: gsap.TweenVars = { opacity: 0, y: 20 };
+      let textToVars: gsap.TweenVars = {
+        duration: 0.7,
+        opacity: 1,
+        y: 0,
+        ease: "back.out(1.2)",
+      };
 
-      // Keep parent visible so split text is rendered, but chars start invisible
-      gsap.set(textRef.current, { opacity: 1 });
+      if (!isMobile) {
+        titleSplit = new SplitType(textRef.current, {
+          types: "words,chars",
+        });
 
-      // 2. Animation Sequence
+        // Keep parent visible so split text is rendered, but chars start invisible
+        gsap.set(textRef.current, { opacity: 1 });
+
+        textTarget = titleSplit.chars;
+        textFromVars = { opacity: 0, y: 40 };
+        textToVars = {
+          duration: 0.7,
+          opacity: 1,
+          y: 0,
+          stagger: 0.02,
+          ease: "back.out(1.2)",
+        };
+      } else {
+        // Mobile: ensure parent starts invisible and set up for simple fade
+        gsap.set(textRef.current, { opacity: 0, y: 20 });
+      }
+
+      // 2. Animation Sequence (Optimized for faster display)
       tl.to(logoRef.current, {
-        duration: 1.2,
+        duration: 0.8,
         opacity: 1,
         y: 0,
         ease: "power3.out",
       })
-        .fromTo(
-          titleSplit.chars,
-          {
-            opacity: 0,
-            y: 40,
-          },
-          {
-            duration: 1.0,
-            opacity: 1,
-            y: 0,
-            stagger: 0.03,
-            ease: "back.out(1.2)",
-          },
-          "-=0.8"
-        )
+        .fromTo(textTarget, textFromVars, textToVars, "-=0.6")
         // Draw the accent line
         .to(
           lineRef.current,
           {
-            duration: 1.2,
+            duration: 0.8,
             scaleX: 1,
             ease: "expo.inOut",
           },
-          "-=0.6"
+          "-=0.5"
         )
         // Hold for a moment to let the brand register and rest of the page load
-        .to({}, { duration: 2 })
+        .to({}, { duration: 1 })
         // Exit animation: Line zips away, text fades
         .to([logoRef.current, textRef.current], {
-          duration: 0.5,
+          duration: 0.4,
           opacity: 0,
           y: -20,
           ease: "power2.in",
@@ -89,7 +103,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
         .to(
           lineRef.current,
           {
-            duration: 0.4,
+            duration: 0.3,
             scaleX: 0,
             transformOrigin: "right",
             ease: "power2.in",
@@ -98,12 +112,16 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
         )
         // The Curtain Lift
         .to(containerRef.current, {
-          duration: 1.2,
+          duration: 0.9,
           yPercent: -100,
           ease: "power4.inOut", // Dramatic, elegant easing
         });
+
+      return () => {
+        if (titleSplit) titleSplit.revert();
+      };
     },
-    { scope: containerRef, dependencies: [] }
+    { scope: containerRef, dependencies: [isMobile] }
   );
 
   return (

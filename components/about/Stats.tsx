@@ -23,9 +23,9 @@ export const Stats = () => {
 
         gsap.to(counter, {
           val: finalValue,
-          duration: 2.5,
+          duration: 2.0,
           delay: index * 0.3,
-          ease: "power3.out", // Starts quickly, slows down at the end
+          ease: "power1.out", // Starts quickly, slows down at the end
           scrollTrigger: {
             trigger: statsGridRef.current,
             start: "top 85%",

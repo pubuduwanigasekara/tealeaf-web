@@ -11,6 +11,7 @@ import {
 import { gsap, ScrollTrigger, ScrollSmoother } from "@/lib/gsap";
 import SplitType from "split-type";
 import { useGSAP } from "@gsap/react";
+import { useIsMobile } from "@/lib/hooks";
 
 const PAIN_POINTS = [
   {
@@ -40,32 +41,47 @@ export const FounderPain: React.FC = () => {
   const listRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
 
   useGSAP(
     () => {
+      let titleSplit: SplitType | null = null;
+
       // 1. Title Animation
       const title = titleRef.current;
       if (title) {
-        const titleSplit = new SplitType(title, { types: "words,chars" });
+        if (!isMobile) {
+          titleSplit = new SplitType(title, { types: "words,chars" });
 
-        // Keep parent visible so split text is rendered, but chars start invisible
-        gsap.set(title, { opacity: 1 });
+          // Keep parent visible so split text is rendered, but chars start invisible
+          gsap.set(title, { opacity: 1 });
 
-        gsap.fromTo(
-          titleSplit.chars,
-          { y: 30, opacity: 0 },
-          {
+          gsap.fromTo(
+            titleSplit.chars,
+            { y: 30, opacity: 0 },
+            {
+              scrollTrigger: {
+                trigger: title,
+                start: "top 80%",
+              },
+              y: 0,
+              opacity: 1,
+              duration: 1,
+              stagger: 0.02,
+              ease: "back.out(1.2)",
+            }
+          );
+        } else {
+          // Mobile: Static heading (simple fade in)
+          gsap.to(title, {
+            opacity: 1,
+            duration: 0.6,
             scrollTrigger: {
               trigger: title,
-              start: "top 80%",
+              start: "top 85%",
             },
-            y: 0,
-            opacity: 1,
-            duration: 1,
-            stagger: 0.02,
-            ease: "back.out(1.2)",
-          }
-        );
+          });
+        }
       }
 
       // 2. Rows Animation (Batch)
@@ -110,10 +126,11 @@ export const FounderPain: React.FC = () => {
       }, 200);
 
       return () => {
+        if (titleSplit) titleSplit.revert();
         clearTimeout(timer);
       };
     },
-    { scope: containerRef, dependencies: [] }
+    { scope: containerRef, dependencies: [isMobile] }
   );
 
   return (
