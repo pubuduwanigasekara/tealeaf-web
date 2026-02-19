@@ -78,7 +78,7 @@ const ServiceCard = React.forwardRef<
     // Each card pins at 96px from top while the next scrolls over it
     <div
       ref={ref}
-      className="service-card relative bg-white border border-brand-dark/5 shadow-lg rounded-3xl overflow-hidden origin-top transform-gpu">
+      className="service-card relative bg-white border border-brand-dark/5  rounded-3xl overflow-hidden origin-top transform-gpu">
       <div className="py-10 px-6 md:py-20 md:px-12">
         <div className="grid md:grid-cols-12 gap-8 lg:gap-16">
           {/* Step Index - Desktop */}
@@ -216,7 +216,7 @@ export const Services: React.FC = () => {
                   const progress = self.progress;
                   // Use gsap.set for instant updates without animation lag
                   gsap.set(card, {
-                    scale: 1 - progress * 0.05,
+                    // scale: 1 - progress * 0.01,
                     filter: `brightness(${1 - progress * 0.1})`,
                     force3D: true, // GPU acceleration
                   });
