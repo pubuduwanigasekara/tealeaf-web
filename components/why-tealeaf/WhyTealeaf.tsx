@@ -33,10 +33,10 @@ export const WhyTealeaf: React.FC = () => {
           {/* Description Text */}
           <div className="space-y-8 text-lg text-gray-300 font-light leading-relaxed max-w-2xl">
             <p className="tracking-wide">
-              Tealeaf Consulting is the strategic financial partner for
-              venture-backed founders ready to scale boldly. Our mission is to
-              build the financial backbone that transforms promising startups
-              into market-leading companies.
+              Tealeaf Consulting is the strategic financial partner for founders
+              ready to scale intentionally. Our mission is to build the
+              financial backbone that transforms promising startups into
+              market-leading companies.
             </p>
             <p className="tracking-wide">
               From fundraising preparation to building investor-ready financial
