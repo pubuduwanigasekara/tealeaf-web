@@ -1,4 +1,4 @@
-import React from 'react';
+import { StaticImageData } from "next/image";
 
 export interface ServiceItem {
   id: string;
@@ -15,5 +15,7 @@ export interface TestimonialItem {
   quote: string;
   author: string;
   role: string;
-  company?: string;
+  company: string;
+  profilePicLink: string;
+  content: React.ReactNode;
 }

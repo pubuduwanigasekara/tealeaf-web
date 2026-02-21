@@ -25,7 +25,6 @@ export function SmoothScrollProvider({
 }) {
   // Always show splash screen on initial load/refresh
   const [showSplash, setShowSplash] = useState(true);
-  const [contentReady, setContentReady] = useState(false);
   const smoothScrollRef = useRef<ScrollSmoother | null>(null);
   const pathname = usePathname();
 
@@ -35,24 +34,13 @@ export function SmoothScrollProvider({
 
   // Scroll to top on route change
   useEffect(() => {
-    if (contentReady) {
-      const smoother = smoothScrollRef.current;
-      if (smoother) {
-        smoother.scrollTo(0, false); // Instant scroll to top, no animation
-      }
+    const smoother = smoothScrollRef.current;
+    if (smoother) {
+      smoother.scrollTo(0, false); // Instant scroll to top, no animation
     }
-  }, [pathname, contentReady]);
+  }, [pathname]);
 
   useLayoutEffect(() => {
-    setTimeout(() => {
-      setContentReady(true);
-    }, 3000);
-  }, []);
-
-  useLayoutEffect(() => {
-    // Only initialize ScrollSmoother after splash is complete and content is ready
-    if (!contentReady) return;
-
     // Initialize ScrollSmoother after component mounts
     // Wait a bit for the DOM to be ready
     const timer = setTimeout(() => {
@@ -81,19 +69,17 @@ export function SmoothScrollProvider({
       clearTimeout(timer);
       smRef?.kill();
     };
-  }, [contentReady]);
+  }, []);
 
   return (
     <>
-      {/* Splash screen - renders first and alone */}
+      {/* Splash screen */}
       {showSplash && <SplashScreen onComplete={handleSplashComplete} />}
 
-      {/* Main content - only renders after splash completes */}
-      {contentReady && (
-        <div id="smooth-wrapper">
-          <div id="smooth-content">{children}</div>
-        </div>
-      )}
+      {/* Main content */}
+      <div id="smooth-wrapper">
+        <div id="smooth-content">{children}</div>
+      </div>
     </>
   );
 }
