@@ -4,7 +4,7 @@ import Script from "next/script";
 
 import "./globals.css";
 import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
-import { ROOT_URL } from "@/lib/data";
+import { ROOT_URL, TESTIMONIALS } from "@/lib/data";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 // import { MouseFollower } from "@/components/MouseFollower";
@@ -83,6 +83,29 @@ export const metadata: Metadata = {
     "apple-mobile-web-app-title": "Tealeaf",
   },
 };
+
+const testimonials_jsonld = TESTIMONIALS.map((testimonial) => ({
+  "@type": "Review",
+  "@id": `${ROOT_URL}/#review${testimonial.id}`,
+  itemReviewed: {
+    "@id": `${ROOT_URL}/#organization`,
+  },
+  author: {
+    "@type": "Person",
+    name: testimonial.author,
+    jobTitle: testimonial.role,
+    worksFor: {
+      "@type": "Organization",
+      name: testimonial.company,
+    },
+  },
+  reviewRating: {
+    "@type": "Rating",
+    ratingValue: 5,
+    bestRating: 5,
+  },
+  reviewBody: testimonial.quote,
+}));
 
 const jsonld = {
   "@context": "https://schema.org",
@@ -186,52 +209,7 @@ const jsonld = {
       },
       inLanguage: "en-US",
     },
-    {
-      "@type": "Review",
-      "@id": `${ROOT_URL}/#review1`,
-      itemReviewed: {
-        "@id": `${ROOT_URL}/#organization`,
-      },
-      author: {
-        "@type": "Person",
-        name: "Sean S. Murphy",
-        jobTitle: "CEO",
-        worksFor: {
-          "@type": "Organization",
-          name: "Helix Decision Science",
-        },
-      },
-      reviewRating: {
-        "@type": "Rating",
-        ratingValue: 5,
-        bestRating: 5,
-      },
-      reviewBody:
-        'Angela does not just "manage the financial infrastructure" - she stewards value creation. She understands the "tollgate" fundraising model, ensuring that a company hits specific, measurable milestones at every phase to unlock new rounds of capital.',
-    },
-    {
-      "@type": "Review",
-      "@id": `${ROOT_URL}/#review2`,
-      itemReviewed: {
-        "@id": `${ROOT_URL}/#organization`,
-      },
-      author: {
-        "@type": "Person",
-        name: "Angela Nibbs",
-        jobTitle: "Founder & CEO",
-        worksFor: {
-          "@type": "Organization",
-          name: "Maven PR",
-        },
-      },
-      reviewRating: {
-        "@type": "Rating",
-        ratingValue: 5,
-        bestRating: 5,
-      },
-      reviewBody:
-        "Angela Sweeney has been an invaluable partner to Maven. She brings clarity to our financial picture while always keeping the long-term vision in focus. Her guidance helps me make confident decisions about growth, investment, and where I'm taking the business next.",
-    },
+    ...testimonials_jsonld,
   ],
 };
 
